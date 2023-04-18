@@ -1,20 +1,24 @@
 package com.mygdx.code;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class MenuPrincipal implements Screen{
-    private Stage mainMenu
-    @Override
-    public void show() {
-        
-    }
+public class MenuPrincipal extends Game{
+    private Stage mainMenuStage;
+    private TextButton buttonJugar;
+    private TextButton buttonSalir;
+    private TextButton buttonConfig;
+    private Skin skinButton;
+    private TextureAtlas atlas;
+    
 
-    @Override
-    public void render(float delta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'render'");
-    }
 
     @Override
     public void resize(int width, int height) {
@@ -35,15 +39,29 @@ public class MenuPrincipal implements Screen{
     }
 
     @Override
-    public void hide() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hide'");
-    }
-
-    @Override
     public void dispose() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'dispose'");
     }
+
+    @Override
+    public void create() {
+        mainMenuStage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(mainMenuStage);
+        skinButton = new Skin();
+        atlas = new TextureAtlas(Gdx.files.internal("flat-earth-ui.atlas"));
+        skinButton.addRegions(atlas);
+        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+
+
+        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    }
     
+    @Override
+    public void render(){
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        mainMenuStage.act();
+        mainMenuStage.draw();
+    }
 }

@@ -1,5 +1,8 @@
 package com.mygdx.code;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JComponent;
 import javax.swing.plaf.nimbus.State;
 
@@ -10,6 +13,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -30,8 +35,11 @@ public class Opciones implements Screen {
 	
 	private Skin textura;
 	
-	private float anchopantalla;
-	private float altopantalla;
+	private float anchoPantalla;
+	private float altoPantalla;
+	
+	private SpriteBatch batch;
+	private Texture img;
 	
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	//Preferences prefs;
@@ -39,33 +47,44 @@ public class Opciones implements Screen {
 	public Opciones(final Code juego) {
 
 		this.juego = juego;
+		anchoPantalla = Gdx.graphics.getWidth();
+		altoPantalla = Gdx.graphics.getHeight();
 		
+		cargarPantalla();
 	}
 	
 	
 	private void cargarPantalla() {
 		
 		stage = new Stage();
+		batch = new SpriteBatch();
+		img = new Texture("fondoMenuPrincipal.png");
+		textura = new Skin();
+		textura.add("boton", "bronce.png");
 		
 		// Crea una tabla, donde añadiremos los elementos de menú
 		Table table = new Table();
-		table.setPosition(anchopantalla, altopantalla);
+		table.setPosition(0, 0);
 		// La tabla ocupa toda la pantalla
 	    table.setFillParent(true);
-	    table.setHeight(500);
+	    table.setHeight(altoPantalla);
+	    
+	    Label hpLabel = new Label("PRUEBA: ",new Label.LabelStyle(new BitmapFont(),Color.BLACK));
+	    table.add(hpLabel);
 	    stage.addActor(table);
 		
-		Label label = new Label("Opciones", textura);  //TEXTURA
-		table.addActor(label);
-		
-		
+	    //Texture boton = textura.get("boton", Texture.class);
+		//Label label = new Label("Opciones", textura.get("prueba", Texture.class));  //TEXTURA
+		//table.addActor(boton);
+//		
+//		
 		final CheckBox checkSound = new CheckBox(" Sonido", textura); //TEXTURA
 		
 		
 		//checkSound.setChecked(prefs.getBoolean("sound"));
 		
 		
-		checkSound.setPosition(label.getOriginX(), label.getOriginY() - 40);
+		checkSound.setPosition(hpLabel.getOriginX(), hpLabel.getOriginY() - 40);
 		checkSound.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;	
@@ -75,28 +94,34 @@ public class Opciones implements Screen {
 			//	prefs.putBoolean("sound", checkSound.isChecked());
 			}
 		});
-		
+//		
 		
 		//Boton Volver
 		
-		TextButton buttonMainMenu = new TextButton("Volver", textura); //TEXTURA
-		buttonMainMenu.setPosition(label.getOriginX(), label.getOriginY() - 220);
-		buttonMainMenu.setWidth(200);
-		buttonMainMenu.setHeight(40);
-		buttonMainMenu.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;	
-			}
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-			//	prefs.flush();
-				dispose(); //Volver a MainMenu
-			//	game.setScreen(new MainMenuScreen(game));
-			}
-		});
-		table.addActor(buttonMainMenu);
-		
+//		TextButton buttonMainMenu = new TextButton("Volver", textura); //TEXTURA
+//		buttonMainMenu.setPosition(label.getOriginX(), label.getOriginY() - 220);
+//		buttonMainMenu.setWidth(200);
+//		buttonMainMenu.setHeight(40);
+//		buttonMainMenu.addListener(new InputListener() {
+//			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//				return true;	
+//			}
+//			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+//				
+//			//	prefs.flush();
+//				dispose(); //Volver a MainMenu
+//			//	game.setScreen(new MainMenuScreen(game));
+//			}
+//		});
+//		table.addActor(buttonMainMenu);
+	   
 		Gdx.input.setInputProcessor(stage);
+		
+	    batch.begin();
+	    batch.draw(img, 0, 0, anchoPantalla, altoPantalla);
+        batch.end();
+        
+		stage.draw();
 		
 	}
 	@Override
@@ -110,12 +135,7 @@ public class Opciones implements Screen {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		
-        
 		stage.act(delta);
-		stage.draw();
-		
-		
-		
 		
 	}
 

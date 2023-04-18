@@ -4,10 +4,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MenuPrincipal extends Game{
@@ -15,9 +18,11 @@ public class MenuPrincipal extends Game{
     private TextButton buttonJugar;
     private TextButton buttonSalir;
     private TextButton buttonConfig;
+    private TextButtonStyle tbs;
     private Skin skinButton;
     private TextureAtlas atlas;
-    
+    private BitmapFont font;
+
 
 
     @Override
@@ -49,10 +54,15 @@ public class MenuPrincipal extends Game{
         mainMenuStage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(mainMenuStage);
         skinButton = new Skin();
+        font = new BitmapFont();
         atlas = new TextureAtlas(Gdx.files.internal("flat-earth-ui.atlas"));
         skinButton.addRegions(atlas);
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-
+        tbs = new TextButtonStyle();
+        tbs.font = font;
+        tbs.up = skin.getDrawable("up-button");
+        tbs.down = skin.getDrawable("down-button");
+;
+        
 
         throw new UnsupportedOperationException("Unimplemented method 'create'");
     }

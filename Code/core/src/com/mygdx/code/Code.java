@@ -1,6 +1,6 @@
 package com.mygdx.code;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,14 +9,17 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
-public class Code extends ApplicationAdapter {
+public class Code extends Game {
 	SpriteBatch batch;
 	Texture img;
 	Sprite barquito;
 	Barco boat;
 	TipoBarco elegido;
+	
 	@Override
 	public void create () {
+		setScreen(new PantallaDeInicio());
+		/*
 		Vector2 pos = new Vector2(100,100);
 		batch = new SpriteBatch();
 		img = new Texture("barquito.png");
@@ -24,10 +27,12 @@ public class Code extends ApplicationAdapter {
 		barquito.setScale(0.3f);
 		elegido = new TipoBarco(10f,10f,"Neutro",10f,20f);
 		boat = new Barco(elegido,pos);
+		*/
 	}
 
 	@Override
 	public void render () {
+		/*
 		ScreenUtils.clear(1, 1, 1, 1);
 		if(Gdx.input.isKeyPressed(Keys.A)) {
 			boat.girarIzquierda();
@@ -49,11 +54,14 @@ public class Code extends ApplicationAdapter {
 		batch.begin();
 		barquito.draw(batch);
 		batch.end();
+		*/
 	}
 	
 	@Override
 	public void dispose () {
+		/*
 		batch.dispose();
 		img.dispose();
+		*/
 	}
 }

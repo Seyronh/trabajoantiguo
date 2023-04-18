@@ -15,6 +15,11 @@ public class Code extends ApplicationAdapter {
 	Sprite barquito;
 	Barco boat;
 	TipoBarco elegido;
+	
+	//////
+	
+	MainMenuScreen pantalla;
+	
 	@Override
 	public void create () {
 		Vector2 pos = new Vector2(100,100);
@@ -23,6 +28,8 @@ public class Code extends ApplicationAdapter {
 		barquito = new Sprite(img,20,50);
 		elegido = new TipoBarco(10f,10f,"Neutro",10f,20f);
 		boat = new Barco(elegido,pos);
+		
+		
 	}
 
 	@Override
@@ -42,12 +49,26 @@ public class Code extends ApplicationAdapter {
 		} else {
 			boat.frenar(true);
 		}
+		
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			
+			System.exit(0);
+		}
+		
 		boat.actualizarposicion();
 		barquito.setPosition(boat.posicion.x,boat.posicion.y);
 		barquito.setRotation(boat.angulo-90);
 		batch.begin();
 		barquito.draw(batch);
+		
 		batch.end();
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	@Override

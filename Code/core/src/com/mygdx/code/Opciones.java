@@ -15,11 +15,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -78,22 +80,22 @@ public class Opciones implements Screen {
 		//table.addActor(boton);
 //		
 //		
-		final CheckBox checkSound = new CheckBox(" Sonido", textura); //TEXTURA
-		
-		
-		//checkSound.setChecked(prefs.getBoolean("sound"));
-		
-		
-		checkSound.setPosition(hpLabel.getOriginX(), hpLabel.getOriginY() - 40);
-		checkSound.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;	
-			}
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-			//	prefs.putBoolean("sound", checkSound.isChecked());
-			}
-		});
+//		final CheckBox checkSound = new CheckBox(" Sonido", textura); //TEXTURA
+//		
+//		
+//		//checkSound.setChecked(prefs.getBoolean("sound"));
+//		
+//		
+//		checkSound.setPosition(label.getOriginX(), label.getOriginY() - 40);
+//		checkSound.addListener(new InputListener() {
+//			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//				return true;	
+//			}
+//			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+//				
+//			//	prefs.putBoolean("sound", checkSound.isChecked());
+//			}
+//		});
 //		
 		
 		//Boton Volver
@@ -114,6 +116,17 @@ public class Opciones implements Screen {
 //			}
 //		});
 //		table.addActor(buttonMainMenu);
+	    
+//	    BitmapFont font = new BitmapFont();
+//	    TextureAtlas  buttonAtlas = new TextureAtlas(Gdx.files.internal("buttons/buttons.pack"));
+//        textura.addRegions(buttonAtlas);
+//        TextButtonStyle textButtonStyle = new TextButtonStyle();
+//        textButtonStyle.font = font;
+//        textButtonStyle.up = textura.getDrawable("up-button");
+//        textButtonStyle.down = textura.getDrawable("down-button");
+//        textButtonStyle.checked = textura.getDrawable("checked-button");
+//        TextButton  button = new TextButton("Button1", textButtonStyle);
+//        stage.addActor(button);
 	   
 		Gdx.input.setInputProcessor(stage);
 		

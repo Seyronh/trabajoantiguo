@@ -1,11 +1,13 @@
+package com.mygdx.code;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class MenuPrincipal implements Screen{
-
+    private Stage mainMenu
     @Override
     public void show() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'show'");
+        
     }
 
     @Override

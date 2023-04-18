@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -120,13 +121,17 @@ public class Opciones implements Screen {
 //	    BitmapFont font = new BitmapFont();
 //	    TextureAtlas  buttonAtlas = new TextureAtlas(Gdx.files.internal("buttons/buttons.pack"));
 //        textura.addRegions(buttonAtlas);
-//        TextButtonStyle textButtonStyle = new TextButtonStyle();
+//        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 //        textButtonStyle.font = font;
 //        textButtonStyle.up = textura.getDrawable("up-button");
 //        textButtonStyle.down = textura.getDrawable("down-button");
 //        textButtonStyle.checked = textura.getDrawable("checked-button");
-//        TextButton  button = new TextButton("Button1", textButtonStyle);
-//        stage.addActor(button);
+//        TextButton button = new TextButton("Button1", textButtonStyle);
+	    
+	    ButtonStyle style = new ButtonStyle();
+	    textura.add("boton2", style);
+	    Button btn = new Button(textura, "boton2");
+        stage.addActor(btn);
 	   
 		Gdx.input.setInputProcessor(stage);
 		

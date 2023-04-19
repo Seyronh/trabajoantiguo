@@ -18,7 +18,8 @@ public class Code extends Game {
 	
 	@Override
 	public void create () {
-		setScreen(new PantallaDeInicio());
+		batch = new SpriteBatch();
+		setScreen(new PantallaDeInicio(this));
 		/*
 		Vector2 pos = new Vector2(100,100);
 		batch = new SpriteBatch();
@@ -30,9 +31,9 @@ public class Code extends Game {
 		*/
 	}
 
-	@Override
+	/*@Override
 	public void render () {
-		/*
+		
 		ScreenUtils.clear(1, 1, 1, 1);
 		if(Gdx.input.isKeyPressed(Keys.A)) {
 			boat.girarIzquierda();
@@ -54,8 +55,8 @@ public class Code extends Game {
 		batch.begin();
 		barquito.draw(batch);
 		batch.end();
-		*/
-	}
+		
+	}*/
 	
 	@Override
 	public void dispose () {

@@ -19,8 +19,12 @@ public class Code extends Game {
 
 	//////
 
-	MainMenuScreen pantalla;
-
+	public Code() {
+		
+		super();
+	}
+	
+	
 	@Override
 	public void create() {
 		Vector2 pos = new Vector2(100, 100);
@@ -30,40 +34,46 @@ public class Code extends Game {
 		barquito.setScale(0.3f);
 		elegido = new TipoBarco(10f, 10f, "Neutro", 10f, 20f);
 		boat = new Barco(elegido, pos);
+		
+		setScreen(new Opciones(this));
 	}
 
 	@Override
 	public void render() {
+		
+		super.render();
 		//ScreenUtils.clear(1, 1, 1, 1);
-		if (Gdx.input.isKeyPressed(Keys.A)) {
-			boat.girarIzquierda();
-		}
-		if (Gdx.input.isKeyPressed(Keys.D)) {
-			boat.girarDerecha();
-		}
-		if (Gdx.input.isKeyPressed(Keys.W)) {
-			boat.acelerar();
-		}
-		if (Gdx.input.isKeyPressed(Keys.S)) {
-			boat.frenar(false);
-		} else {
-			boat.frenar(true);
-		}
-
+//		if (Gdx.input.isKeyPressed(Keys.A)) {
+//			boat.girarIzquierda();
+//		}
+//		if (Gdx.input.isKeyPressed(Keys.D)) {
+//			boat.girarDerecha();
+//		}
+//		if (Gdx.input.isKeyPressed(Keys.W)) {
+//			boat.acelerar();
+//		}
+//		if (Gdx.input.isKeyPressed(Keys.S)) {
+//			boat.frenar(false);
+//		} else {
+//			boat.frenar(true);
+//		}
+//
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 
 			System.exit(0);
 		}
-
-		boat.actualizarposicion();
-		barquito.setPosition(boat.posicion.x, boat.posicion.y);
-		barquito.setRotation(boat.angulo - 90);
+//
+//		boat.actualizarposicion();
+//		barquito.setPosition(boat.posicion.x, boat.posicion.y);
+//		barquito.setRotation(boat.angulo - 90);
 //		batch.begin();
 //		barquito.draw(batch);
 //
 //		batch.end();
 		
-		setScreen(new Opciones(this));
+//		setScreen(new Opciones(this));
+		
+		
 
 	}
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -49,6 +50,13 @@ public class Opciones implements Screen {
 	private SpriteBatch batch;
 	private Texture Fondo;
 	private Texture Tabla;
+	
+	private Texture seleccionar;
+	
+	private int commandnum;
+	
+	float AnchoBoton;
+    float AltoBoton;
 
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	//Preferences prefs;
@@ -59,11 +67,20 @@ public class Opciones implements Screen {
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 		
+		
+		commandnum = 0;
+		
+		AnchoBoton = anchoPantalla *15/100;
+		AltoBoton = altoPantalla *10/100;
+		
+		seleccionar = new Texture("seleccionar.png");
 		//cargarPantalla();
 	}
 	
 	
 	private void cargarPantalla() {
+		
+		
 		
 //		textura = new Skin();
 //		
@@ -90,8 +107,11 @@ public class Opciones implements Screen {
 	    	stage = new Stage();
 			batch = new SpriteBatch();
 			
+			
 			Fondo = new Texture("fondoMenuPrincipal.png");
 			Tabla = new Texture("opciones.png");
+			
+			
 	    	
 			Table table = new Table();
 		    table.setPosition(0, 0);
@@ -103,23 +123,32 @@ public class Opciones implements Screen {
 			//table.addActor(boton);
 //		    stage.addActor(table2);
 		    stage.addActor(table);
+		    
+		    float BotonX = anchoPantalla * 47 /100;
+		    float BotonY = altoPantalla * 70/100;
+		    
+		    
+		    
 	    	
 	    	TextButtonStyle styleb = new TextButtonStyle();
 			
 			
 			Texture buttondown = new Texture("botondownplchld.png");
 			Texture buttonup = new Texture("botonplchld.png");
+
 			
 			styleb.down = new TextureRegionDrawable(new TextureRegion(buttondown));
 			styleb.up = new TextureRegionDrawable(new TextureRegion(buttonup));
+		
 			
 			styleb.font = new BitmapFont();
 			styleb.fontColor = Color.BLACK;
 			
 			TextButton buttonControles = new TextButton("Controles", styleb); //TEXTURA
-			buttonControles.setPosition(anchoPantalla*45/100, altoPantalla*70/100);
-			buttonControles.setWidth(200);
-			buttonControles.setHeight(40);
+			buttonControles.setPosition(BotonX, BotonY);
+
+			
+			buttonControles.setSize(AnchoBoton, AltoBoton);
 			buttonControles.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					return true;	
@@ -135,11 +164,13 @@ public class Opciones implements Screen {
 			});
 			table.addActor(buttonControles);
 			
+			BotonY = BotonY - anchoPantalla*10/100;
+			
 			
 			TextButton buttonSonido = new TextButton("Sonido", styleb); //TEXTURA
-			buttonSonido.setPosition(anchoPantalla*45/100, altoPantalla*60/100);
-			buttonSonido.setWidth(200);
-			buttonSonido.setHeight(40);
+			buttonSonido.setPosition(BotonX, BotonY);
+
+			buttonSonido.setSize(AnchoBoton, AltoBoton);
 			buttonSonido.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					return true;	
@@ -155,12 +186,14 @@ public class Opciones implements Screen {
 			});
 			table.addActor(buttonSonido);
 			
+			BotonY = BotonY - anchoPantalla*10/100;
+			
 			//Boton Volver
 			
 			TextButton buttonMainMenu = new TextButton("Volver", styleb); //TEXTURA
-			buttonMainMenu.setPosition(anchoPantalla*45/100, altoPantalla*50/100);
-			buttonMainMenu.setWidth(200);
-			buttonMainMenu.setHeight(40);
+			buttonMainMenu.setPosition(BotonX, BotonY);
+
+			buttonMainMenu.setSize(AnchoBoton, AltoBoton);
 			buttonMainMenu.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					return true;	
@@ -169,11 +202,13 @@ public class Opciones implements Screen {
 					
 			//	prefs.flush();
 					dispose(); //Volver a MainMenu
-				//	game.setScreen(new MainMenuScreen(game));
+					game.setScreen(new MainMenuScreen(game));
 				}
 			});
 			table.addActor(buttonMainMenu);
 		    
+		//	BotonY = BotonY - anchoPantalla*15/100;
+			
 //		    BitmapFont font = new BitmapFont();
 //		    TextureAtlas  buttonAtlas = new TextureAtlas(Gdx.files.internal("buttons/buttons.pack"));
 //	        textura.addRegions(buttonAtlas);
@@ -201,20 +236,94 @@ public class Opciones implements Screen {
 		// TODO Auto-generated method stub
 	//	Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+    		
+    		
+    		game.setScreen(new MainMenuScreen(game));
+    	}
+		
+		
 		batch.begin();
 	    batch.draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
 	    batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
-
+	    
+	//    batch.draw(Tabla, anchoPantalla*35/100, altoPantalla*30/100, anchoPantalla*45/100, altoPantalla*65/100);
+	    
+	    
+	    if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+    		
+    		commandnum++;
+    		
+    		if(commandnum > 2) {
+    			
+    			commandnum = 0;
+    		}
+    		
+    	}
+	    if(Gdx.input.isKeyPressed(Keys.UP)) {
+    		
+    		commandnum--;
+    		
+    		if(commandnum < 0) {
+    			
+    			commandnum = 2;
+    		}
+    		
+    	}
+	    
+	    if(Gdx.graphics.isFullscreen()) {
+	    
+	    	batch.draw(seleccionar, anchoPantalla*39/100, altoPantalla*70/100 - altoPantalla*18/100*commandnum, AnchoBoton/2, AltoBoton); //Pantalla completa
+		    
+	     
+	    }else {
+	    	batch.draw(seleccionar, anchoPantalla*39/100, altoPantalla*70/100 - altoPantalla*13/100*commandnum);  // Modo ventana
+	 	   
+	    	
+	    }
+	    
+	    switch(commandnum) {
+	    case 0:
+	    	
+	    	
+	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+	    		
+	    		game.setScreen(new OpcionesControles(game));
+	    	}
+	    	break;
+	    case 1:
+	    	
+	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+	    		
+	    		game.setScreen(new OpcionesSonido(game));
+	    	}
+	    	break;
+	    case 2:
+	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+	    		
+	    		
+	    		game.setScreen(new MainMenuScreen(game));
+	    	}
+	    	break;
+	    
+	    
+	    }
+	    
+	    
+	    
 	    batch.end();
 	    
 		stage.act(delta);
 		stage.draw();
+		
+		
+		
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+		cargarPantalla();
 	}
 
 	@Override

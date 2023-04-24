@@ -35,7 +35,7 @@ public class Code extends Game {
 		elegido = new TipoBarco(10f, 10f, "Neutro", 10f, 20f);
 		boat = new Barco(elegido, pos);
 		
-		setScreen(new Opciones(this));
+		setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
@@ -58,10 +58,7 @@ public class Code extends Game {
 //			boat.frenar(true);
 //		}
 //
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-
-			System.exit(0);
-		}
+		
 //
 //		boat.actualizarposicion();
 //		barquito.setPosition(boat.posicion.x, boat.posicion.y);

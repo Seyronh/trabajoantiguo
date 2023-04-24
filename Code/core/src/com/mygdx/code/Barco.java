@@ -9,7 +9,7 @@ public class Barco {
 	public float vida;
 	public float cansancio = 100;
 	private TipoBarco elegido;
-	private Body body;
+	public Body body;
 	
 	public Barco(TipoBarco elegido,Body body) {
 		this.elegido = elegido;

@@ -32,8 +32,10 @@ public class Code extends Game {
 	
 	@Override
 	public void create() {
-		Vector2 pos = new Vector2(100, 100);
 		batch = new SpriteBatch();
+		setScreen(new PantallaPartida(this));
+		/*
+		Vector2 pos = new Vector2(100,100);
 		img = new Texture("barquito.png");
 		barquito = new Sprite(img, 1024, 1024);
 		barquito.setScale(0.3f);
@@ -41,8 +43,9 @@ public class Code extends Game {
 		boat = new Barco(elegido, pos);
 		
 		setScreen(new MainMenuScreen(this));
+		*/
 	}
-
+/*
 	@Override
 	public void render() {
 		
@@ -78,10 +81,10 @@ public class Code extends Game {
 		
 
 	}
-
+	*/
 	@Override
 	public void dispose() {
 		batch.dispose();
-		img.dispose();
+		//img.dispose();
 	}
 }

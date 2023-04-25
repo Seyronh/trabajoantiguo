@@ -88,7 +88,7 @@ public class OpcionesControles implements Screen {
 
 
 		//table.addActor(boton);
-//	    stage.addActor(table2);
+	    //stage.addActor(table2);
 	    stage.addActor(table2);
 		
 	    //Estilo boton
@@ -262,9 +262,15 @@ public class OpcionesControles implements Screen {
 	    	
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+	    		
+	    		game.moverizq = Keys.LEFT;
+	    		
+	    		
 	    		arrows = true;
 	    	}
 	    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+	    		
+	    		game.moverizq = Keys.A;
 	    		
 	    		arrows = false;
 	    	}

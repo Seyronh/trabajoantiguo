@@ -17,8 +17,13 @@ public class Code extends Game {
 	Barco boat;
 	TipoBarco elegido;
 
+	
+	
+	
 	//////
 
+	public int moverizq = Keys.A;
+	
 	public Code() {
 		
 		super();
@@ -43,9 +48,9 @@ public class Code extends Game {
 		
 		super.render();
 		//ScreenUtils.clear(1, 1, 1, 1);
-//		if (Gdx.input.isKeyPressed(Keys.A)) {
-//			boat.girarIzquierda();
-//		}
+		if (Gdx.input.isKeyPressed(moverizq)) {
+			boat.girarIzquierda();
+		}
 //		if (Gdx.input.isKeyPressed(Keys.D)) {
 //			boat.girarDerecha();
 //		}

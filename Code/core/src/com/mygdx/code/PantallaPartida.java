@@ -31,7 +31,7 @@ public class PantallaPartida implements Screen {
 	public PantallaPartida(Code code) {
 		this.code = code;
 	}
-	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Sprite foto,float escala,Vector2 tamaño) {
+	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Sprite foto,float escala,Vector2 tamano) {
 		foto.setScale(escala/relation);
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = tipo;
@@ -39,7 +39,7 @@ public class PantallaPartida implements Screen {
 		Body cuerpo = fisicas.createBody(bodyDef);
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape poly = new PolygonShape();
-		poly.setAsBox(tamaño.x/relation, tamaño.y/relation);
+		poly.setAsBox(tamano.x/relation, tamano.y/relation);
 		fixtureDef.shape = poly;
 		fixtureDef.density = densidad;
 		fixtureDef.friction = friccion;
@@ -58,9 +58,11 @@ public class PantallaPartida implements Screen {
 		Box2D.init();
 		debugRenderer = new Box2DDebugRenderer();
 		fisicas = new World(new Vector2(0, 0), true);
-		Body barco = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.5f,0.4f,0.6f,false,new Sprite(new Texture("barquito.png"),294,886),0.20f,new Vector2(20,85)); 
-		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Sprite(new Texture("powerUp.png"),1024,1024),0.05f,new Vector2(40,40));
-		boat = new Barco(new TipoBarco(20f,20f,"Neutro",10f,100f),barco);
+				   //crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Sprite foto,float escala,Vector2 tamano)
+		Body barco = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Sprite(new Texture("barquito.png"),294,886),0.20f,new Vector2(20,85)); 
+		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,false,new Sprite(new Texture("powerUp.png"),1024,1024),0.05f,new Vector2(40,40));
+		boat = new Barco(new TipoBarco(50f,100f,"Neutro",10f,50f),barco);
+		//(float aceleracion,float movilidad,String barco,float vidamax,float velocidadmax)
 	}
 
 	@Override

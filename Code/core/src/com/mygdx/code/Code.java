@@ -23,8 +23,7 @@ public class Code extends Game {
 		Vector2 pos = new Vector2(100,100);
 		img = new Texture("barquito.png");
 		barquito = new Sprite(img,1024,1024);
-		barquito.setScale(0.3f);
-		elegido = new TipoBarco(10f,10f,"Neutro",10f,20f);
+		barquito.setScale(0.3f);ww
 		boat = new Barco(elegido,pos);
 		*/
 	}

@@ -44,4 +44,14 @@ public class Barco {
 			this.body.applyForceToCenter(-x*this.elegido.aceleracion*(this.cansancio/100), -y*this.elegido.aceleracion*(this.cansancio/100), false);
 		}
 	}
+	public void guardarPowerUp() {
+		
+		
+		
+	}
+	public void usarPowerUp() {
+		
+		
+		
+	}
 }

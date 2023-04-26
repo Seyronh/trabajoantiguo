@@ -58,8 +58,9 @@ public class PantallaPartida implements Screen {
 		Box2D.init();
 		debugRenderer = new Box2DDebugRenderer();
 		fisicas = new World(new Vector2(0, 0), true);
+		fisicas.setContactListener(new Colisiones());
 		Body barco = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.5f,0.4f,0.6f,false,new Sprite(new Texture("barquito.png"),294,886),0.20f,new Vector2(20,85)); 
-		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Sprite(new Texture("powerUp.png"),1024,1024),0.05f,new Vector2(40,40));
+		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,false,new Sprite(new Texture("powerUp.png"),1024,1024),0.05f,new Vector2(20,20));
 		boat = new Barco(new TipoBarco(20f,20f,"Neutro",10f,100f),barco);
 	}
 

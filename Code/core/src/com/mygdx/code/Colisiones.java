@@ -11,7 +11,9 @@ public class Colisiones {
 		final Fixture Barco = contact.getFixtureA();
 		final Fixture powerUp  = contact.getFixtureB();
 		
-		if (userDataBarco.getValue().equals("jugador") && powerUp.getBody().getUserData().equals("PowerUp")){            
+//		if (userDataBarco.getValue().equals("jugador") && powerUp.getBody().getUserData().equals("PowerUp")){      
+//			
+//		}
            
 	}
 
@@ -20,9 +22,9 @@ public class Colisiones {
 		final Fixture Barco = contact.getFixtureA();
         final Fixture powerUp = contact.getFixtureB();
 	}
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void dispose() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 }

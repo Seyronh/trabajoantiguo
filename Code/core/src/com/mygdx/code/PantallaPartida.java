@@ -31,7 +31,7 @@ public class PantallaPartida implements Screen {
 	public PantallaPartida(Code code) {
 		this.code = code;
 	}
-	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Sprite foto,float escala,Vector2 tamaño) {
+	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Sprite foto,float escala,Vector2 tamano) {
 		foto.setScale(escala/relation);
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = tipo;
@@ -39,7 +39,7 @@ public class PantallaPartida implements Screen {
 		Body cuerpo = fisicas.createBody(bodyDef);
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape poly = new PolygonShape();
-		poly.setAsBox(tamaño.x/relation, tamaño.y/relation);
+		poly.setAsBox(tamano.x/relation, tamano.y/relation);
 		fixtureDef.shape = poly;
 		fixtureDef.density = densidad;
 		fixtureDef.friction = friccion;

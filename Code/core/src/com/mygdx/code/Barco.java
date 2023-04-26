@@ -8,23 +8,28 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 public class Barco {
 	public float vida;
 	public float cansancio = 100;
-	private TipoBarco elegido;
+	public TipoBarco elegido;
+	public TipoBarco elegidoOriginal;
 	public Body body;
+	public PowerUp poder = null;
+	public float tiempo = 0;
+	public boolean aplicado = false;
 	
 	public Barco(TipoBarco elegido,Body body) {
+		this.elegidoOriginal = new TipoBarco(elegido.aceleracion,elegido.movilidad,elegido.barco,elegido.vidamax,elegido.velocidadmax);
 		this.elegido = elegido;
 		this.vida = this.elegido.vidamax;
 		this.body = body;
 	}
 	public void girarDerecha() {
 		Vector2 pos = this.body.getPosition();
-		if(this.body.getAngularVelocity() < this.elegido.velocidadmax) {
+		if(Math.abs(this.body.getAngularVelocity()) < this.elegido.velocidadmax) {
 			this.body.applyTorque(-this.elegido.movilidad*(this.cansancio/100), true);
 		}
 	}
 	public void girarIzquierda() {
 		Vector2 pos = this.body.getPosition();
-		if(this.body.getAngularVelocity() < this.elegido.velocidadmax) {
+		if(Math.abs(this.body.getAngularVelocity()) < this.elegido.velocidadmax) {
 			this.body.applyTorque(this.elegido.movilidad*(this.cansancio/100), true);
 		}
 	}
@@ -43,5 +48,14 @@ public class Barco {
 			float y = (float)Math.cos(body.getAngle());
 			this.body.applyForceToCenter(-x*this.elegido.aceleracion*(this.cansancio/100), -y*this.elegido.aceleracion*(this.cansancio/100), false);
 		}
+	}
+	public void guardarPowerUp(PowerUp poder) {
+		this.poder = poder;
+	}
+	public PowerUp usarPowerUp() {
+		return this.poder;
+	}
+	public void resetStats() {
+		this.elegido = new TipoBarco(elegidoOriginal.aceleracion,elegidoOriginal.movilidad,elegidoOriginal.barco,elegidoOriginal.vidamax,elegidoOriginal.velocidadmax);
 	}
 }

@@ -2,6 +2,7 @@ package com.mygdx.code;
 
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
@@ -21,6 +22,8 @@ public class PantallaPartida implements Screen {
 	static final float relation = (Gdx.graphics.getWidth()/Gdx.graphics.getHeight())+15;
 	static final float STEP_TIME = 1f/60f;
 	float accumulator = 0;
+	private int ids=0;
+	private float tiempo = 0;
 	World fisicas;
 	Barco boat;
 	TipoBarco elegido;
@@ -28,18 +31,18 @@ public class PantallaPartida implements Screen {
 	Box2DDebugRenderer debugRenderer;
 	Code code;
 	BackgroundPartida background;
+	ArrayList<Body> borrar = new ArrayList<Body>();
 	public PantallaPartida(Code code) {
 		this.code = code;
 	}
-	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Sprite foto,float escala,Vector2 tamano) {
-		foto.setScale(escala/relation);
+	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Vector2 tamanio) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = tipo;
 		bodyDef.position.set(posicion);
 		Body cuerpo = fisicas.createBody(bodyDef);
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape poly = new PolygonShape();
-		poly.setAsBox(tamano.x/relation, tamano.y/relation);
+		poly.setAsBox(tamanio.x/relation, tamanio.y/relation);
 		fixtureDef.shape = poly;
 		fixtureDef.density = densidad;
 		fixtureDef.friction = friccion;
@@ -47,10 +50,8 @@ public class PantallaPartida implements Screen {
 		fixtureDef.isSensor = sensor;
 		cuerpo.createFixture(fixtureDef);
 		poly.dispose();
-		cuerpo.setUserData(foto);
 		return cuerpo;
 	}
-
 	@Override
 	public void show() {
 		camara = new OrthographicCamera(Gdx.graphics.getWidth()/relation,Gdx.graphics.getHeight()/relation);  
@@ -58,15 +59,33 @@ public class PantallaPartida implements Screen {
 		Box2D.init();
 		debugRenderer = new Box2DDebugRenderer();
 		fisicas = new World(new Vector2(0, 0), true);
-				   //crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Sprite foto,float escala,Vector2 tamano)
-		Body barco = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Sprite(new Texture("barquito.png"),294,886),0.20f,new Vector2(20,85)); 
-		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,false,new Sprite(new Texture("powerUp.png"),1024,1024),0.05f,new Vector2(40,40));
-		boat = new Barco(new TipoBarco(50f,100f,"Neutro",10f,50f),barco);
-		//(float aceleracion,float movilidad,String barco,float vidamax,float velocidadmax)
+		fisicas.setContactListener(new Colisiones(borrar));
+		Body barco = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(20,85)); 
+		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
+		Body powerup2 = crearCuerpo(new Vector2(20,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
+		boat = new Barco(new TipoBarco(20f,20f,"Neutro",10f,100f),barco);
+		Sprite barquito = new Sprite(new Texture("barquito.png"),294,886);
+		barquito.setScale(0.20f/relation);
+		barco.setUserData(new UserData(barquito,ids,boat));
+		ids++;
+		Sprite power = new Sprite(new Texture("powerUp.png"),1024,1024);
+		power.setScale(0.05f/relation);
+		powerup.setUserData(new UserData(power,ids,new PowerUp(20f, 20f, 0f, false, 0f)));
+		ids++;
+		powerup2.setUserData(new UserData(power,ids,new PowerUp(20f, 20f, 0f, false, 0f)));
+		ids++;
 	}
 
 	@Override
 	public void render(float delta) {
+		if(boat.aplicado) {
+			boat.tiempo += 100*delta;
+			if(boat.tiempo > 1000) {
+				boat.tiempo = 0;
+				boat.aplicado = false;
+				boat.resetStats();
+			}
+		}
 		ScreenUtils.clear(1, 1, 1, 1);
 		if(Gdx.input.isKeyPressed(Keys.A)) {
 			boat.girarIzquierda();
@@ -79,6 +98,23 @@ public class PantallaPartida implements Screen {
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)) {
 			boat.frenar();
+		}
+		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+			PowerUp poder = boat.usarPowerUp();
+			if(poder != null) {
+				boat.aplicado = true;
+				boat.elegido.aceleracion += poder.aceleracion;
+				boat.elegido.movilidad += poder.movilidad;
+				boat.vida += poder.curacion;
+				if(boat.vida > boat.elegido.vidamax) {
+					boat.vida = boat.elegido.vidamax;
+				}
+				boat.cansancio += poder.cansancio;
+				if(boat.cansancio > 100) {
+					boat.cansancio = 100;
+				}
+				boat.poder = null;
+			}
 		}
 		Vector2 pos2 = boat.body.getPosition();
 		camara.position.set(new Vector3(pos2.x,pos2.y,0));
@@ -95,20 +131,26 @@ public class PantallaPartida implements Screen {
 	    background.draw(this.code.batch);
 	    while (iter.hasNext()) {
 	        body = iter.next();
-	        sprite = (Sprite) body.getUserData();
+	        UserData data = (UserData) body.getUserData();
+	        sprite = (Sprite) data.foto;
 	        Vector2 pos = body.getPosition();
 	        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
 	        sprite.setCenter(pos.x, pos.y);
 	        sprite.draw(this.code.batch);
 	    }
 	    this.code.batch.end();
-
 	    accumulator += Math.min(delta, 0.25f);
 
 	    if (accumulator >= STEP_TIME) {
 	        accumulator -= STEP_TIME;
 
 	        fisicas.step(STEP_TIME, 6, 2);
+	    }
+	    for(int i = 0;i<this.borrar.size();i++) {
+	    	fisicas.destroyBody(this.borrar.get(i));
+	    	if(i == this.borrar.size()-1) {
+	    		this.borrar = new ArrayList<Body>();
+	    	}
 	    }
 	  
 	}

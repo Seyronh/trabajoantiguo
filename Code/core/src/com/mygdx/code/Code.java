@@ -8,13 +8,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.assets.AssetManager;
 
 public class Code extends Game {
 	SpriteBatch batch;
-	Texture img;
-	Sprite barquito;
-	Barco boat;
-	TipoBarco elegido;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();

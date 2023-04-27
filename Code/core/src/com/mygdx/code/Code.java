@@ -1,16 +1,15 @@
 package com.mygdx.code;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Mixer;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 
 public class Code extends Game {
 	SpriteBatch batch;
@@ -19,6 +18,7 @@ public class Code extends Game {
 	Barco boat;
 	TipoBarco elegido;
 	Music music;
+	private MyInputProcessor inputProcessor;
 
 	//////
 
@@ -33,7 +33,8 @@ public class Code extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		/**
-		 * Activar para escuchar música, para probarlo hay que poner el nombre del fichero .ogg en la carpeta sonidos dentro de assets
+		 * Activar para escuchar música, para probarlo hay que poner el nombre del
+		 * fichero .ogg en la carpeta sonidos dentro de assets
 		 */
 //		music = Gdx.audio.newMusic(Gdx.files.internal("sonidos/juego.ogg"));
 //		music.setLooping(true);
@@ -46,6 +47,17 @@ public class Code extends Game {
 		 * 
 		 * setScreen(new MainMenuScreen(this));
 		 */
+
+		/**
+		 * Quita la interacción con el ratón
+		 */
+		inputProcessor = new MyInputProcessor();
+		Gdx.input.setInputProcessor(inputProcessor);
+
+		/**
+		 * Quita el puntero del ratón
+		 */
+		Gdx.input.setCursorCatched(true);
 	}
 
 	/*

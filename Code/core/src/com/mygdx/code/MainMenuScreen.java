@@ -69,8 +69,8 @@ public class MainMenuScreen implements Screen {
 		
 		
 		
-		float BotonX = anchoPantalla * 47 /100;
-	    float BotonY = altoPantalla * 42/100;
+		float BotonX = (anchoPantalla * 50 /100) - (AnchoBoton/2);
+	    float BotonY = altoPantalla * 50/100;
 	    
 	    
 	    
@@ -112,7 +112,7 @@ public class MainMenuScreen implements Screen {
 	    //Boton Jugar
 	    	
 	    	TextButton buttonCambiar = new TextButton("Jugar", styleb); //TEXTURA
-			buttonCambiar.setPosition(BotonX, BotonY);
+			buttonCambiar.setPosition(BotonX, BotonY + altoPantalla*15/100);
 			buttonCambiar.setSize(AnchoBoton, AltoBoton);
 			buttonCambiar.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -129,8 +129,6 @@ public class MainMenuScreen implements Screen {
 	    
 			
 			table2.addActor(buttonCambiar);
-			
-			BotonY = BotonY - altoPantalla*15/100;
 			
 			
 			//Boton Opciones
@@ -232,7 +230,7 @@ public class MainMenuScreen implements Screen {
 	    
 	    if(Gdx.graphics.isFullscreen()) {
 	    
-	    	batch.draw(seleccionar, anchoPantalla*37/100, altoPantalla*42/100 - altoPantalla*15/100*commandnum, AnchoBoton/4, AltoBoton); //Pantalla completa
+	    	batch.draw(seleccionar, (anchoPantalla * 50 /100) - (AnchoBoton), ((altoPantalla * 50/100) + (altoPantalla*15/100)) - altoPantalla*15/100*commandnum, AnchoBoton/4, AltoBoton); //Pantalla completa
 		    
 	     
 	    }else {

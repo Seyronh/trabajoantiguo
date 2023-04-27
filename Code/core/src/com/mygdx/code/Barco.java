@@ -44,7 +44,7 @@ public class Barco {
 	public void frenar() {
 		Vector2 vel = this.body.getLinearVelocity();
 		if(vel.x+vel.y<this.elegido.velocidadmax) {
-			float x = (float)Math.sin(body.getAngle());
+			float x = (float)Math.sin(body.getAngle()-Math.PI);
 			float y = (float)Math.cos(body.getAngle());
 			this.body.applyForceToCenter(-x*this.elegido.aceleracion*(this.cansancio/100), -y*this.elegido.aceleracion*(this.cansancio/100), false);
 		}

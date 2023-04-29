@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -76,7 +77,15 @@ public class PantallaDeInicio implements Screen {
 	        	elapsedTime = 0.0f;
 	        }
 	    }	else {
-	    	font.draw(this.code.batch, "Presiona cualquier tecla", 580, 100);
+	    	elapsedTime += delta;
+	    	if(elapsedTime < 1f) {
+	    		font.draw(this.code.batch, "Presiona la barra espaciadora para continuar", 200, 100);
+	    	} else if(elapsedTime > 1.5f){
+	    		elapsedTime = 0f;
+	    	}
+	    	if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+	    		this.code.setScreen(new MainMenuScreen(this.code));
+	    	}
 	    }
 	    this.code.batch.end();
 

@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.useVsync(true);
 		config.setFullscreenMode(config.getDisplayMode());
 		config.setTitle("Dragon Boat Racing");
+		config.setWindowIcon("Icono.png");
 		new Lwjgl3Application(new Code(), config);
 	}
 }

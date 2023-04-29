@@ -119,7 +119,6 @@ public class PantallaPartida implements Screen {
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			
 			code.setScreen(new MainMenuScreen(code));
 		}
 		

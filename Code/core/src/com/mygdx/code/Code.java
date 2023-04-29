@@ -8,61 +8,23 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.assets.AssetManager;
 
 public class Code extends Game {
 	SpriteBatch batch;
-	Texture img;
-	Sprite barquito;
-	Barco boat;
-	TipoBarco elegido;
+	AssetManager manager;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		manager = new AssetManager();
+		manager.load("Fondo_Inicio.jpg", Texture.class);
+		manager.finishLoading();
 		setScreen(new PantallaDeInicio(this));
-		/*
-		Vector2 pos = new Vector2(100,100);
-		batch = new SpriteBatch();
-		img = new Texture("barquito.png");
-		barquito = new Sprite(img,1024,1024);
-		barquito.setScale(0.3f);
-		elegido = new TipoBarco(10f,10f,"Neutro",10f,20f);
-		boat = new Barco(elegido,pos);
-		*/
 	}
 
-	/*@Override
-	public void render () {
-		
-		ScreenUtils.clear(1, 1, 1, 1);
-		if(Gdx.input.isKeyPressed(Keys.A)) {
-			boat.girarIzquierda();
-		}
-		if(Gdx.input.isKeyPressed(Keys.D)) {
-			boat.girarDerecha();
-		}
-		if(Gdx.input.isKeyPressed(Keys.W)) {
-			boat.acelerar();
-		}
-		if(Gdx.input.isKeyPressed(Keys.S)) {
-			boat.frenar(false);
-		} else {
-			boat.frenar(true);
-		}
-		boat.actualizarposicion();
-		barquito.setPosition(boat.posicion.x,boat.posicion.y);
-		barquito.setRotation(boat.angulo-90);
-		batch.begin();
-		barquito.draw(batch);
-		batch.end();
-		
-	}*/
-	
 	@Override
 	public void dispose () {
-		/*
 		batch.dispose();
-		img.dispose();
-		*/
 	}
 }

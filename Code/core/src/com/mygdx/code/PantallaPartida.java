@@ -66,18 +66,23 @@ public class PantallaPartida implements Screen {
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(1, 1, 1, 1);
-		if(Gdx.input.isKeyPressed(Keys.A)) {
+		if(Gdx.input.isKeyPressed(code.moverIzquierda)) {
 			boat.girarIzquierda();
 		}
-		if(Gdx.input.isKeyPressed(Keys.D)) {
+		if(Gdx.input.isKeyPressed(code.moverDerecha)) {
 			boat.girarDerecha();
 		}
-		if(Gdx.input.isKeyPressed(Keys.W)) {
+		if(Gdx.input.isKeyPressed(code.moverArriba)) {
 			boat.acelerar();
 		}
-		if(Gdx.input.isKeyPressed(Keys.S)) {
+		if(Gdx.input.isKeyPressed(code.frenar)) {
 			boat.frenar();
 		}
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			
+			code.setScreen(new MainMenuScreen(code));
+		}
+		
 		Vector2 pos2 = boat.body.getPosition();
 		camara.position.set(new Vector3(pos2.x,pos2.y,0));
 		camara.update();

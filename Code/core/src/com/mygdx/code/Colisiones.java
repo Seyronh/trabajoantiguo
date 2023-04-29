@@ -10,7 +10,6 @@ public class Colisiones {
 		// TODO Auto-generated method stub
 		final Fixture Barco = contact.getFixtureA();
 		final Fixture powerUp  = contact.getFixtureB();
-		
 //		if (userDataBarco.getValue().equals("jugador") && powerUp.getBody().getUserData().equals("PowerUp")){      
 //			
 //		}

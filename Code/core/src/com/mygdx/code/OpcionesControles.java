@@ -54,7 +54,7 @@ public class OpcionesControles implements Screen {
 		
 		commandnum = 0;
 		
-		arrows = true;
+		arrows = game.moverIzquierda == Keys.LEFT;;
 		
 		AnchoBoton = anchoPantalla *15/100;
 		AltoBoton = altoPantalla *5/100;
@@ -260,20 +260,35 @@ public class OpcionesControles implements Screen {
 	    switch(commandnum) {
 	    case 0:
 	    	
+	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+    			
+	    		 game.moverIzquierda = arrows ? Keys.LEFT : Keys.A;
+	    		 game.moverDerecha = arrows ? Keys.RIGHT : Keys.D;
+	    		 game.moverArriba = arrows ? Keys.UP : Keys.W;
+	    		 game.frenar = arrows ? Keys.DOWN : Keys.S;
+
+	    		 
+	    		 game.setScreen(new Opciones(game));
+	    		 
+	    	}
+	    		
+	    	
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    		
 	    		game.moverizq = Keys.LEFT;
 	    		
 	    		
 	    		arrows = true;
 	    	}
 	    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    		
 	    		game.moverizq = Keys.A;
 	    		
 	    		arrows = false;
 	    	}
+	    	
+	    	
+	    	
+	    	
 	    	break;
 	    case 1:
 	    	

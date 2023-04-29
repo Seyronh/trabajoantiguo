@@ -245,7 +245,7 @@ public class MainMenuScreen implements Screen {
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		//game.setScreen(new OpcionesControles(game));
+	    		game.setScreen(new PantallaPartida(game));
 	    	}
 	    	break;
 	    case 1:

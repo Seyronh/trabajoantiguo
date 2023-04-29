@@ -20,10 +20,20 @@ public class Code extends Game {
 	Music music;
 	private MyInputProcessor inputProcessor;
 
+	
+	
+	
 	//////
 
 	public int moverizq = Keys.A;
 
+	public int moverDerecha = Keys.D;
+	public int moverArriba = Keys.W;
+	public int frenar = Keys.S;
+	
+	public int usarPowerUp = Keys.SPACE; // Provisional
+	
+	
 	public Code() {
 
 		super();
@@ -33,7 +43,7 @@ public class Code extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		/**
-		 * Activar para escuchar música, para probarlo hay que poner el nombre del
+		 * Activar para escuchar mï¿½sica, para probarlo hay que poner el nombre del
 		 * fichero .ogg en la carpeta sonidos dentro de assets
 		 */
 //		music = Gdx.audio.newMusic(Gdx.files.internal("sonidos/juego.ogg"));
@@ -49,13 +59,13 @@ public class Code extends Game {
 		 */
 
 		/**
-		 * Quita la interacción con el ratón
+		 * Quita la interacciï¿½n con el ratï¿½n
 		 */
 		inputProcessor = new MyInputProcessor();
 		Gdx.input.setInputProcessor(inputProcessor);
 
 		/**
-		 * Quita el puntero del ratón
+		 * Quita el puntero del ratï¿½n
 		 */
 		Gdx.input.setCursorCatched(true);
 	}

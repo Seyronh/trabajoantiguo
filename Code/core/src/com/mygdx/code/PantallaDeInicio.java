@@ -41,13 +41,20 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("bronce.png", Texture.class);
 		this.code.manager.load("oro.png", Texture.class);
 		this.code.manager.load("plata.png", Texture.class);
-		this.code.manager.load("powerUp.png", Texture.class);
+		this.code.manager.load("PowerUp.png", Texture.class);
+		this.code.manager.load("seleccionar.png", Texture.class);
+		this.code.manager.load("sliderbg.png", Texture.class);
+		this.code.manager.load("sliderknob.png", Texture.class);
+		this.code.manager.load("Volumen.png", Texture.class);
+		this.code.manager.load("fondoMenuPrincipal.png", Texture.class);
+		this.code.manager.load("botondownplchld.png", Texture.class);
+		this.code.manager.load("botonplchld.png", Texture.class);
 		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(10, 10, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-		this.texture = new Texture("Fondo_Inicio.jpg");
+		this.texture = this.code.manager.get("Fondo_Inicio.jpg",Texture.class);
 		this.splash = new Sprite(texture);
 		this.splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}

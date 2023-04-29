@@ -56,7 +56,7 @@ public class PantallaPartida implements Screen {
 	@Override
 	public void show() {
 		camara = new OrthographicCamera(Gdx.graphics.getWidth()/relation,Gdx.graphics.getHeight()/relation);  
-		background = new BackgroundPartida(relation,camara);
+		background = new BackgroundPartida(relation,camara, this.code);
 		Box2D.init();
 		debugRenderer = new Box2DDebugRenderer();
 		fisicas = new World(new Vector2(0, 0), true);
@@ -65,11 +65,11 @@ public class PantallaPartida implements Screen {
 		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		Body powerup2 = crearCuerpo(new Vector2(20,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		boat = new Barco(new TipoBarco(20f,20f,"Neutro",10f,100f),barco);
-		Sprite barquito = new Sprite(new Texture("barquito.png"),294,886);
+		Sprite barquito = new Sprite(this.code.manager.get("barquito.png",Texture.class),294,886);
 		barquito.setScale(0.20f/relation);
 		barco.setUserData(new UserData(barquito,ids,boat));
 		ids++;
-		Sprite power = new Sprite(new Texture("powerUp.png"),1024,1024);
+		Sprite power = new Sprite(this.code.manager.get("PowerUp.png",Texture.class),1024,1024);
 		power.setScale(0.05f/relation);
 		powerup.setUserData(new UserData(power,ids,new PowerUp(20f, 20f, 0f, false, 0f)));
 		ids++;
@@ -99,6 +99,13 @@ public class PantallaPartida implements Screen {
 		}
 		if(Gdx.input.isKeyPressed(code.frenar)) {
 			boat.frenar();
+		}
+		if(!(Gdx.input.isKeyPressed(code.moverIzquierda)) && 
+		   !(Gdx.input.isKeyPressed(code.moverDerecha)) &&
+		   !(Gdx.input.isKeyPressed(code.moverArriba)) &&
+		   !(Gdx.input.isKeyPressed(code.frenar))){
+			
+			boat.cansancio += 0.16666f * delta;
 		}
 
 		if(Gdx.input.isKeyPressed(Keys.SPACE)) {

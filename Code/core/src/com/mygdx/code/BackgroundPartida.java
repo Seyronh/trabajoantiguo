@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class BackgroundPartida {
 	
+	Code code;
 	Sprite backgroundIzquierdaArriba;
 	Sprite backgroundArriba;
 	Sprite backgroundDerechaArriba;
@@ -37,21 +38,22 @@ public class BackgroundPartida {
 	
 	//float acumulador = 0;
 	
-	public BackgroundPartida(float relation,OrthographicCamera camara) {
+	public BackgroundPartida(float relation,OrthographicCamera camara, Code code) {
 		this.camara = camara;
+		this.code = code;
 		
 		this.w = Gdx.graphics.getWidth()/relation;
 		this.h = Gdx.graphics.getHeight()/relation;
 		
-		backgroundIzquierdaArriba = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundArriba = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundDerechaArriba = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundIzquierda = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundCentro = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundDerecha = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundIzquierdaAbajo = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundAbajo = new Sprite(new Texture("aguaRio.png"),1024,1024);
-		backgroundDerechaAbajo = new Sprite(new Texture("aguaRio.png"),1024,1024);
+		backgroundIzquierdaArriba = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundArriba = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundDerechaArriba = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundIzquierda = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundCentro = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundDerecha = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundIzquierdaAbajo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundAbajo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+		backgroundDerechaAbajo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
 		
 		backgroundIzquierdaArriba.setSize(w, h);
 		backgroundArriba.setSize(w, h);

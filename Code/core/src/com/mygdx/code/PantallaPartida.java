@@ -35,6 +35,7 @@ public class PantallaPartida implements Screen {
 	public PantallaPartida(Code code) {
 		this.code = code;
 	}
+
 	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Vector2 tamanio) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = tipo;
@@ -87,18 +88,19 @@ public class PantallaPartida implements Screen {
 			}
 		}
 		ScreenUtils.clear(1, 1, 1, 1);
-		if(Gdx.input.isKeyPressed(Keys.A)) {
+		if(Gdx.input.isKeyPressed(code.moverIzquierda)) {
 			boat.girarIzquierda();
 		}
-		if(Gdx.input.isKeyPressed(Keys.D)) {
+		if(Gdx.input.isKeyPressed(code.moverDerecha)) {
 			boat.girarDerecha();
 		}
-		if(Gdx.input.isKeyPressed(Keys.W)) {
+		if(Gdx.input.isKeyPressed(code.moverArriba)) {
 			boat.acelerar();
 		}
-		if(Gdx.input.isKeyPressed(Keys.S)) {
+		if(Gdx.input.isKeyPressed(code.frenar)) {
 			boat.frenar();
 		}
+
 		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
 			PowerUp poder = boat.usarPowerUp();
 			if(poder != null) {
@@ -116,6 +118,11 @@ public class PantallaPartida implements Screen {
 				boat.poder = null;
 			}
 		}
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			
+			code.setScreen(new MainMenuScreen(code));
+		}
+		
 		Vector2 pos2 = boat.body.getPosition();
 		camara.position.set(new Vector3(pos2.x,pos2.y,0));
 		camara.update();

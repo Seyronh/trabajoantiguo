@@ -46,13 +46,10 @@ public class PantallaDeInicio implements Screen {
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-
-		
 		this.texture = new Texture("Fondo_Inicio.jpg");
 		this.splash = new Sprite(texture);
 		this.splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
-
 	@Override
 	public void render(float delta) {
 		

@@ -17,8 +17,19 @@ public class Code extends Game {
 	Barco boat;
 	TipoBarco elegido;
 
+	
+	
+	
 	//////
 
+	public int moverIzquierda = Keys.A;
+	public int moverDerecha = Keys.D;
+	public int moverArriba = Keys.W;
+	public int frenar = Keys.S;
+	
+	public int usarPowerUp = Keys.SPACE; // Provisional
+	
+	
 	public Code() {
 		
 		super();
@@ -27,8 +38,10 @@ public class Code extends Game {
 	
 	@Override
 	public void create() {
-		Vector2 pos = new Vector2(100, 100);
 		batch = new SpriteBatch();
+		setScreen(new MainMenuScreen(this));
+		/*
+		Vector2 pos = new Vector2(100,100);
 		img = new Texture("barquito.png");
 		barquito = new Sprite(img, 1024, 1024);
 		barquito.setScale(0.3f);
@@ -36,16 +49,17 @@ public class Code extends Game {
 		boat = new Barco(elegido, pos);
 		
 		setScreen(new MainMenuScreen(this));
+		*/
 	}
-
+/*
 	@Override
 	public void render() {
 		
 		super.render();
 		//ScreenUtils.clear(1, 1, 1, 1);
-//		if (Gdx.input.isKeyPressed(Keys.A)) {
-//			boat.girarIzquierda();
-//		}
+		if (Gdx.input.isKeyPressed(moverizq)) {
+			boat.girarIzquierda();
+		}
 //		if (Gdx.input.isKeyPressed(Keys.D)) {
 //			boat.girarDerecha();
 //		}
@@ -73,10 +87,10 @@ public class Code extends Game {
 		
 
 	}
-
+	*/
 	@Override
 	public void dispose() {
 		batch.dispose();
-		img.dispose();
+		//img.dispose();
 	}
 }

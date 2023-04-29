@@ -25,8 +25,7 @@ public class Code extends Game {
 	
 	//////
 
-	public int moverizq = Keys.A;
-
+	public int moverIzquierda = Keys.A;
 	public int moverDerecha = Keys.D;
 	public int moverArriba = Keys.W;
 	public int frenar = Keys.S;
@@ -61,13 +60,13 @@ public class Code extends Game {
 		/**
 		 * Quita la interacci�n con el rat�n
 		 */
-		inputProcessor = new MyInputProcessor();
-		Gdx.input.setInputProcessor(inputProcessor);
+//		inputProcessor = new MyInputProcessor();
+//		Gdx.input.setInputProcessor(inputProcessor);
 
 		/**
 		 * Quita el puntero del rat�n
 		 */
-		Gdx.input.setCursorCatched(true);
+//		Gdx.input.setCursorCatched(true);
 	}
 
 	/*

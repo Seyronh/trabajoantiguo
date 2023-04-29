@@ -275,13 +275,13 @@ public class OpcionesControles implements Screen {
 	    	
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    		game.moverizq = Keys.LEFT;
+	    		game.moverIzquierda = Keys.LEFT;
 	    		
 	    		
 	    		arrows = true;
 	    	}
 	    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    		game.moverizq = Keys.A;
+	    		game.moverIzquierda = Keys.A;
 	    		
 	    		arrows = false;
 	    	}

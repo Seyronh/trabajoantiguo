@@ -1,6 +1,5 @@
 package com.mygdx.code;
 
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,23 +13,21 @@ import javax.sound.sampled.Mixer;
 
 public class Code extends Game {
 	SpriteBatch batch;
-  AssetManager manager;
+	AssetManager manager;
 	Music music;
 	private MyInputProcessor inputProcessor;
+	Pais paisSeleccionado;
+	Barco barcoSeleccionado;
 
-	
-	
-	
 	//////
 
 	public int moverIzquierda = Keys.A;
 	public int moverDerecha = Keys.D;
 	public int moverArriba = Keys.W;
 	public int frenar = Keys.S;
-	
+
 	public int usarPowerUp = Keys.SPACE; // Provisional
-	
-	
+
 	public Code() {
 
 		super();
@@ -39,7 +36,7 @@ public class Code extends Game {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-    		/**
+		/**
 		 * Quita el puntero del ratï¿½n
 		 */
 //		Gdx.input.setCursorCatched(true);
@@ -60,9 +57,11 @@ public class Code extends Game {
 		manager.load("Fondo_Inicio.jpg", Texture.class);
 		manager.finishLoading();
 		setScreen(new PantallaDeInicio(this));
+		paisSeleccionado = new Pais("ES", "España", "pais0.png");
+		barcoSeleccionado = new Barco(new TipoBarco(5f, 5f, "barquito.png", 10f, 10f), null);
 
 	}
-  
+
 	@Override
 	public void dispose() {
 		batch.dispose();

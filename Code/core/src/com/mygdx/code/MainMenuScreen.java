@@ -121,7 +121,7 @@ public class MainMenuScreen implements Screen {
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 					
 					
-					
+					game.setScreen(new SeleccionBarco(game));
 		
 					
 				}
@@ -245,7 +245,7 @@ public class MainMenuScreen implements Screen {
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		game.setScreen(new PantallaPartida(game));
+	    		game.setScreen(new SeleccionBarco(game));
 	    	}
 	    	break;
 	    case 1:

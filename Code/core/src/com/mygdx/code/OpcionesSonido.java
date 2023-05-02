@@ -80,7 +80,7 @@ public class OpcionesSonido implements Screen {
 		batch = new SpriteBatch();
 
 		Fondo = new Texture("fondoMenuPrincipal.png");
-		Tabla = new Texture("opciones.png");
+		Tabla = new Texture("Menu.png");
 
 		volumen = new Texture("Volumen.png");
 		barra = new Texture("Barra.png");

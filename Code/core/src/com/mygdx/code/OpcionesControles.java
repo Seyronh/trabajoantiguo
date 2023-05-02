@@ -78,7 +78,7 @@ public class OpcionesControles implements Screen {
 		batch = new SpriteBatch();
 		
 		Fondo = new Texture("fondoMenuPrincipal.png");
-		Tabla = new Texture("opciones.png");
+		Tabla = new Texture("Menu.png");
     	
 		Table table2 = new Table();
 	    table2.setPosition(0,0);

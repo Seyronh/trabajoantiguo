@@ -12,13 +12,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class minijuego implements Screen{
     final Code game;
-    //private Stage stage;
+    //private Stage stage;º
 	private float anchoPantalla, altoPantalla;
-	private Texture fondo, pescador, canaPescar, barraProgreso, indicador, pezV, pezH;
+	private Texture fondo, pescador, canaPescar, barraVertical, indicador, pezV, pezH;
     private SpriteBatch batch;
     private float posY;
     private int puntuacion;
@@ -27,6 +28,7 @@ public class minijuego implements Screen{
     private BitmapFont fuente;
     private Random rnd;
     private int subir;
+    private ProgressBar barraProgreso;
 
     public minijuego(final Code game){
         this.game = game;
@@ -37,6 +39,9 @@ public class minijuego implements Screen{
         MAX_PUNTOS = 3;
         rnd = new Random();
         subir = 0;
+        //ProgressBar(float min, float max, float stepSize, boolean vertical, Skin skin) 
+
+        barraProgreso = new ProgressBar(0, 100, MAX_PUNTOS, true, null, strPuntuacion);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class minijuego implements Screen{
         //caña
         canaPescar = new Texture("canapescar.png");
         //barra progreso
-        barraProgreso = new Texture("barraProgresoVertical.png");
+        barraVertical = new Texture("barraProgresoVertical.png");
         //indicador
         indicador = new Texture("indicadorVertical.png");
         //pez
@@ -84,7 +89,7 @@ public class minijuego implements Screen{
 
         batch.draw(pescador, anchoPantalla/2 + 225, altoPantalla/2 - 15, 90, 150);
         batch.draw(canaPescar,anchoPantalla/2 + 270, altoPantalla/2 - 15, 180, 150);
-        batch.draw(barraProgreso, anchoPantalla/2 + 120, altoPantalla/2 - 30, 50, 300);
+        batch.draw(barraVertical, anchoPantalla/2 + 120, altoPantalla/2 - 30, 50, 300);
 
         float indicadorY = (altoPantalla/2 - 22) + subir;
         //posicion inicial indicador
@@ -127,9 +132,21 @@ public class minijuego implements Screen{
 
         //Colisiones
         if(Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY < maxY){
-            subir+=8;
-        } else if (!Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY > minY + 10){
-            subir-=10;
+            if((maxY - indicadorY) >= 8){
+                subir+=8;
+            } else {
+                subir += (maxY - indicadorY) + 3;
+            }
+        } else if (!Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY > minY){
+            if((indicadorY - minY) >= 10){
+                subir-=10;
+            } else {
+                subir -= (indicadorY - minY) + 5;
+            }
+        } else if (indicadorY <= minY){
+            indicadorY += 50;
+        } else if (indicadorY >= minY){
+            indicadorY -= 50;
         }
         batch.end();
 

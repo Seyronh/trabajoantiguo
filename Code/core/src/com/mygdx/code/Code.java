@@ -49,7 +49,7 @@ public class Code extends Game {
 //		music = Gdx.audio.newMusic(Gdx.files.internal("sonidos/juego.ogg"));
 //		music.setLooping(true);
 //		music.play();
-		setScreen(new MainMenuScreen(this));
+		setScreen(new minijuego(this));
 		/*
 		 * Vector2 pos = new Vector2(100,100); img = new Texture("barquito.png");
 		 * barquito = new Sprite(img, 1024, 1024); barquito.setScale(0.3f); elegido =

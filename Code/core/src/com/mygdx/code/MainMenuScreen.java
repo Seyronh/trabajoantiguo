@@ -61,7 +61,9 @@ public class MainMenuScreen implements Screen {
 		AnchoBoton = anchoPantalla *25/100;
 		AltoBoton = altoPantalla *10/100;
 		
-		seleccionar = new Texture("Menus/madera.png");
+
+		seleccionar = this.game.manager.get("Menus/madera.png",Texture.class);
+
 		//cargarPantalla();
 	}
 	
@@ -81,9 +83,10 @@ public class MainMenuScreen implements Screen {
     	stage = new Stage();
 		batch = new SpriteBatch();
 		
-		Fondo = new Texture("fondoMenuPrincipal.png");
-		Titulo = new Texture("Titulo.png");
-		
+
+		Fondo = this.game.manager.get("fondoMenuPrincipal.png",Texture.class);
+    Titulo = this.game.manager.get("Titulo.png", Texture.class);
+
 	//	Tabla = new Texture("opciones.png");
     	
 		Table table2 = new Table();
@@ -102,8 +105,8 @@ public class MainMenuScreen implements Screen {
 	    	TextButtonStyle styleb = new TextButtonStyle();
 		
 		
-	    	Texture buttondown = new Texture("botondownplchld.png");
-	    	Texture buttonup = new Texture("botonplchld.png");
+	    	Texture buttondown = this.game.manager.get("botondownplchld.png",Texture.class);
+	    	Texture buttonup = this.game.manager.get("botonplchld.png",Texture.class);
 		
 	    	styleb.down = new TextureRegionDrawable(new TextureRegion(buttondown));
 	    	styleb.up = new TextureRegionDrawable(new TextureRegion(buttonup));

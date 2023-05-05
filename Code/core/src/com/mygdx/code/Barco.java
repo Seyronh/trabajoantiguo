@@ -26,12 +26,16 @@ public class Barco {
 		if(Math.abs(this.body.getAngularVelocity()) < this.elegido.velocidadmax) {
 			this.body.applyTorque(-this.elegido.movilidad*(this.cansancio/100), true);
 		}
+		this.cansancio -= 0.5f* Gdx.graphics.getDeltaTime();
+		if(this.cansancio < 0) this.cansancio = 0;
 	}
 	public void girarIzquierda() {
 		Vector2 pos = this.body.getPosition();
 		if(Math.abs(this.body.getAngularVelocity()) < this.elegido.velocidadmax) {
 			this.body.applyTorque(this.elegido.movilidad*(this.cansancio/100), true);
 		}
+		this.cansancio -= 0.5f * Gdx.graphics.getDeltaTime();
+		if(this.cansancio < 0) this.cansancio = 0;
 	}
 	public void acelerar() {
 		Vector2 vel = this.body.getLinearVelocity();
@@ -40,6 +44,8 @@ public class Barco {
 			float y = (float)Math.cos(body.getAngle());
 			this.body.applyForceToCenter(x*this.elegido.aceleracion*(this.cansancio/100), y*this.elegido.aceleracion*(this.cansancio/100), false);
 		}
+		this.cansancio -= 0.5f * Gdx.graphics.getDeltaTime();
+		if(this.cansancio < 0) this.cansancio = 0;
 	}
 	public void frenar() {
 		Vector2 vel = this.body.getLinearVelocity();
@@ -48,6 +54,8 @@ public class Barco {
 			float y = (float)Math.cos(body.getAngle());
 			this.body.applyForceToCenter(-x*this.elegido.aceleracion*(this.cansancio/100), -y*this.elegido.aceleracion*(this.cansancio/100), false);
 		}
+		this.cansancio -= 0.5f * Gdx.graphics.getDeltaTime();
+		if(this.cansancio < 0) this.cansancio = 0;
 	}
 	public void guardarPowerUp(PowerUp poder) {
 		this.poder = poder;

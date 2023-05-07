@@ -70,7 +70,7 @@ public class minijuego implements Screen{
     }
 
     private boolean pescado(){
-
+        return false;
     }
 
     @Override
@@ -101,13 +101,13 @@ public class minijuego implements Screen{
         }
 
         */
-        
+
         //dibujar puntuacion
         fuente.draw(batch, strPuntuacion, 100, altoPantalla-70);
         batch.draw(pezH, 230, altoPantalla-125, 80, 50);
 
         /* 
-        if(pescado){
+        if(pescado()){
             puntuacion++;
             fuente.draw(batch, strPuntuacion, 100, altoPantalla-70);
         } */

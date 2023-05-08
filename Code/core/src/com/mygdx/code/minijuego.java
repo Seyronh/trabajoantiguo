@@ -5,15 +5,20 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class minijuego implements Screen{
     final Code game;
@@ -29,6 +34,7 @@ public class minijuego implements Screen{
     private Random rnd;
     private int subir;
     private ProgressBar barraProgreso;
+    private Stage stage;
 
     public minijuego(final Code game){
         this.game = game;
@@ -39,14 +45,11 @@ public class minijuego implements Screen{
         MAX_PUNTOS = 3;
         rnd = new Random();
         subir = 0;
-        //ProgressBar(float min, float max, float stepSize, boolean vertical, Skin skin) 
-
-        barraProgreso = new ProgressBar(0, 100, MAX_PUNTOS, true, null, strPuntuacion);
     }
 
     @Override
     public void show() {
-        //stage = new Stage();
+        stage = new Stage();
         batch = new SpriteBatch();
         //puntuacion
         fuente = new BitmapFont();
@@ -60,10 +63,42 @@ public class minijuego implements Screen{
         pescador = new Texture("pescador.png");
         //caña
         canaPescar = new Texture("canapescar.png");
-        //barra progreso
+        //barra pez
         barraVertical = new Texture("barraProgresoVertical.png");
         //indicador
         indicador = new Texture("indicadorVertical.png");
+
+        //barraProgresp
+        Pixmap pixmap = new Pixmap(100, 20, Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fill();
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+        ProgressBarStyle progressBarStyle = new ProgressBarStyle();
+        progressBarStyle.background = drawable;
+
+        Pixmap pixmap2 = new Pixmap(0, 20, Format.RGBA8888);
+        pixmap2.setColor(Color.GREEN);
+        pixmap2.fill();
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap2)));
+        pixmap2.dispose();
+ 
+        progressBarStyle.knob = drawable;
+
+        Pixmap pixmap3 = new Pixmap(100, 20, Format.RGBA8888);
+        pixmap3.setColor(Color.GREEN);
+        pixmap3.fill();
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap3)));
+        pixmap3.dispose();
+
+        ProgressBar barraProgreso = new ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle);
+        barraProgreso.setValue(1.0f);
+        barraProgreso.setAnimateDuration(0.25f);
+        barraProgreso.setBounds(10, 10, 100, 20);
+ 
+        stage.addActor(barraProgreso);      
+
         //pez
         pezV = new Texture("pezVertical.png");
         Random rnd = new Random();
@@ -80,7 +115,6 @@ public class minijuego implements Screen{
     public void render(float delta) {
         
         batch.begin();
-
         batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 
         //Para hacer las colisiones
@@ -107,18 +141,6 @@ public class minijuego implements Screen{
         } else if (posY >= minY){
             posY -= 5;
         }
-        /* 
-        if(Gdx.input.touchDown()){
-           empezar = true;
-        }
-        
-        if(empezar){
-            Random rnd = new Random();
-            posY = posY + rnd.nextFloat() * ((altoPantalla/2 + 211) - posY)
-            batch.draw(pezV, anchoPantalla/2 + 130, posY, 30, 50)
-        }
-
-        */
 
         //dibujar puntuacion
         fuente.draw(batch, strPuntuacion, 100, altoPantalla-70);
@@ -149,7 +171,8 @@ public class minijuego implements Screen{
             indicadorY -= 50;
         }
         batch.end();
-
+        stage.draw();
+        stage.act();
     }
 
     @Override

@@ -69,23 +69,23 @@ public class SeleccionBarco implements Screen {
 		cargarPaises();
 		cargarBarcos();
 		
-		if (game.paisSeleccionado != null) {
-			boolean encontrado = false;
-			for(int i = 0; (i < paises.size()) && !encontrado; i++) {
-				if (paises.get(i).getIdPais().equalsIgnoreCase(game.paisSeleccionado.getIdPais())) {
-					posPais = i;
-				}
-			}
-		}
-		
-		if (game.barcoSeleccionado != null) {
-			boolean encontrado = false;
-			for(int i = 0; (i < barcos.size()) && !encontrado; i++) {
-				if (barcos.get(i).elegido.barco.equalsIgnoreCase(game.barcoSeleccionado.elegido.barco)) {
-					posBarco = i;
-				}
-			}
-		}
+//		if (game.paisSeleccionado != null) {
+//			boolean encontrado = false;
+//			for(int i = 0; (i < paises.size()) && !encontrado; i++) {
+//				if (paises.get(i).getIdPais().equalsIgnoreCase(game.paisSeleccionado.getIdPais())) {
+//					posPais = i;
+//				}
+//			}
+//		}
+//		
+//		if (game.barcoSeleccionado != null) {
+//			boolean encontrado = false;
+//			for(int i = 0; (i < barcos.size()) && !encontrado; i++) {
+//				if (barcos.get(i).elegido.barco.equalsIgnoreCase(game.barcoSeleccionado.elegido.barco)) {
+//					posBarco = i;
+//				}
+//			}
+//		}
 		// cargarPantalla();
 	}
 
@@ -101,8 +101,7 @@ public class SeleccionBarco implements Screen {
 
 		
 		fondo = new Texture("fondoMenuPrincipal.png");
-		new Texture("pais" + posPais + ".png");
-		imagenPais = new Texture("pais" + posPais + ".png");
+		imagenPais = new Texture(game.paisSeleccionado.getBandera());
 		
 		/**
 		 * Manera correcta de coger el barco, aún no tenemos
@@ -185,7 +184,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				game.paisSeleccionado = paises.get(posPais);
-				imagenPais = new Texture("pais" + posPais + ".png");
+				imagenPais = new Texture(game.paisSeleccionado.getBandera());
 				
 			} else {
 				posBarco++;
@@ -212,7 +211,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				game.paisSeleccionado = paises.get(posPais);
-				imagenPais = new Texture("pais" + posPais + ".png");
+				imagenPais = new Texture(game.paisSeleccionado.getBandera());
 			} else {
 				posBarco--;
 
@@ -275,9 +274,38 @@ public class SeleccionBarco implements Screen {
 
 	// Método que añade todos los países al array para mostrarlos
 	private void cargarPaises() {
-		paises.add(new Pais("ES", "España", "pais0.png"));
-		paises.add(new Pais("CH", "China", "pais1.png"));
-		// TODO meter el resto de países
+		paises.add(new Pais("ES", "España", "espana.png"));
+		paises.add(new Pais("CH", "China", "china.png"));
+		paises.add(new Pais("JP", "Japon", "japon.png"));
+		paises.add(new Pais("CS", "Corea del Sur", "coreaSur.png"));
+		paises.add(new Pais("BR", "Brasil", "brasil.png"));
+		paises.add(new Pais("RU", "Reino Unido", "reinoUnido.png"));
+		paises.add(new Pais("ID", "Indonesia", "indonesia.png"));
+		paises.add(new Pais("AU", "Australia", "australia.png"));
+		paises.add(new Pais("EU", "Estados Unidos", "estadosUnidos.png"));
+		paises.add(new Pais("RU", "Rusia", "rusia.png"));
+		paises.add(new Pais("SD", "Sudáfrica", "sudafrica.png"));
+		paises.add(new Pais("BO", "Bolivia", "bolivia.png"));
+		paises.add(new Pais("AL", "Alemania", "alemania.png"));
+		paises.add(new Pais("FR", "Francia", "francia.png"));
+		paises.add(new Pais("CHAD", "Chad", "chad.png"));
+		paises.add(new Pais("NIG", "Nigeria", "nigeria.png"));
+		paises.add(new Pais("CM", "Costa de Marfil", "costaMarfil.png"));
+		paises.add(new Pais("CAM", "Camerún", "camerun.png"));
+		paises.add(new Pais("GR", "Grecia", "grecia.png"));
+		paises.add(new Pais("EG", "Egipto", "egipto.png"));
+		paises.add(new Pais("SU", "Suecia", "suecia.png"));
+		paises.add(new Pais("SUI", "Suiza", "suiza.png"));
+		paises.add(new Pais("CA", "Canada", "canada.png"));
+		paises.add(new Pais("MX", "México", "mexico.png"));
+		paises.add(new Pais("AR", "Argentina", "argentina.png"));
+		paises.add(new Pais("CU", "Cuba", "cuba.png"));
+		paises.add(new Pais("SL", "SriLanka", "sriLanka.png"));
+		paises.add(new Pais("MAU", "Islas Mauricio", "mauricio.png"));
+		paises.add(new Pais("MA", "Madagascar", "madagascar.png"));
+		paises.add(new Pais("VA", "Vaticano", "vaticano.png"));
+		paises.add(new Pais("IT", "Italia", "italia.png"));
+		paises.add(new Pais("IN", "India", "india.png"));
 	}
 
 	// Método que añade todos los barcos al array para mostrarlos

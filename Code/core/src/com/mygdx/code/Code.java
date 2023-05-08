@@ -57,7 +57,7 @@ public class Code extends Game {
 		manager.load("Fondo_Inicio.jpg", Texture.class);
 		manager.finishLoading();
 		setScreen(new PantallaDeInicio(this));
-		paisSeleccionado = new Pais("ES", "España", "pais0.png");
+		paisSeleccionado = new Pais("ES", "España", "espana.png");
 		barcoSeleccionado = new Barco(new TipoBarco(5f, 5f, "barquito.png", 10f, 10f), null);
 
 	}

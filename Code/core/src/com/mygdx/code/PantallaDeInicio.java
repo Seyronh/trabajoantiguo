@@ -1,6 +1,5 @@
 package com.mygdx.code;
 
-
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -20,33 +19,32 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PantallaDeInicio implements Screen {
-	
+
 	private Code code;
 	private Sprite splash;
 	private Texture texture;
 	private BitmapFont font;
 	private float elapsedTime = 0.0f;
-	
-	
+
 	public PantallaDeInicio(Code code) {
 		this.code = code;
 	}
 
 	@Override
 	public void show() {
-		
+
 		cargarImagenes();
 
-    Skin skin = new Skin();
+		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(10, 10, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-		this.texture = this.code.manager.get("Fondo_Inicio.jpg",Texture.class);
+		this.texture = this.code.manager.get("Fondo_Inicio.jpg", Texture.class);
 		this.splash = new Sprite(texture);
 		this.splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
-	
+
 	private void cargarImagenes() {
 		this.code.manager.load("aguaMar.png", Texture.class);
 		this.code.manager.load("aguaRio.png", Texture.class);
@@ -103,17 +101,33 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("botonuncheckedplchld.png", Texture.class);
 		this.code.manager.load("botondownplchld.png", Texture.class);
 		this.code.manager.load("botonplchld.png", Texture.class);
-    this.code.manager.load("Titulo.png", Texture.class);
+		this.code.manager.load("Titulo.png", Texture.class);
 		this.code.manager.load("Menus/madera.png", Texture.class);
-    this.code.manager.load("PowerUp.png", Texture.class);
-    this.code.manager.load("sliderbg.png", Texture.class);
+		this.code.manager.load("PowerUp.png", Texture.class);
+		this.code.manager.load("sliderbg.png", Texture.class);
 		this.code.manager.load("sliderknob.png", Texture.class);
+		this.code.manager.load("Menu.png", Texture.class);
+		this.code.manager.load("Menus/Cuadro_sonido.png", Texture.class);
+		this.code.manager.load("Menus/Volumen.png", Texture.class);
+		this.code.manager.load("Menus/Silenciar.png", Texture.class);
+		this.code.manager.load("Menus/Volver.png", Texture.class);
+		this.code.manager.load("Menus/Hoyo.png", Texture.class);
+		this.code.manager.load("Menus/Tick.png", Texture.class);
+		this.code.manager.load("Menus/circulo.png", Texture.class);
+		this.code.manager.load("Menus/mapeado.png", Texture.class);
+		this.code.manager.load("Menus/opcion1.png", Texture.class);
+		this.code.manager.load("Menus/opcion2.png", Texture.class);
+		this.code.manager.load("Menus/1.png", Texture.class);
+		this.code.manager.load("Menus/2.png", Texture.class);
+		this.code.manager.load("Jugar.png", Texture.class);
+		this.code.manager.load("Controles.png", Texture.class);
+		this.code.manager.load("Sonido.png", Texture.class);
+		this.code.manager.load("Salir.png", Texture.class);
 	}
-	
+
 	@Override
 	public void render(float delta) {
-		
-		
+
 		BitmapFont fuente = new BitmapFont();
 		fuente.setColor(Color.GOLDENROD);
 		fuente.getData().setScale(5.0f, 5.0f);
@@ -121,62 +135,62 @@ public class PantallaDeInicio implements Screen {
 
 		ScreenUtils.clear(0, 0, 0, 1);
 		this.code.batch.begin();
-	    this.code.batch.draw(this.texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	    if(!this.code.manager.update()) {
-	    	elapsedTime += delta;
-		    if (elapsedTime < 0.5f) {
-	            font.draw(this.code.batch, "Cargando", 75, 75);
-	        }else if(elapsedTime < 1f){
-	            font.draw(this.code.batch, "Cargando.", 75, 75);
-	        }else if(elapsedTime < 1.5f){
-	            font.draw(this.code.batch, "Cargando..", 75, 75);
-	        }else if(elapsedTime < 2.0f){
-	            font.draw(this.code.batch, "Cargando...", 75, 75);
-	        }else {
-	        	elapsedTime = 0.0f;
-	        }
-	    }	else {
-	    	elapsedTime += delta;
-	    	if(elapsedTime < 1f) {
-	    		font.draw(this.code.batch, "Presiona la barra espaciadora para continuar", 200, 100);
-	    	} else if(elapsedTime > 1.5f){
-	    		elapsedTime = 0f;
-	    	}
-	    	if(Gdx.input.isKeyPressed(Keys.SPACE)) {
-	    		this.code.setScreen(new MainMenuScreen(this.code));
-	    	}
-	    }
-	    this.code.batch.end();
+		this.code.batch.draw(this.texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		if (!this.code.manager.update()) {
+			elapsedTime += delta;
+			if (elapsedTime < 0.5f) {
+				font.draw(this.code.batch, "Cargando", 75, 75);
+			} else if (elapsedTime < 1f) {
+				font.draw(this.code.batch, "Cargando.", 75, 75);
+			} else if (elapsedTime < 1.5f) {
+				font.draw(this.code.batch, "Cargando..", 75, 75);
+			} else if (elapsedTime < 2.0f) {
+				font.draw(this.code.batch, "Cargando...", 75, 75);
+			} else {
+				elapsedTime = 0.0f;
+			}
+		} else {
+			elapsedTime += delta;
+			if (elapsedTime < 1f) {
+				font.draw(this.code.batch, "Presiona la barra espaciadora para continuar", 200, 100);
+			} else if (elapsedTime > 1.5f) {
+				elapsedTime = 0f;
+			}
+			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+				this.code.setScreen(new MainMenuScreen(this.code));
+			}
+		}
+		this.code.batch.end();
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose() {
-		
+
 	}
 
 }

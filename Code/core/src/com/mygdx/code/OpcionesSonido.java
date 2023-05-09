@@ -68,7 +68,7 @@ public class OpcionesSonido implements Screen {
 		altoBoton = altoPantalla * 10 / 100;
 
 
-		seleccionar = new Texture("Menus/madera.png");
+		seleccionar = code.manager.get("Menus/madera.png",Texture.class);
 		// cargarPantalla();
 		
 		
@@ -229,45 +229,45 @@ public class OpcionesSonido implements Screen {
 		
 		stage.getBatch().begin();
 		
-		stage.getBatch().draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
+		stage.getBatch().draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 		
 		
 		
-		stage.getBatch().draw(Tabla, anchoPantalla * 355 / 1000, altoPantalla * 3 / 10, anchoPantalla*30/100, altoPantalla * 60/100);
+		stage.getBatch().draw(tabla, anchoPantalla * 355 / 1000, altoPantalla * 3 / 10, anchoPantalla*30/100, altoPantalla * 60/100);
 
 		//medio pantalla  
 		// batch.draw(new Texture("sliderknob.png"), anchoPantalla/2, altoPantalla/2, 2, 200);
 		    
 		
 		
-		stage.getBatch().draw(barra, anchoPantalla * 45 / 100, altoPantalla * 65 / 100, anchoPantalla*14/100 * Volumen, AltoBoton/4);
+		stage.getBatch().draw(barra, anchoPantalla * 45 / 100, altoPantalla * 65 / 100, anchoPantalla*14/100 * volumen, altoBoton/4);
 
-		stage.getBatch().draw(new Texture("Menus/Cuadro_sonido.png"), anchoPantalla * 43 / 100, altoPantalla * 61 / 100, anchoPantalla*18/100, AltoBoton);
+		stage.getBatch().draw(code.manager.get("Menus/Cuadro_sonido.png", Texture.class), anchoPantalla * 43 / 100, altoPantalla * 61 / 100, anchoPantalla*18/100, altoBoton);
 
 		
 		float medidax = anchoPantalla*45/100;
 	    float mediday =  altoPantalla*70/100;
 		
-	    stage.getBatch().draw(new Texture("Menus/Volumen.png"), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("Menus/Volumen.png",Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 		mediday = mediday - altoPantalla*15/100;
 		
-		stage.getBatch().draw(new Texture("Menus/Silenciar.png"), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+		stage.getBatch().draw(code.manager.get("Menus/Silenciar.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 		mediday = mediday - altoPantalla*10/100;
 		
-		stage.getBatch().draw(new Texture("Menus/Volver.png"), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+		stage.getBatch().draw(code.manager.get("Menus/Volver.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 		
-		if (Silenciar) {
+		if (silenciar) {
 
-			stage.getBatch().draw(new Texture("Menus/Hoyo.png"), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, AnchoBoton , AnchoBoton*0.33f );
+			stage.getBatch().draw(code.manager.get("Menus/Hoyo.png", Texture.class), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, anchoBoton , anchoBoton*0.33f );
 			//	game.music.setVolume(0f);
 		} else {
 
-			stage.getBatch().draw(new Texture("Menus/Hoyo.png"), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, AnchoBoton , AnchoBoton*0.33f );
+			stage.getBatch().draw(code.manager.get("Menus/Hoyo.png", Texture.class), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, anchoBoton , anchoBoton*0.33f );
 			
-			stage.getBatch().draw(new Texture("Menus/Tick.png"), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, AnchoBoton , AnchoBoton*0.33f );
+			stage.getBatch().draw(code.manager.get("Menus/Tick.png", Texture.class), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, anchoBoton , anchoBoton*0.33f );
 			
 			//	game.music.setVolume(Volumen);
 		}
@@ -294,7 +294,7 @@ public class OpcionesSonido implements Screen {
 		}
 
 		if (Gdx.graphics.isFullscreen()) {
-			stage.getBatch().draw(seleccionar, anchoPantalla * 39 / 100, altoPantalla * 64 / 100 - altoPantalla * 9 / 100 * commandnum, AnchoBoton/2, AltoBoton/2); // Pantalla
+			stage.getBatch().draw(seleccionar, anchoPantalla * 39 / 100, altoPantalla * 64 / 100 - altoPantalla * 9 / 100 * commandnum, anchoBoton/2, altoBoton/2); // Pantalla
 
 		} else {
 			stage.getBatch().draw(seleccionar, anchoPantalla * 39 / 100, altoPantalla * 65 / 100 - altoPantalla * 10 / 100 * commandnum); // Modo ventana
@@ -333,7 +333,7 @@ public class OpcionesSonido implements Screen {
 			break;
 		case 2:
 			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-				code.setScreen(new MainMenuScreen(game));
+				code.setScreen(new MainMenuScreen(code));
 			}
 			break;
 

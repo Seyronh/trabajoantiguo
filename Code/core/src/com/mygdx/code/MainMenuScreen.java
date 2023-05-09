@@ -194,39 +194,35 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub	
-		
-		batch.begin();
-	    batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
-	 //   batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
-
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-
-			dispose();
-			
-			System.exit(0);
-		}
+	
+//		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+//
+//			dispose();
+//			
+//			System.exit(0);
+//		}
 	    
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.getBatch().begin();
-		stage.getBatch().draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
-		stage.getBatch().draw(Titulo,anchoPantalla*5/100,altoPantalla*70/100,anchoPantalla*95/100/(16/9) , altoPantalla*18/100/(16/9));
+		stage.getBatch().draw(fondo, 0, 0, anchoPantalla, altoPantalla);
+		stage.getBatch().draw(titulo,anchoPantalla*5/100,altoPantalla*70/100,anchoPantalla*95/100/(16/9) , altoPantalla*18/100/(16/9));
 	 // batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10); 
-		stage.getBatch().draw(new Texture("cuadro.png"), anchoPantalla*49/100 - (AnchoBoton/2), altoPantalla*20/100, anchoPantalla*25/100, altoPantalla*40/100);
+		stage.getBatch().draw(new Texture("cuadro.png"), anchoPantalla*49/100 - (anchoBoton/2), altoPantalla*20/100, anchoPantalla*25/100, altoPantalla*40/100);
 	    
 	    float medidax = anchoPantalla*45/100;
 	    float mediday =  altoPantalla*495/1000;
 	    
-	    stage.getBatch().draw(new Texture("Jugar.png"), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("Jugar.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    mediday = mediday - altoPantalla*9/100;
 	    
-	    stage.getBatch().draw(new Texture("Controles.png"), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("Controles.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    mediday = mediday - altoPantalla*9/100;
-	    stage.getBatch().draw(new Texture("Sonido.png"), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("Sonido.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    mediday = mediday - altoPantalla*9/100;
-	    stage.getBatch().draw(new Texture("Salir.png"), medidax, mediday+4, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("Salir.png", Texture.class), medidax, mediday+4, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    
 	  //medio pantalla  
@@ -277,13 +273,13 @@ public class MainMenuScreen implements Screen {
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		code.setScreen(new OpcionesControles(game));
+	    		code.setScreen(new OpcionesControles(code));
 	    	}
 	    	break;
 	    case 2:
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		code.setScreen(new OpcionesSonido(game));
+	    		code.setScreen(new OpcionesSonido(code));
 	    	}
 	    	break;
 	    case 3:

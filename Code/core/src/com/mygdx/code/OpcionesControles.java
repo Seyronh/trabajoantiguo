@@ -40,8 +40,8 @@ public class OpcionesControles implements Screen {
 	private boolean arrows;
 
 	
-	float AnchoBoton;
-    float AltoBoton;
+	float anchoBoton;
+    float altoBoton;
     
    
     
@@ -59,10 +59,10 @@ public class OpcionesControles implements Screen {
 		
 		arrows = code.moverIzquierda == Keys.LEFT;;
 		
-		AnchoBoton = anchoPantalla *15/100;
-		AltoBoton = altoPantalla *5/100;
+		anchoBoton = anchoPantalla *15/100;
+		altoBoton = altoPantalla *5/100;
 		
-		seleccionar = new Texture("Menus/madera.png");
+		seleccionar = this.code.manager.get("Menus/madera.png", Texture.class);
 		//cargarPantalla();
 		
 		
@@ -74,8 +74,8 @@ public class OpcionesControles implements Screen {
 		
 		
 		
-		float BotonX = anchoPantalla * 47 /100;
-	    float BotonY = altoPantalla * 42/100;
+		float botonX = anchoPantalla * 47 /100;
+	    float botonY = altoPantalla * 42/100;
 	    
 	    
 		
@@ -84,9 +84,10 @@ public class OpcionesControles implements Screen {
 		
 	    stage = new Stage();
    		batch = new SpriteBatch();
-    
+		
 		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
 		tabla = code.manager.get("Menu.png", Texture.class);
+		
 		
 //    	
 //		Table table2 = new Table();
@@ -154,7 +155,7 @@ public class OpcionesControles implements Screen {
 //			table2.addActor(buttonCambiarB);
 //			
 //			
-//			BotonY = BotonY - altoPantalla*7/100;
+//			BotonY = BotonY - altoPantalla*)7/100;
 //			
 //			
 //		//Boton Volver
@@ -200,18 +201,19 @@ public class OpcionesControles implements Screen {
 
 			dispose();
 			
-game.setScreen(new MainMenuScreen(code));
-			
+			code.setScreen(new MainMenuScreen(code));
 		}
+		
+		
 		
 	    
 		stage.act(Gdx.graphics.getDeltaTime());
 		
 		stage.getBatch().begin();
 		
-		stage.getBatch().draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
+		stage.getBatch().draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 		    
-		stage.getBatch().draw(Tabla, anchoPantalla * 335 / 1000, altoPantalla * 25 / 100, anchoPantalla*32/100, altoPantalla * 65/100);
+		stage.getBatch().draw(tabla, anchoPantalla * 335 / 1000, altoPantalla * 25 / 100, anchoPantalla*32/100, altoPantalla * 65/100);
 
 		    
 
@@ -219,18 +221,18 @@ game.setScreen(new MainMenuScreen(code));
 		    float mediday =  altoPantalla*70/100;
 		    
 		    
-		    stage.getBatch().draw(new Texture("Menus/mapeado.png"), medidax, mediday - altoPantalla*25/100, anchoPantalla*20/100, altoPantalla*30/100);	  
+		    stage.getBatch().draw(code.manager.get("Menus/mapeado.png", Texture.class), medidax, mediday - altoPantalla*25/100, anchoPantalla*20/100, altoPantalla*30/100);	  
 			
 		    if(!arrows) {
 		    	
 		    	
-		    	stage.getBatch().draw(new Texture("Menus/opcion1.png"), medidax + anchoPantalla*6/100, altoPantalla*48/100, anchoPantalla*20/100, altoPantalla*7/100*4);
+		    	stage.getBatch().draw(code.manager.get("Menus/opcion1.png", Texture.class), medidax + anchoPantalla*6/100, altoPantalla*48/100, anchoPantalla*20/100, altoPantalla*7/100*4);
 		    	
 		    	
-		    }else {	
+		    }else {
 	    	
-	    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-		    	stage.getBatch().draw(new Texture("Menus/opcion2.png"), medidax + anchoPantalla*14/100, altoPantalla*50/100, anchoPantalla*14/100/367*100,anchoPantalla*14/100 );
+		    	stage.getBatch().draw(code.manager.get("Menus/opcion2.png", Texture.class), medidax + anchoPantalla*14/100, altoPantalla*50/100, anchoPantalla*14/100/367*100,anchoPantalla*14/100 );
+		    	
 		    	
 		    }
 			
@@ -244,13 +246,13 @@ game.setScreen(new MainMenuScreen(code));
 //		    
 			mediday = altoPantalla*40/100;
 		    
-			stage.getBatch().draw(new Texture("Menus/1.png"), medidax + anchoPantalla*8/100, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+			stage.getBatch().draw(code.manager.get("Menus/1.png", Texture.class), medidax + anchoPantalla*8/100, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 			
-			stage.getBatch().draw(new Texture("Menus/2.png"), medidax + anchoPantalla*12/100, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+			stage.getBatch().draw(code.manager.get("Menus/2.png", Texture.class), medidax + anchoPantalla*12/100, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 			
 			mediday = mediday - altoPantalla*5/100;
 			
-			stage.getBatch().draw(new Texture("Menus/Volver.png"), medidax + anchoPantalla*5/100, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+			stage.getBatch().draw(code.manager.get("Menus/Volver.png", Texture.class), medidax + anchoPantalla*5/100, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 			
 		    
 		    if(Gdx.input.isKeyPressed(Keys.DOWN)) {
@@ -263,13 +265,6 @@ game.setScreen(new MainMenuScreen(code));
 	    		}
 	    		
 	    	}
-
-	    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    		code.moverIzquierda = Keys.A;
-	    		
-	    		arrows = false;
-	    	}
-          
 		    if(Gdx.input.isKeyPressed(Keys.UP)) {
 	    		
 	    		commandnum--;
@@ -278,24 +273,25 @@ game.setScreen(new MainMenuScreen(code));
 	    			
 	    			commandnum = 1;
 	    		}
+	    		
 	    	}
 		    
 		    float desplazamiento = 0;
 			
 			if(arrows) {
 				
-				desplazamiento = AnchoBoton*29/100;
+				desplazamiento = anchoBoton*29/100;
 			}
 		    
 		    if(Gdx.graphics.isFullscreen()) {
 			    
 		    	if(commandnum == 0) {
 		    	
-		    		stage.getBatch().draw(seleccionar, anchoPantalla*47/100 + desplazamiento, altoPantalla*41/100 - altoPantalla*18/100*commandnum, AnchoBoton/2, AltoBoton); //Pantalla completa
+		    		stage.getBatch().draw(seleccionar, anchoPantalla*47/100 + desplazamiento, altoPantalla*41/100 - altoPantalla*18/100*commandnum, anchoBoton/2, altoBoton); //Pantalla completa
 		    	
 		    	}else {
 		    		
-		    		stage.getBatch().draw(seleccionar, anchoPantalla*39/100 + 35, altoPantalla*42/100 - altoPantalla*7/100*commandnum, AnchoBoton/2, AltoBoton); //Pantalla completa
+		    		stage.getBatch().draw(seleccionar, anchoPantalla*39/100 + 35, altoPantalla*42/100 - altoPantalla*7/100*commandnum, anchoBoton/2, altoBoton); //Pantalla completa
 			    	
 		    	}
 		     
@@ -304,10 +300,10 @@ game.setScreen(new MainMenuScreen(code));
 		    	if(commandnum == 0) {
 		    	
 		    		
-		    		stage.getBatch().draw(seleccionar, anchoPantalla*40/100 + desplazamiento, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
+		    		stage.getBatch().draw(seleccionar, anchoPantalla*40/100 + desplazamiento, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, anchoBoton/3, altoBoton);  // Modo ventana
 		    	}else {
 		    		
-		    		stage.getBatch().draw(seleccionar, anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
+		    		stage.getBatch().draw(seleccionar, anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, anchoBoton/3, altoBoton);  // Modo ventana
 			    	
 		    	}
 		    	
@@ -315,13 +311,13 @@ game.setScreen(new MainMenuScreen(code));
 		    
 		//    batch.draw(seleccionar, anchoPantalla*39/100, altoPantalla *42/100 - (altoPantalla*5/100 * commandnum));
 	 
-		    if(game.moverIzquierda == Keys.A) {
+		    if(code.moverIzquierda == Keys.A) {
 		    	
-		    	stage.getBatch().draw(new Texture("Menus/circulo.png"), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
+		    	stage.getBatch().draw(code.manager.get("Menus/circulo.png", Texture.class), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, anchoBoton/3, altoBoton);  // Modo ventana
 		    	
 		    }else {
 		    	
-		    	stage.getBatch().draw(new Texture("Menus/circulo.png"), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
+		    	stage.getBatch().draw(code.manager.get("Menus/circulo.png", Texture.class), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, anchoBoton/3, altoBoton);  // Modo ventana
 		    	
 		    }
 		    
@@ -330,26 +326,26 @@ game.setScreen(new MainMenuScreen(code));
 		    	
 		    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    			
-		    		 game.moverIzquierda = arrows ? Keys.LEFT : Keys.A;
-		    		 game.moverDerecha = arrows ? Keys.RIGHT : Keys.D;
-		    		 game.moverArriba = arrows ? Keys.UP : Keys.W;
-		    		 game.frenar = arrows ? Keys.DOWN : Keys.S;
+		    		code.moverIzquierda = arrows ? Keys.LEFT : Keys.A;
+		    		code.moverDerecha = arrows ? Keys.RIGHT : Keys.D;
+		    		code.moverArriba = arrows ? Keys.UP : Keys.W;
+		    		code.frenar = arrows ? Keys.DOWN : Keys.S;
 
 		    		 
-		    		 game.setScreen(new MainMenuScreen(game));
+		    		code.setScreen(new MainMenuScreen(code));
 		    		 
 		    	}
 		    		
 		    	
 		    	
 		    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-		    		game.moverIzquierda = Keys.LEFT;
+		    		code.moverIzquierda = Keys.LEFT;
 		    		
 		    		
 		    		arrows = true;
 		    	}
 		    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-		    		game.moverIzquierda = Keys.A;
+		    		code.moverIzquierda = Keys.A;
 		    		
 		    		arrows = false;
 		    	}
@@ -361,7 +357,7 @@ game.setScreen(new MainMenuScreen(code));
 		    case 1:
 		    	
 		    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-		    		game.setScreen(new MainMenuScreen(game));
+		    		code.setScreen(new MainMenuScreen(code));
 		    	}
 		    	break;
 		    

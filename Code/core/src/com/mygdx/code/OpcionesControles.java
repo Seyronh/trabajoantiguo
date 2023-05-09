@@ -313,11 +313,11 @@ public class OpcionesControles implements Screen {
 	 
 		    if(game.moverIzquierda == Keys.A) {
 		    	
-		    	stage.getBatch().draw(new Texture("Menus/"), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
+		    	stage.getBatch().draw(new Texture("Menus/circulo.png"), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
 		    	
 		    }else {
 		    	
-		    	stage.getBatch().draw(seleccionar, anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
+		    	stage.getBatch().draw(new Texture("Menus/circulo.png"), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, AnchoBoton/3, AltoBoton);  // Modo ventana
 		    	
 		    }
 		    

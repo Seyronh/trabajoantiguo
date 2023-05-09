@@ -64,6 +64,8 @@ public class MainMenuScreen implements Screen {
 
 		seleccionar = this.game.manager.get("Menus/madera.png",Texture.class);
 
+		//seleccionar = new Texture("Menus/madera.png");
+		
 		//cargarPantalla();
 	}
 	

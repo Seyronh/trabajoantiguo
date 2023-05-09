@@ -114,21 +114,8 @@ public class PantallaPartida implements Screen {
 					boat.resetStats();
 				}
 			}
-			ScreenUtils.clear(1, 1, 1, 1);
-			if(Gdx.input.isKeyPressed(code.moverIzquierda)) {
-				boat.girarIzquierda();
-			}
-			if(Gdx.input.isKeyPressed(code.moverDerecha)) {
-				boat.girarDerecha();
-			}
-			if(Gdx.input.isKeyPressed(code.moverArriba)) {
-				boat.acelerar();
-			}
-			if(Gdx.input.isKeyPressed(code.frenar)) {
-				boat.frenar();
-			}
-
-		}
+			
+		
 		ScreenUtils.clear(1, 1, 1, 1);
 		if(Gdx.input.isKeyPressed(code.moverIzquierda)) {
 			boat.girarIzquierda();

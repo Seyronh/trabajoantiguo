@@ -23,7 +23,7 @@ public class MainMenuScreen implements Screen {
 
 
 	
-	final Code game;
+	final Code code;
 	
 	private Stage stage;
 	
@@ -31,10 +31,10 @@ public class MainMenuScreen implements Screen {
 	private float altoPantalla;
 	
 	private SpriteBatch batch;
-	private Texture Fondo;
-	private Texture Tabla;
-	private Texture Titulo;
-	
+	private Texture fondo;
+	private Texture tabla;
+	private Texture titulo;
+
 	private Texture seleccionar;
 	
 	private int commandnum;
@@ -42,14 +42,14 @@ public class MainMenuScreen implements Screen {
 	private boolean arrows;
 
 	
-	float AnchoBoton;
-    float AltoBoton;
+	float anchoBoton;
+    float altoBoton;
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	//Preferences prefs;
 	
-	public MainMenuScreen(final Code game) {
+	public MainMenuScreen(final Code code) {
 
-		this.game = game;
+		this.code = code;
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 		
@@ -58,14 +58,10 @@ public class MainMenuScreen implements Screen {
 		
 		arrows = true;
 		
-		AnchoBoton = anchoPantalla *25/100;
-		AltoBoton = altoPantalla *10/100;
-		
+		anchoBoton = anchoPantalla *25/100;
+		altoBoton = altoPantalla *10/100;
 
-		seleccionar = this.game.manager.get("Menus/madera.png",Texture.class);
-
-		//seleccionar = new Texture("Menus/madera.png");
-		
+		seleccionar = this.code.manager.get("Menus/madera.png",Texture.class);
 		//cargarPantalla();
 	}
 	
@@ -74,7 +70,7 @@ public class MainMenuScreen implements Screen {
 		
 		
 		
-		float BotonX = (anchoPantalla * 50 /100) - (AnchoBoton/2);
+		float BotonX = (anchoPantalla * 50 /100) - (anchoBoton/2);
 	    float BotonY = altoPantalla * 50/100;
 	    
 	    
@@ -86,8 +82,8 @@ public class MainMenuScreen implements Screen {
 		batch = new SpriteBatch();
 		
 
-		Fondo = this.game.manager.get("fondoMenuPrincipal.png",Texture.class);
-    Titulo = this.game.manager.get("Titulo.png", Texture.class);
+		fondo = this.code.manager.get("fondoMenuPrincipal.png",Texture.class);
+    titulo = this.code.manager.get("Titulo.png", Texture.class);
 
 	//	Tabla = new Texture("opciones.png");
     	
@@ -106,9 +102,8 @@ public class MainMenuScreen implements Screen {
 	    
 	    	TextButtonStyle styleb = new TextButtonStyle();
 		
-		
-	    	Texture buttondown = this.game.manager.get("botondownplchld.png",Texture.class);
-	    	Texture buttonup = this.game.manager.get("botonplchld.png",Texture.class);
+	    	Texture buttondown = this.code.manager.get("botondownplchld.png",Texture.class);
+	    	Texture buttonup = this.code.manager.get("botonplchld.png",Texture.class);
 		
 	    	styleb.down = new TextureRegionDrawable(new TextureRegion(buttondown));
 	    	styleb.up = new TextureRegionDrawable(new TextureRegion(buttonup));
@@ -117,6 +112,7 @@ public class MainMenuScreen implements Screen {
 	    	styleb.fontColor = Color.BLACK;
 	    	
 	    		
+
 //	    //Boton Jugar
 //	    	
 //	    	TextButton buttonCambiar = new TextButton("Jugar", styleb); //TEXTURA
@@ -197,31 +193,22 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 		
-		
-		
-		
+		batch.begin();
+	    batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
+	 //   batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
+
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 
 			dispose();
 			
 			System.exit(0);
 		}
-		
-	
 	    
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.getBatch().begin();
-		
-		
-		
 		stage.getBatch().draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
-	    
-	    
-	    
-	    
-	    
 		stage.getBatch().draw(Titulo,anchoPantalla*5/100,altoPantalla*70/100,anchoPantalla*95/100/(16/9) , altoPantalla*18/100/(16/9));
 	 // batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10); 
 		stage.getBatch().draw(new Texture("cuadro.png"), anchoPantalla*49/100 - (AnchoBoton/2), altoPantalla*20/100, anchoPantalla*25/100, altoPantalla*40/100);
@@ -268,8 +255,7 @@ public class MainMenuScreen implements Screen {
     	}
 	    
 	    if(Gdx.graphics.isFullscreen()) {
-	    
-	    	stage.getBatch().draw(seleccionar, anchoPantalla*28/100, (altoPantalla * 48/100) - altoPantalla*9/100*commandnum, AltoBoton*32/10, AltoBoton); //Pantalla completa
+	    	stage.getBatch().draw(seleccionar, anchoPantalla*28/100, (altoPantalla * 48/100) - altoPantalla*9/100*commandnum, altoBoton*32/10, altoBoton); //Pantalla completa
 		    
 	     
 	    }else {
@@ -284,35 +270,31 @@ public class MainMenuScreen implements Screen {
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		game.setScreen(new PantallaPartida(game));
+	    		code.setScreen(new SeleccionBarco(code));
 	    	}
 	    	break;
 	    case 1:
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		game.setScreen(new OpcionesControles(game));
+	    		code.setScreen(new OpcionesControles(game));
 	    	}
 	    	break;
 	    case 2:
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		game.setScreen(new OpcionesSonido(game));
+	    		code.setScreen(new OpcionesSonido(game));
 	    	}
 	    	break;
 	    case 3:
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
 	    		System.exit(0);
-	    		
-	    		//game.setScreen(new OpcionesSonido(game));
 	    	}
 	    	break;
 	    
 	    
 	    }
-	    
-		
 		
 		stage.getBatch().end();
 		

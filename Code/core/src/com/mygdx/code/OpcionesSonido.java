@@ -24,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class OpcionesSonido implements Screen {
 
-	final Code game;
+	final Code code;
 
 	private Stage stage;
 
@@ -32,38 +32,41 @@ public class OpcionesSonido implements Screen {
 	private float altoPantalla;
 
 	private SpriteBatch batch;
-	private Texture Fondo;
-	private Texture Tabla;
+	private Texture fondo;
+	private Texture tabla;
 
 	private Texture seleccionar;
-	private Texture volumen;
+	private Texture imagenVolumen;
 	private Texture barra;
 
 	private int commandnum;
 
-	float AnchoBoton;
-	float AltoBoton;
+	float anchoBoton;
+	float altoBoton;
 
-	boolean Silenciar;
-	float Volumen;
+	boolean silenciar;
+	float volumen;
 
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	// Preferences prefs;
 
-	public OpcionesSonido(final Code game) {
+	public OpcionesSonido(final Code code) {
 
-		this.game = game;
+		this.code = code;
 
-		Silenciar = false;
-		Volumen = 1f;
+		if (code.music != null) {
+			silenciar = code.music.getVolume() == 0;
+			volumen = code.music.getVolume();
+		}
 
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 
 		commandnum = 0;
 
-		AnchoBoton = anchoPantalla * 15 / 100;
-		AltoBoton = altoPantalla * 10 / 100;
+		anchoBoton = anchoPantalla * 15 / 100;
+		altoBoton = altoPantalla * 10 / 100;
+
 
 		seleccionar = new Texture("Menus/madera.png");
 		// cargarPantalla();
@@ -83,11 +86,11 @@ public class OpcionesSonido implements Screen {
 		stage = new Stage();
 		batch = new SpriteBatch();
 
-		Fondo = new Texture("fondoMenuPrincipal.png");
-		Tabla = new Texture("Menu.png");
+		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
+		tabla = code.manager.get("Menu.png", Texture.class);
 
-		volumen = new Texture("Volumen.png");
-		barra = new Texture("Barra.png");
+		imagenVolumen = code.manager.get("Volumen.png", Texture.class);
+		barra = code.manager.get("Barra.png", Texture.class);
 
 //		Table table2 = new Table();
 //		table2.setPosition(0, 0);
@@ -169,6 +172,7 @@ public class OpcionesSonido implements Screen {
 //		});
 //		
 //		table2.addActor(checkSound);
+
 //
 //		// Boton Volver
 //
@@ -216,8 +220,7 @@ public class OpcionesSonido implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 
 			dispose();
-
-			game.setScreen(new MainMenuScreen(game));
+			code.setScreen(new MainMenuScreen(code));
 		}
 
 		
@@ -267,7 +270,6 @@ public class OpcionesSonido implements Screen {
 			stage.getBatch().draw(new Texture("Menus/Tick.png"), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, AnchoBoton , AnchoBoton*0.33f );
 			
 			//	game.music.setVolume(Volumen);
-
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
@@ -292,7 +294,6 @@ public class OpcionesSonido implements Screen {
 		}
 
 		if (Gdx.graphics.isFullscreen()) {
-
 			stage.getBatch().draw(seleccionar, anchoPantalla * 39 / 100, altoPantalla * 64 / 100 - altoPantalla * 9 / 100 * commandnum, AnchoBoton/2, AltoBoton/2); // Pantalla
 
 		} else {
@@ -303,39 +304,36 @@ public class OpcionesSonido implements Screen {
 		case 0:
 
 			if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-				Volumen += 0.1f;
+				volumen += 0.1f;
 
-				if (Volumen > 1f) {
-					Volumen = 1f;
+				if (volumen > 1f) {
+					volumen = 1f;
 				}
 
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 
-				Volumen -= 0.1f;
-				if (Volumen < 0f) {
-					Volumen = 0f;
+				volumen -= 0.1f;
+				if (volumen < 0f) {
+					volumen = 0f;
 				}
 			}
 
-			if (!Silenciar) {
-		//		game.music.setVolume(Volumen);
-			}
+			if (!silenciar && code.music != null) {
+				code.music.setVolume(volumen);
+      }
 			break;
 		case 1:
 
 			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 
-				Silenciar = !Silenciar;
+				silenciar = !silenciar;
 
 			}
 			break;
 		case 2:
 			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-
-				game.setScreen(new MainMenuScreen(game));
-
-				// game.setScreen(new OpcionesSonido(game));
+				code.setScreen(new MainMenuScreen(game));
 			}
 			break;
 

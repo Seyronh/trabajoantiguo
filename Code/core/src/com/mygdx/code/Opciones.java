@@ -40,7 +40,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Opciones implements Screen {
 
-	final Code game;
+	final Code code;
 	
 	private Stage stage;
 	
@@ -48,32 +48,32 @@ public class Opciones implements Screen {
 	private float altoPantalla;
 	
 	private SpriteBatch batch;
-	private Texture Fondo;
-	private Texture Tabla;
+	private Texture fondo;
+	private Texture tabla;
 	
 	private Texture seleccionar;
 	
 	private int commandnum;
 	
-	float AnchoBoton;
-    float AltoBoton;
+	float anchoBoton;
+    float altoBoton;
 
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	//Preferences prefs;
 	
-	public Opciones(final Code game) {
+	public Opciones(final Code code) {
 
-		this.game = game;
+		this.code = code;
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 		
 		
 		commandnum = 0;
 		
-		AnchoBoton = anchoPantalla *15/100;
-		AltoBoton = altoPantalla *10/100;
+		anchoBoton = anchoPantalla *15/100;
+		altoBoton = altoPantalla *10/100;
 		
-		seleccionar = new Texture("seleccionar.png");
+		seleccionar = code.manager.get("seleccionar.png", Texture.class);
 		//cargarPantalla();
 	}
 	
@@ -92,7 +92,7 @@ public class Opciones implements Screen {
 		
 		
 		
-		// Crea una tabla, donde añadiremos los elementos de menú
+		// Crea una tabla, donde aÃ±adiremos los elementos de menÃº
 //		Table table2 = new Table();
 //		
 //		table2.setPosition(0, 300);
@@ -108,8 +108,8 @@ public class Opciones implements Screen {
 			batch = new SpriteBatch();
 			
 			
-			Fondo = new Texture("fondoMenuPrincipal.png");
-			Tabla = new Texture("Menu.png");
+			fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
+			tabla = code.manager.get("Menu.png", Texture.class);
 			
 			
 	    	
@@ -133,8 +133,8 @@ public class Opciones implements Screen {
 	    	TextButtonStyle styleb = new TextButtonStyle();
 			
 			
-			Texture buttondown = new Texture("botondownplchld.png");
-			Texture buttonup = new Texture("botonplchld.png");
+			Texture buttondown = code.manager.get("botondownplchld.png", Texture.class);
+			Texture buttonup = code.manager.get("botonplchld.png", Texture.class);
 
 			
 			styleb.down = new TextureRegionDrawable(new TextureRegion(buttondown));
@@ -148,7 +148,7 @@ public class Opciones implements Screen {
 			buttonControles.setPosition(BotonX, BotonY);
 
 			
-			buttonControles.setSize(AnchoBoton, AltoBoton);
+			buttonControles.setSize(anchoBoton, altoBoton);
 			buttonControles.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					return true;	
@@ -159,7 +159,7 @@ public class Opciones implements Screen {
 					dispose();
 					
 					
-					game.setScreen(new OpcionesControles(game));
+					code.setScreen(new OpcionesControles(code));
 				}
 			});
 			table.addActor(buttonControles);
@@ -170,7 +170,7 @@ public class Opciones implements Screen {
 			TextButton buttonSonido = new TextButton("Sonido", styleb); //TEXTURA
 			buttonSonido.setPosition(BotonX, BotonY);
 
-			buttonSonido.setSize(AnchoBoton, AltoBoton);
+			buttonSonido.setSize(anchoBoton, altoBoton);
 			buttonSonido.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					return true;	
@@ -180,7 +180,7 @@ public class Opciones implements Screen {
 					dispose();
 					
 					
-					game.setScreen(new OpcionesSonido(game));
+					code.setScreen(new OpcionesSonido(code));
 					
 				}
 			});
@@ -193,7 +193,7 @@ public class Opciones implements Screen {
 			TextButton buttonMainMenu = new TextButton("Volver", styleb); //TEXTURA
 			buttonMainMenu.setPosition(BotonX, BotonY);
 
-			buttonMainMenu.setSize(AnchoBoton, AltoBoton);
+			buttonMainMenu.setSize(anchoBoton, altoBoton);
 			buttonMainMenu.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					return true;	
@@ -202,7 +202,7 @@ public class Opciones implements Screen {
 					
 			//	prefs.flush();
 					dispose(); //Volver a MainMenu
-					game.setScreen(new MainMenuScreen(game));
+					code.setScreen(new MainMenuScreen(code));
 				}
 			});
 			table.addActor(buttonMainMenu);
@@ -239,15 +239,13 @@ public class Opciones implements Screen {
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
     		
     		
-    		game.setScreen(new MainMenuScreen(game));
+    		code.setScreen(new MainMenuScreen(code));
     	}
 		
 		
 		batch.begin();
-		
-			
-	    batch.draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
-	    batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
+	    batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
+	    batch.draw(tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
 	    
 	//    batch.draw(Tabla, anchoPantalla*35/100, altoPantalla*30/100, anchoPantalla*45/100, altoPantalla*65/100);
 	    
@@ -275,7 +273,7 @@ public class Opciones implements Screen {
 	    
 	    if(Gdx.graphics.isFullscreen()) {
 	    
-	    	batch.draw(seleccionar, anchoPantalla*39/100, altoPantalla*70/100 - altoPantalla*18/100*commandnum, AnchoBoton/2, AltoBoton); //Pantalla completa
+	    	batch.draw(seleccionar, anchoPantalla*39/100, altoPantalla*70/100 - altoPantalla*18/100*commandnum, anchoBoton/2, altoBoton); //Pantalla completa
 		    
 	     
 	    }else {
@@ -290,21 +288,21 @@ public class Opciones implements Screen {
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		game.setScreen(new OpcionesControles(game));
+	    		code.setScreen(new OpcionesControles(code));
 	    	}
 	    	break;
 	    case 1:
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
-	    		game.setScreen(new OpcionesSonido(game));
+	    		code.setScreen(new OpcionesSonido(code));
 	    	}
 	    	break;
 	    case 2:
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 	    		
 	    		
-	    		game.setScreen(new MainMenuScreen(game));
+	    		code.setScreen(new MainMenuScreen(code));
 	    	}
 	    	break;
 	    

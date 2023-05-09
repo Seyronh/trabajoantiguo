@@ -34,30 +34,10 @@ public class PantallaDeInicio implements Screen {
 
 	@Override
 	public void show() {
-	
-		this.code.manager.load("aguaMar.png", Texture.class);
-		this.code.manager.load("aguaRio.png", Texture.class);
-		this.code.manager.load("barquito.png", Texture.class);
-		this.code.manager.load("bronce.png", Texture.class);
-		this.code.manager.load("oro.png", Texture.class);
-		this.code.manager.load("plata.png", Texture.class);
-		this.code.manager.load("PowerUp.png", Texture.class);
-		this.code.manager.load("seleccionar.png", Texture.class);
-		this.code.manager.load("sliderbg.png", Texture.class);
-		this.code.manager.load("sliderknob.png", Texture.class);
-		this.code.manager.load("Volumen.png", Texture.class);
-		this.code.manager.load("fondoMenuPrincipal.png", Texture.class);
-		this.code.manager.load("botondownplchld.png", Texture.class);
-		this.code.manager.load("botonplchld.png", Texture.class);
 		
-		//
-		this.code.manager.load("Titulo.png", Texture.class);
-		this.code.manager.load("Menus/madera.png", Texture.class);
-		
-		
-		//
-		
-		Skin skin = new Skin();
+		cargarImagenes();
+
+    Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(10, 10, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
@@ -66,6 +46,70 @@ public class PantallaDeInicio implements Screen {
 		this.splash = new Sprite(texture);
 		this.splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
+	
+	private void cargarImagenes() {
+		this.code.manager.load("aguaMar.png", Texture.class);
+		this.code.manager.load("aguaRio.png", Texture.class);
+		this.code.manager.load("barquito.png", Texture.class);
+		this.code.manager.load("bronce.png", Texture.class);
+		this.code.manager.load("oro.png", Texture.class);
+		this.code.manager.load("plata.png", Texture.class);
+		this.code.manager.load("powerUp.png", Texture.class);
+		this.code.manager.load("vida.png", Texture.class);
+		this.code.manager.load("velocidad.png", Texture.class);
+		this.code.manager.load("movilidad.png", Texture.class);
+		this.code.manager.load("aceleracion.png", Texture.class);
+		this.code.manager.load("fondoMenuPrincipal.png", Texture.class);
+		this.code.manager.load("opciones.png", Texture.class);
+		this.code.manager.load("espana.png", Texture.class);
+		this.code.manager.load("china.png", Texture.class);
+		this.code.manager.load("japon.png", Texture.class);
+		this.code.manager.load("coreaSur.png", Texture.class);
+		this.code.manager.load("brasil.png", Texture.class);
+		this.code.manager.load("reinoUnido.png", Texture.class);
+		this.code.manager.load("indonesia.png", Texture.class);
+		this.code.manager.load("australia.png", Texture.class);
+		this.code.manager.load("estadosUnidos.png", Texture.class);
+		this.code.manager.load("rusia.png", Texture.class);
+		this.code.manager.load("sudafrica.png", Texture.class);
+		this.code.manager.load("bolivia.png", Texture.class);
+		this.code.manager.load("alemania.png", Texture.class);
+		this.code.manager.load("francia.png", Texture.class);
+		this.code.manager.load("chad.png", Texture.class);
+		this.code.manager.load("nigeria.png", Texture.class);
+		this.code.manager.load("costaMarfil.png", Texture.class);
+		this.code.manager.load("camerun.png", Texture.class);
+		this.code.manager.load("grecia.png", Texture.class);
+		this.code.manager.load("egipto.png", Texture.class);
+		this.code.manager.load("suecia.png", Texture.class);
+		this.code.manager.load("suiza.png", Texture.class);
+		this.code.manager.load("canada.png", Texture.class);
+		this.code.manager.load("mexico.png", Texture.class);
+		this.code.manager.load("argentina.png", Texture.class);
+		this.code.manager.load("cuba.png", Texture.class);
+		this.code.manager.load("sriLanka.png", Texture.class);
+		this.code.manager.load("mauricio.png", Texture.class);
+		this.code.manager.load("madagascar.png", Texture.class);
+		this.code.manager.load("vaticano.png", Texture.class);
+		this.code.manager.load("italia.png", Texture.class);
+		this.code.manager.load("india.png", Texture.class);
+		this.code.manager.load("Barra.png", Texture.class);
+		this.code.manager.load("Volumen.png", Texture.class);
+		this.code.manager.load("textoSeleccionBarcoPais.png", Texture.class);
+		this.code.manager.load("flechaSeleccionDerecha.png", Texture.class);
+		this.code.manager.load("flechaSeleccionIzquierda.png", Texture.class);
+		this.code.manager.load("seleccionar.png", Texture.class);
+		this.code.manager.load("botoncheckedplchld.png", Texture.class);
+		this.code.manager.load("botonuncheckedplchld.png", Texture.class);
+		this.code.manager.load("botondownplchld.png", Texture.class);
+		this.code.manager.load("botonplchld.png", Texture.class);
+    this.code.manager.load("Titulo.png", Texture.class);
+		this.code.manager.load("Menus/madera.png", Texture.class);
+    this.code.manager.load("PowerUp.png", Texture.class);
+    this.code.manager.load("sliderbg.png", Texture.class);
+		this.code.manager.load("sliderknob.png", Texture.class);
+	}
+	
 	@Override
 	public void render(float delta) {
 		

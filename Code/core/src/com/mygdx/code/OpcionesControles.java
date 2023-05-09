@@ -22,7 +22,7 @@ public class OpcionesControles implements Screen {
 
 	
 	
-	final Code game;
+	final Code code;
 	
 	private Stage stage;
 	
@@ -30,8 +30,8 @@ public class OpcionesControles implements Screen {
 	private float altoPantalla;
 	
 	private SpriteBatch batch;
-	private Texture Fondo;
-	private Texture Tabla;
+	private Texture fondo;
+	private Texture tabla;
 	
 	private Texture seleccionar;
 	
@@ -48,16 +48,16 @@ public class OpcionesControles implements Screen {
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	//Preferences prefs;
 	
-	public OpcionesControles(final Code game) {
+	public OpcionesControles(final Code code) {
 
-		this.game = game;
+		this.code = code;
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 		
 		
 		commandnum = 0;
 		
-		arrows = game.moverIzquierda == Keys.LEFT;;
+		arrows = code.moverIzquierda == Keys.LEFT;;
 		
 		AnchoBoton = anchoPantalla *15/100;
 		AltoBoton = altoPantalla *5/100;
@@ -84,10 +84,9 @@ public class OpcionesControles implements Screen {
 		
 	    stage = new Stage();
    		batch = new SpriteBatch();
-		
-		Fondo = new Texture("fondoMenuPrincipal.png");
-		Tabla = new Texture("Menu.png");
-		
+    
+		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
+		tabla = code.manager.get("Menu.png", Texture.class);
 		
 //    	
 //		Table table2 = new Table();
@@ -201,10 +200,9 @@ public class OpcionesControles implements Screen {
 
 			dispose();
 			
-			game.setScreen(new MainMenuScreen(game));
+game.setScreen(new MainMenuScreen(code));
+			
 		}
-		
-		
 		
 	    
 		stage.act(Gdx.graphics.getDeltaTime());
@@ -229,10 +227,10 @@ public class OpcionesControles implements Screen {
 		    	stage.getBatch().draw(new Texture("Menus/opcion1.png"), medidax + anchoPantalla*6/100, altoPantalla*48/100, anchoPantalla*20/100, altoPantalla*7/100*4);
 		    	
 		    	
-		    }else {
+		    }else {	
 	    	
+	    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
 		    	stage.getBatch().draw(new Texture("Menus/opcion2.png"), medidax + anchoPantalla*14/100, altoPantalla*50/100, anchoPantalla*14/100/367*100,anchoPantalla*14/100 );
-		    	
 		    	
 		    }
 			
@@ -265,6 +263,13 @@ public class OpcionesControles implements Screen {
 	    		}
 	    		
 	    	}
+
+	    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+	    		code.moverIzquierda = Keys.A;
+	    		
+	    		arrows = false;
+	    	}
+          
 		    if(Gdx.input.isKeyPressed(Keys.UP)) {
 	    		
 	    		commandnum--;
@@ -273,7 +278,6 @@ public class OpcionesControles implements Screen {
 	    			
 	    			commandnum = 1;
 	    		}
-	    		
 	    	}
 		    
 		    float desplazamiento = 0;

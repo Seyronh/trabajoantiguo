@@ -1,42 +1,24 @@
 package com.mygdx.code;
-
+import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 
 public class BackgroundPartida {
 	
 	Code code;
-	Sprite backgroundIzquierdaArriba;
-	Sprite backgroundArriba;
-	Sprite backgroundDerechaArriba;
-	Sprite backgroundIzquierda;
-	Sprite backgroundCentro;
-	Sprite backgroundDerecha;
-	Sprite backgroundIzquierdaAbajo;
-	Sprite backgroundAbajo;
-	Sprite backgroundDerechaAbajo;
-	
-	Vector2 posicionIzquierdaArriba;
-	Vector2 posicionArriba;
-	Vector2 posicionDerechaArriba;
-	Vector2 posicionIzquierda;
-	Vector2 posicionCentro;
-	Vector2 posicionDerecha;
-	Vector2 posicionIzquierdaAbajo;
-	Vector2 posicionAbajo;
-	Vector2 posicionDerechaAbajo;
+	ArrayList<Sprite> fondos = new ArrayList<Sprite>();
+	ArrayList<Vector2> posiciones = new ArrayList<Vector2>();
 	
 	float h;
 	float w;
 	
 	OrthographicCamera camara;
+	boolean a = false;
 	
-	//float acumulador = 0;
 	
 	public BackgroundPartida(float relation,OrthographicCamera camara, Code code) {
 		this.camara = camara;
@@ -44,102 +26,53 @@ public class BackgroundPartida {
 		
 		this.w = Gdx.graphics.getWidth()/relation;
 		this.h = Gdx.graphics.getHeight()/relation;
-		
-		backgroundIzquierdaArriba = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundArriba = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundDerechaArriba = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundIzquierda = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundCentro = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundDerecha = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundIzquierdaAbajo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundAbajo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		backgroundDerechaAbajo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
-		
-		backgroundIzquierdaArriba.setSize(w, h);
-		backgroundArriba.setSize(w, h);
-		backgroundDerechaArriba.setSize(w, h);
-		backgroundIzquierda.setSize(w, h);
-		backgroundCentro.setSize(w, h);
-		backgroundDerecha.setSize(w, h);
-		backgroundIzquierdaAbajo.setSize(w, h);
-		backgroundAbajo.setSize(w, h);
-		backgroundDerechaAbajo.setSize(w, h);
-		
-		posicionIzquierdaArriba = new Vector2(camara.position.x-w,camara.position.y+h);
-		posicionArriba = new Vector2(camara.position.x,camara.position.y+h);
-		posicionDerechaArriba = new Vector2(camara.position.x+w,camara.position.y+h);
-		posicionIzquierda = new Vector2(camara.position.x-w,camara.position.y);
-		posicionCentro = new Vector2(camara.position.x,camara.position.y);
-		posicionDerecha = new Vector2(camara.position.x+w,camara.position.y);
-		posicionIzquierdaAbajo = new Vector2(camara.position.x-w,camara.position.y-h);
-		posicionAbajo = new Vector2(camara.position.x,camara.position.y-h);
-		posicionDerechaAbajo = new Vector2(camara.position.x+w,camara.position.y-h);
+		for(int y = -1;y<=1;y++) {
+			for(int x = -1;x<=1;x++) {//Creamos los vectores de posicion
+				posiciones.add(new Vector2(camara.position.x+w*x,camara.position.y+h*y));
+			}
+		}
+		for(int i = 0;i<9;i++) { //Creamos los 9 fondos y les ponemos el tamaño de la camara y la posicion
+			Sprite fondo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+			fondo.setSize(w, h);
+			Vector2 pos = posiciones.get(i);
+			fondo.setCenter(pos.x, pos.y);
+			fondos.add(fondo);
+		}
 	}
 	public void animate(float delta) {
-		//acumulador += delta;
 		boolean actualizado = false;
 		Vector2 pos = new Vector2(this.camara.position.x,this.camara.position.y);
-		if(backgroundIzquierdaArriba.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionIzquierdaArriba.x,posicionIzquierdaArriba.y);
-			actualizado = true;
-		}else
-		if(backgroundArriba.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionArriba.x,posicionArriba.y);
-			actualizado = true;
-		}else
-		if(backgroundDerechaArriba.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionDerechaArriba.x,posicionDerechaArriba.y);
-			actualizado = true;
-		}else
-		if(backgroundIzquierda.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionIzquierda.x,posicionIzquierda.y);
-			actualizado = true;
-		}else
-		if(backgroundDerecha.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionDerecha.x,posicionDerecha.y);
-			actualizado = true;
-		}else
-		if(backgroundIzquierdaAbajo.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionIzquierdaAbajo.x,posicionIzquierdaAbajo.y);
-			actualizado = true;
-		}else
-		if(backgroundAbajo.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionAbajo.x,posicionAbajo.y);
-			actualizado = true;
-		}else
-		if(backgroundDerechaAbajo.getBoundingRectangle().contains(pos)) {
-			posicionCentro = new Vector2(posicionDerechaAbajo.x,posicionDerechaAbajo.y);
-			actualizado = true;
+		for(int i = 0;!actualizado&&i<fondos.size();i++) { //Comprobamos si el usuario se ha movido del fondo del centro
+			if(i!=4) {
+				Sprite fondo = fondos.get(i);
+				if(fondo.getBoundingRectangle().contains(pos)) {
+					Vector2 posfondo = posiciones.get(i);
+					posiciones.set(4, posfondo);
+					actualizado = true;
+				}
+			}
 		}
 		if(actualizado) {
-			posicionIzquierdaArriba = new Vector2(posicionCentro.x-w,posicionCentro.y+h);
-			posicionArriba = new Vector2(posicionCentro.x,posicionCentro.y+h);
-			posicionDerechaArriba = new Vector2(posicionCentro.x+w,posicionCentro.y+h);
-			posicionIzquierda = new Vector2(posicionCentro.x-w,posicionCentro.y);
-			posicionDerecha = new Vector2(posicionCentro.x+w,posicionCentro.y);
-			posicionIzquierdaAbajo = new Vector2(posicionCentro.x-w,posicionCentro.y-h);
-			posicionAbajo = new Vector2(posicionCentro.x,posicionCentro.y-h);
-			posicionDerechaAbajo = new Vector2(posicionCentro.x+w,posicionCentro.y-h);
+			int i = 0;
+			for(int y = -1;y<=1;y++) {
+				for(int x = -1;x<=1;x++) {
+					if(!(y==0 && x==0)) { //Actualizamos las posiciones menos la del centro
+						Vector2 centro = posiciones.get(4);
+						Vector2 nuevo = new Vector2(centro.x+w*x,centro.y+h*y);
+						posiciones.set(i, nuevo);
+					}
+					i++;
+				}
+			}
+			for(int index = 0;index<fondos.size();index++) {//Actualizamos la posicion de los sprites
+				Vector2 pos2 = posiciones.get(index);
+				fondos.get(index).setCenter(pos2.x, pos2.y);
+			}
 		}
-		backgroundIzquierdaArriba.setCenter(posicionIzquierdaArriba.x, posicionIzquierdaArriba.y);
-		backgroundArriba.setCenter(posicionArriba.x, posicionArriba.y);
-		backgroundDerechaArriba.setCenter(posicionDerechaArriba.x, posicionDerechaArriba.y);
-		backgroundIzquierda.setCenter(posicionIzquierda.x, posicionIzquierda.y);
-		backgroundCentro.setCenter(posicionCentro.x, posicionCentro.y);
-		backgroundDerecha.setCenter(posicionDerecha.x, posicionDerecha.y);
-		backgroundIzquierdaAbajo.setCenter(posicionIzquierdaAbajo.x, posicionIzquierdaAbajo.y);
-		backgroundAbajo.setCenter(posicionAbajo.x, posicionAbajo.y);
-		backgroundDerechaAbajo.setCenter(posicionDerechaAbajo.x, posicionDerechaAbajo.y);
 	}
 	public void draw(SpriteBatch batch) {
-		backgroundIzquierdaArriba.draw(batch);
-		backgroundArriba.draw(batch);
-		backgroundDerechaArriba.draw(batch);
-		backgroundIzquierda.draw(batch);
-		backgroundCentro.draw(batch);
-		backgroundDerecha.draw(batch);
-		backgroundIzquierdaAbajo.draw(batch);
-		backgroundAbajo.draw(batch);
-		backgroundDerechaAbajo.draw(batch);
+		for(int i = 0;i<fondos.size();i++) { //Dibujamos todos los fondos
+			fondos.get(i).draw(batch);
+		}
 	}
 }

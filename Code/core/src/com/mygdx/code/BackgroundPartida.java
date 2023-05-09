@@ -17,7 +17,6 @@ public class BackgroundPartida {
 	float w;
 	
 	OrthographicCamera camara;
-	boolean a = false;
 	
 	
 	public BackgroundPartida(float relation,OrthographicCamera camara, Code code) {

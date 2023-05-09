@@ -109,7 +109,7 @@ public class Opciones implements Screen {
 			
 			
 			Fondo = new Texture("fondoMenuPrincipal.png");
-			Tabla = new Texture("opciones.png");
+			Tabla = new Texture("Menu.png");
 			
 			
 	    	
@@ -244,6 +244,8 @@ public class Opciones implements Screen {
 		
 		
 		batch.begin();
+		
+			
 	    batch.draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
 	    batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
 	    

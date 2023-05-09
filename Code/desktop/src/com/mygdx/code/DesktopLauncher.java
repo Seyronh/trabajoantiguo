@@ -8,7 +8,9 @@ import com.mygdx.code.Code;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(90);
+
+		config.setForegroundFPS(60);
+
 		config.useVsync(true);
 		config.setFullscreenMode(config.getDisplayMode());
 		config.setTitle("Dragon Boat Racing");

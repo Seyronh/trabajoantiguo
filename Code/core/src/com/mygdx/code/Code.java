@@ -18,9 +18,6 @@ public class Code extends Game {
 	Music music;
 	private MyInputProcessor inputProcessor;
 
-	
-	
-	
 	//////
 
 	public int moverIzquierda = Keys.A;
@@ -66,5 +63,18 @@ public class Code extends Game {
 	@Override
 	public void dispose() {
 		batch.dispose();
+	}
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+		
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
 	}
 }

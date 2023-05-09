@@ -49,6 +49,14 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("fondoMenuPrincipal.png", Texture.class);
 		this.code.manager.load("botondownplchld.png", Texture.class);
 		this.code.manager.load("botonplchld.png", Texture.class);
+		
+		//
+		this.code.manager.load("Titulo.png", Texture.class);
+		this.code.manager.load("Menus/madera.png", Texture.class);
+		
+		
+		//
+		
 		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(10, 10, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);

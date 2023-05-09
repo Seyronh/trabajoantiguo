@@ -8,6 +8,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -32,8 +33,29 @@ public class PantallaPartida implements Screen {
 	Code code;
 	BackgroundPartida background;
 	ArrayList<Body> borrar = new ArrayList<Body>();
+	
+	
+	/////////
+	
+	
+	private int commandnum;
+	
+	public enum State{
+		
+		RUNNING,
+		PAUSE
+		
+	}
+	
+	private State state;
+	
+	
 	public PantallaPartida(Code code) {
 		this.code = code;
+		
+		/////
+		state = State.RUNNING;
+		commandnum = 0;
 	}
 
 	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Vector2 tamanio) {
@@ -79,14 +101,21 @@ public class PantallaPartida implements Screen {
 
 	@Override
 	public void render(float delta) {
-		if(boat.aplicado) {
-			boat.tiempo += 100*delta;
-			if(boat.tiempo > 1000) {
-				boat.tiempo = 0;
-				boat.aplicado = false;
-				boat.resetStats();
+		
+		switch (state) {
+		case RUNNING:
+			
+
+			if(boat.aplicado) {
+				boat.tiempo += 100*delta;
+				if(boat.tiempo > 1000) {
+					boat.tiempo = 0;
+					boat.aplicado = false;
+					boat.resetStats();
+				}
 			}
-		}
+			
+		
 		ScreenUtils.clear(1, 1, 1, 1);
 		if(Gdx.input.isKeyPressed(code.moverIzquierda)) {
 			boat.girarIzquierda();
@@ -108,63 +137,142 @@ public class PantallaPartida implements Screen {
 			boat.cansancio += 0.16666f * delta;
 		}
 
-		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
-			PowerUp poder = boat.usarPowerUp();
-			if(poder != null) {
-				boat.aplicado = true;
-				boat.elegido.aceleracion += poder.aceleracion;
-				boat.elegido.movilidad += poder.movilidad;
-				boat.vida += poder.curacion;
-				if(boat.vida > boat.elegido.vidamax) {
-					boat.vida = boat.elegido.vidamax;
+
+			if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+				PowerUp poder = boat.usarPowerUp();
+				if(poder != null) {
+					boat.aplicado = true;
+					boat.elegido.aceleracion += poder.aceleracion;
+					boat.elegido.movilidad += poder.movilidad;
+					boat.vida += poder.curacion;
+					if(boat.vida > boat.elegido.vidamax) {
+						boat.vida = boat.elegido.vidamax;
+					}
+					boat.cansancio += poder.cansancio;
+					if(boat.cansancio > 100) {
+						boat.cansancio = 100;
+					}
+					boat.poder = null;
 				}
-				boat.cansancio += poder.cansancio;
-				if(boat.cansancio > 100) {
-					boat.cansancio = 100;
-				}
-				boat.poder = null;
 			}
-		}
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			code.setScreen(new MainMenuScreen(code));
+			if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+				
+				state = State.PAUSE;
+			}
+			
+			Vector2 pos2 = boat.body.getPosition();
+			camara.position.set(new Vector3(pos2.x,pos2.y,0));
+			camara.update();
+			debugRenderer.render(fisicas, camara.combined);
+			Array<Body> lista = new Array<Body>();
+			fisicas.getBodies(lista);
+			Iterator<Body> iter = lista.iterator();
+		    Body body;
+		    Sprite sprite;
+		    background.animate(delta);
+		    this.code.batch.setProjectionMatrix(camara.combined);
+		    this.code.batch.begin();
+		    background.draw(this.code.batch);
+		    while (iter.hasNext()) {
+		        body = iter.next();
+		        UserData data = (UserData) body.getUserData();
+		        sprite = (Sprite) data.foto;
+		        Vector2 pos = body.getPosition();
+		        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
+		        sprite.setCenter(pos.x, pos.y);
+		        sprite.draw(this.code.batch);
+		    }
+		    this.code.batch.end();
+		    accumulator += Math.min(delta, 0.25f);
+
+		    if (accumulator >= STEP_TIME) {
+		        accumulator -= STEP_TIME;
+
+		        fisicas.step(STEP_TIME, 6, 2);
+		    }
+		    for(int i = 0;i<this.borrar.size();i++) {
+		    	fisicas.destroyBody(this.borrar.get(i));
+		    	if(i == this.borrar.size()-1) {
+		    		this.borrar = new ArrayList<Body>();
+		    	}
+		    }
+			
+			
+			break;
+		case PAUSE:
+			
+			//Aqui ya las cosas
+			
+			 if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+		    		
+		    		commandnum++;
+		    		
+		    		if(commandnum > 2) {
+		    			
+		    			commandnum = 0;
+		    		}
+		    		
+		    	}
+			  if(Gdx.input.isKeyPressed(Keys.UP)) {
+		    		
+		    		commandnum--;
+		    		
+		    		if(commandnum < 0) {
+		    			
+		    			commandnum = 2;
+		    		}
+		    		
+		    }
+			
+			Texture Fondo = new Texture("pausa.png");
+			
+
+			
+			code.batch.begin();
+
+
+		//	code.batch.draw(Fondo,0 , 0);
+			
+			
+			
+			code.batch.end();
+			
+			
+			switch (commandnum) {
+			
+			case 0:
+				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+					
+					state = State.RUNNING;
+				}
+				break;
+			case 1:
+				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+					
+					code.setScreen(new MainMenuScreen(code));
+				}
+				break;
+			case 2:
+				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+					
+					System.exit(0);
+				}
+				break;
+			
+			
+			}
+
+			
+			
+			
+			break;
+		
+		
+
 		}
 		
-		Vector2 pos2 = boat.body.getPosition();
-		camara.position.set(new Vector3(pos2.x,pos2.y,0));
-		camara.update();
-		debugRenderer.render(fisicas, camara.combined);
-		Array<Body> lista = new Array<Body>();
-		fisicas.getBodies(lista);
-		Iterator<Body> iter = lista.iterator();
-	    Body body;
-	    Sprite sprite;
-	    background.animate(delta);
-	    this.code.batch.setProjectionMatrix(camara.combined);
-	    this.code.batch.begin();
-	    background.draw(this.code.batch);
-	    while (iter.hasNext()) {
-	        body = iter.next();
-	        UserData data = (UserData) body.getUserData();
-	        sprite = (Sprite) data.foto;
-	        Vector2 pos = body.getPosition();
-	        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
-	        sprite.setCenter(pos.x, pos.y);
-	        sprite.draw(this.code.batch);
-	    }
-	    this.code.batch.end();
-	    accumulator += Math.min(delta, 0.25f);
-
-	    if (accumulator >= STEP_TIME) {
-	        accumulator -= STEP_TIME;
-
-	        fisicas.step(STEP_TIME, 6, 2);
-	    }
-	    for(int i = 0;i<this.borrar.size();i++) {
-	    	fisicas.destroyBody(this.borrar.get(i));
-	    	if(i == this.borrar.size()-1) {
-	    		this.borrar = new ArrayList<Body>();
-	    	}
-	    }
+		
+		
 	  
 	}
 
@@ -177,6 +285,7 @@ public class PantallaPartida implements Screen {
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
+		
 		
 	}
 

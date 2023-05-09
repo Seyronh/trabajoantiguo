@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class SeleccionBarco implements Screen {
 
-	final Code game;
+	final Code code;
 
 	private Stage stage;
 
@@ -40,18 +40,24 @@ public class SeleccionBarco implements Screen {
 	private int commandnum;
 
 	private boolean arrows;
-	private ArrayList<Pais> paises = new ArrayList(); // Lista de paises a mostrar
-	private ArrayList<Barco> barcos = new ArrayList(); // Lista de barcos a mostrar
-	private int posPais, posBarco; // Posición cogida de país y barco del array
+	private int posPais, posTipoBarco; // Posición cogida de país y barco del array
 
 	float anchoBoton;
 	float altoBoton;
+	private Texture vida;
+	private Texture velocidad;
+	private Texture movilidad;
+	private Texture aceleracion;
+	private Texture barraVida;
+	private Texture barraVelocidad;
+	private Texture barraMovilidad;
+	private Texture barraAceleracion;
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	// Preferences prefs;
 
-	public SeleccionBarco(final Code game) {
+	public SeleccionBarco(final Code code) {
 
-		this.game = game;
+		this.code = code;
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 
@@ -62,12 +68,19 @@ public class SeleccionBarco implements Screen {
 		anchoBoton = anchoPantalla * 25 / 100;
 		altoBoton = altoPantalla * 10 / 100;
 
-		seleccionarIzquierda = new Texture("flechaSeleccionIzquierda.png");
-		seleccionarDerecha = new Texture("flechaSeleccionDerecha.png");
-		textoSeleccion = new Texture("textoSeleccionBarcoPais.png");
+		seleccionarIzquierda = code.manager.get("flechaSeleccionIzquierda.png", Texture.class);
+		seleccionarDerecha = code.manager.get("flechaSeleccionDerecha.png", Texture.class);
+		textoSeleccion = code.manager.get("textoSeleccionBarcoPais.png",Texture.class);
 		
-		cargarPaises();
-		cargarBarcos();
+		vida = code.manager.get("Volumen.png", Texture.class);
+		velocidad = code.manager.get("Volumen.png", Texture.class);
+		movilidad = code.manager.get("Volumen.png", Texture.class);
+		aceleracion = code.manager.get("Volumen.png", Texture.class);
+		
+		barraVida = code.manager.get("Barra.png", Texture.class);
+		barraAceleracion = code.manager.get("Barra.png", Texture.class);
+		barraMovilidad = code.manager.get("Barra.png", Texture.class);
+		barraVelocidad= code.manager.get("Barra.png", Texture.class);
 		
 //		if (game.paisSeleccionado != null) {
 //			boolean encontrado = false;
@@ -100,14 +113,9 @@ public class SeleccionBarco implements Screen {
 		batch = new SpriteBatch();
 
 		
-		fondo = new Texture("fondoMenuPrincipal.png");
-		imagenPais = new Texture(game.paisSeleccionado.getBandera());
-		
-		/**
-		 * Manera correcta de coger el barco, aún no tenemos
-		 */
-		//imagenBarco = new Texture("barco" + posBarco + ".png");
-		imagenBarco = new Texture("barquito.png");
+		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
+		imagenPais = code.manager.get(code.paisSeleccionado.getBandera(), Texture.class);
+		imagenBarco = code.manager.get(code.tipoBarcoSeleccionado.barco, Texture.class);
 		
 		
 		
@@ -137,20 +145,26 @@ public class SeleccionBarco implements Screen {
 		// SALIR
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 
-			game.setScreen(new MainMenuScreen(game));
+			code.setScreen(new MainMenuScreen(code));
 		}
 		
 		// Inicia Juego
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 
-			game.setScreen(new PantallaPartida(game));
+			code.setScreen(new PantallaPartida(code));
 		}
 
+		BitmapFont fuente = new BitmapFont();
+		fuente.setColor(Color.GOLDENROD);
+		fuente.getData().setScale(4.0f, 4.0f);
 
 		batch.begin();
 		batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 		batch.draw(imagenPais, anchoPantalla * 35/100, altoPantalla*6/10, anchoPantalla/4, altoPantalla/4);
 		batch.draw(imagenBarco, anchoPantalla * 35/100, altoPantalla*15/100, anchoPantalla/4, altoPantalla/4);
+		fuente.draw(batch, code.paisSeleccionado.getNombre(), anchoPantalla * 35/100, altoPantalla*57/100);
+		
+		setearVistaValoresBarco();
 		// batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4,
 		// altoPantalla*6/10);
 
@@ -179,26 +193,22 @@ public class SeleccionBarco implements Screen {
 			if (commandnum == 0) {
 				posPais++;
 
-				if (posPais >= paises.size()) {
+				if (posPais >= code.paises.size()) {
 					posPais = 0;
 				}
 
-				game.paisSeleccionado = paises.get(posPais);
-				imagenPais = new Texture(game.paisSeleccionado.getBandera());
+				code.paisSeleccionado = code.paises.get(posPais);
+				imagenPais = new Texture(code.paisSeleccionado.getBandera());
 				
 			} else {
-				posBarco++;
+				posTipoBarco++;
 
-				if (posBarco >= barcos.size()) {
-					posBarco = 0;
+				if (posTipoBarco >= code.tipoBarcos.size()) {
+					posTipoBarco = 0;
 				}
-
-				game.barcoSeleccionado = barcos.get(posBarco);
-				/**
-				 * Manera correcta de coger el barco, aún no tenemos
-				 */
-				//imagenBarco = new Texture("barco" + posBarco + ".png");
-				imagenBarco = new Texture("barquito.png");
+				code.tipoBarcoSeleccionado = code.tipoBarcos.get(posTipoBarco);
+				imagenBarco = new Texture(code.tipoBarcoSeleccionado.barco);
+				setearVistaValoresBarco();
 			}
 		}
 		
@@ -207,25 +217,21 @@ public class SeleccionBarco implements Screen {
 				posPais--;
 
 				if (posPais < 0) {
-					posPais = (paises.size() - 1);
+					posPais = (code.paises.size() - 1);
 				}
 
-				game.paisSeleccionado = paises.get(posPais);
-				imagenPais = new Texture(game.paisSeleccionado.getBandera());
+				code.paisSeleccionado = code.paises.get(posPais);
+				imagenPais = new Texture(code.paisSeleccionado.getBandera());
 			} else {
-				posBarco--;
+				posTipoBarco--;
 
-				if (posBarco < 0) {
-					posBarco = (barcos.size() - 1);
+				if (posTipoBarco < 0) {
+					posTipoBarco = (code.tipoBarcos.size() - 1);
 				}
 
-				game.barcoSeleccionado = barcos.get(posBarco);
-				
-				/**
-				 * Manera correcta de coger el barco, aún no tenemos
-				 */
-				//imagenBarco = new Texture("barco" + posBarco + ".png");
-				imagenBarco = new Texture("barquito.png");
+				code.tipoBarcoSeleccionado = code.tipoBarcos.get(posTipoBarco);
+				imagenBarco = new Texture(code.tipoBarcoSeleccionado.barco);
+				setearVistaValoresBarco();
 			}
 		}
 
@@ -253,14 +259,14 @@ public class SeleccionBarco implements Screen {
 
 			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 
-				game.setScreen(new PantallaPartida(game));
+				code.setScreen(new PantallaPartida(code));
 			}
 			break;
 		case 1:
 
 			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 
-				game.setScreen(new Opciones(game));
+				code.setScreen(new Opciones(code));
 			}
 			break;
 
@@ -271,47 +277,20 @@ public class SeleccionBarco implements Screen {
 		stage.act(delta);
 		stage.draw();
 	}
-
-	// Método que añade todos los países al array para mostrarlos
-	private void cargarPaises() {
-		paises.add(new Pais("ES", "España", "espana.png"));
-		paises.add(new Pais("CH", "China", "china.png"));
-		paises.add(new Pais("JP", "Japon", "japon.png"));
-		paises.add(new Pais("CS", "Corea del Sur", "coreaSur.png"));
-		paises.add(new Pais("BR", "Brasil", "brasil.png"));
-		paises.add(new Pais("RU", "Reino Unido", "reinoUnido.png"));
-		paises.add(new Pais("ID", "Indonesia", "indonesia.png"));
-		paises.add(new Pais("AU", "Australia", "australia.png"));
-		paises.add(new Pais("EU", "Estados Unidos", "estadosUnidos.png"));
-		paises.add(new Pais("RU", "Rusia", "rusia.png"));
-		paises.add(new Pais("SD", "Sudáfrica", "sudafrica.png"));
-		paises.add(new Pais("BO", "Bolivia", "bolivia.png"));
-		paises.add(new Pais("AL", "Alemania", "alemania.png"));
-		paises.add(new Pais("FR", "Francia", "francia.png"));
-		paises.add(new Pais("CHAD", "Chad", "chad.png"));
-		paises.add(new Pais("NIG", "Nigeria", "nigeria.png"));
-		paises.add(new Pais("CM", "Costa de Marfil", "costaMarfil.png"));
-		paises.add(new Pais("CAM", "Camerún", "camerun.png"));
-		paises.add(new Pais("GR", "Grecia", "grecia.png"));
-		paises.add(new Pais("EG", "Egipto", "egipto.png"));
-		paises.add(new Pais("SU", "Suecia", "suecia.png"));
-		paises.add(new Pais("SUI", "Suiza", "suiza.png"));
-		paises.add(new Pais("CA", "Canada", "canada.png"));
-		paises.add(new Pais("MX", "México", "mexico.png"));
-		paises.add(new Pais("AR", "Argentina", "argentina.png"));
-		paises.add(new Pais("CU", "Cuba", "cuba.png"));
-		paises.add(new Pais("SL", "SriLanka", "sriLanka.png"));
-		paises.add(new Pais("MAU", "Islas Mauricio", "mauricio.png"));
-		paises.add(new Pais("MA", "Madagascar", "madagascar.png"));
-		paises.add(new Pais("VA", "Vaticano", "vaticano.png"));
-		paises.add(new Pais("IT", "Italia", "italia.png"));
-		paises.add(new Pais("IN", "India", "india.png"));
-	}
-
-	// Método que añade todos los barcos al array para mostrarlos
-	private void cargarBarcos() {
-		barcos.add(new Barco(new TipoBarco(5f, 5f, "barquito.png", 10f, 10f), null));
-		// TODO meter los barcos
+	
+	private void setearVistaValoresBarco() {
+		batch.draw(code.manager.get("vida.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 38 / 100, anchoBoton / 4, altoBoton / 2);
+		batch.draw(vida, anchoPantalla * 72 / 100, altoPantalla * 36 / 100, anchoBoton, altoBoton / 4);
+		batch.draw(barraVida, anchoPantalla * 72 / 100, altoPantalla * 36 / 100, anchoBoton *(code.tipoBarcoSeleccionado.vidamax / 10), altoBoton / 4);
+		batch.draw(code.manager.get("velocidad.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 31 / 100, anchoBoton / 3, altoBoton / 2);
+		batch.draw(velocidad, anchoPantalla * 72 / 100, altoPantalla * 29 / 100, anchoBoton, altoBoton / 4);
+		batch.draw(barraVelocidad, anchoPantalla * 72 / 100, altoPantalla * 29 / 100, anchoBoton *(code.tipoBarcoSeleccionado.velocidadmax / 10), altoBoton / 4);
+		batch.draw(code.manager.get("aceleracion.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 24 / 100, anchoBoton / 3, altoBoton / 2);
+		batch.draw(aceleracion, anchoPantalla * 72 / 100, altoPantalla * 22 / 100, anchoBoton, altoBoton / 4);
+		batch.draw(barraAceleracion, anchoPantalla * 72 / 100, altoPantalla * 22 / 100, anchoBoton *(code.tipoBarcoSeleccionado.aceleracion / 10), altoBoton / 4);
+		batch.draw(code.manager.get("movilidad.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 17 / 100, anchoBoton / 3, altoBoton / 2);
+		batch.draw(movilidad, anchoPantalla * 72 / 100, altoPantalla * 15 / 100, anchoBoton, altoBoton / 4);
+		batch.draw(barraMovilidad, anchoPantalla * 72 / 100, altoPantalla * 15 / 100, anchoBoton *(code.tipoBarcoSeleccionado.movilidad / 10), altoBoton / 4);
 	}
 
 	@Override

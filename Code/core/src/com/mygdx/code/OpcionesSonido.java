@@ -24,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class OpcionesSonido implements Screen {
 
-	final Code game;
+	final Code code;
 
 	private Stage stage;
 
@@ -32,40 +32,42 @@ public class OpcionesSonido implements Screen {
 	private float altoPantalla;
 
 	private SpriteBatch batch;
-	private Texture Fondo;
-	private Texture Tabla;
+	private Texture fondo;
+	private Texture tabla;
 
 	private Texture seleccionar;
-	private Texture volumen;
+	private Texture imagenVolumen;
 	private Texture barra;
 
 	private int commandnum;
 
-	float AnchoBoton;
-	float AltoBoton;
+	float anchoBoton;
+	float altoBoton;
 
-	boolean Silenciar;
-	float Volumen;
+	boolean silenciar;
+	float volumen;
 
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	// Preferences prefs;
 
-	public OpcionesSonido(final Code game) {
+	public OpcionesSonido(final Code code) {
 
-		this.game = game;
+		this.code = code;
 
-		Silenciar = false;
-		Volumen = 1f;
+		if (code.music != null) {
+			silenciar = code.music.getVolume() == 0;
+			volumen = code.music.getVolume();
+		}
 
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 
 		commandnum = 0;
 
-		AnchoBoton = anchoPantalla * 15 / 100;
-		AltoBoton = altoPantalla * 10 / 100;
+		anchoBoton = anchoPantalla * 15 / 100;
+		altoBoton = altoPantalla * 10 / 100;
 
-		seleccionar = new Texture("seleccionar.png");
+		seleccionar = code.manager.get("seleccionar.png", Texture.class);
 		// cargarPantalla();
 	}
 
@@ -79,11 +81,11 @@ public class OpcionesSonido implements Screen {
 		stage = new Stage();
 		batch = new SpriteBatch();
 
-		Fondo = new Texture("fondoMenuPrincipal.png");
-		Tabla = new Texture("opciones.png");
+		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
+		tabla = code.manager.get("opciones.png", Texture.class);
 
-		volumen = new Texture("Volumen.png");
-		barra = new Texture("Barra.png");
+		imagenVolumen = code.manager.get("Volumen.png", Texture.class);
+		barra = code.manager.get("Barra.png", Texture.class);
 
 		Table table2 = new Table();
 		table2.setPosition(0, 0);
@@ -170,8 +172,8 @@ public class OpcionesSonido implements Screen {
 
 		TextButtonStyle styleb = new TextButtonStyle();
 
-		Texture buttondown = new Texture("botondownplchld.png");
-		Texture buttonup = new Texture("botonplchld.png");
+		Texture buttondown = code.manager.get("botondownplchld.png", Texture.class);
+		Texture buttonup = code.manager.get("botonplchld.png", Texture.class);
 
 		styleb.down = new TextureRegionDrawable(new TextureRegion(buttondown));
 		styleb.up = new TextureRegionDrawable(new TextureRegion(buttonup));
@@ -181,7 +183,7 @@ public class OpcionesSonido implements Screen {
 
 		TextButton buttonVolver = new TextButton("Volver", styleb); // TEXTURA
 		buttonVolver.setPosition(BotonX, BotonY);
-		buttonVolver.setSize(AnchoBoton, AltoBoton);
+		buttonVolver.setSize(anchoBoton, altoBoton);
 		buttonVolver.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
@@ -191,7 +193,7 @@ public class OpcionesSonido implements Screen {
 
 				dispose();
 
-				game.setScreen(new Opciones(game));
+				code.setScreen(new Opciones(code));
 			}
 		});
 		table2.addActor(buttonVolver);
@@ -213,28 +215,31 @@ public class OpcionesSonido implements Screen {
 
 			dispose();
 
-			game.setScreen(new Opciones(game));
+			code.setScreen(new Opciones(code));
 		}
 
 		batch.begin();
-		batch.draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
-		batch.draw(Tabla, anchoPantalla * 38 / 100, altoPantalla * 3 / 10, anchoPantalla / 4, altoPantalla * 6 / 10);
+		batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
+		batch.draw(tabla, anchoPantalla * 38 / 100, altoPantalla * 3 / 10, anchoPantalla / 4, altoPantalla * 6 / 10);
 
-		batch.draw(volumen, anchoPantalla * 47 / 100, altoPantalla * 67 / 100, AnchoBoton, AltoBoton / 2);
+		batch.draw(imagenVolumen, anchoPantalla * 47 / 100, altoPantalla * 67 / 100, anchoBoton, altoBoton / 2);
 
-		batch.draw(barra, anchoPantalla * 47 / 100, altoPantalla * 67 / 100, AnchoBoton * Volumen, AltoBoton / 2);
+		batch.draw(barra, anchoPantalla * 47 / 100, altoPantalla * 67 / 100, anchoBoton * volumen, altoBoton / 2);
 
-		if (Silenciar) {
+		if (silenciar) {
 
 			batch.draw(new Texture("botoncheckedplchld.png"), anchoPantalla * 58 / 100, altoPantalla * 57 / 100,
-					AltoBoton / 2, AltoBoton / 2);
-			game.music.setVolume(0f);
+					altoBoton / 2, altoBoton / 2);
+			if (code.music != null) {
+				code.music.setVolume(0f);
+			}
 		} else {
 
 			batch.draw(new Texture("botonuncheckedplchld.png"), anchoPantalla * 58 / 100, altoPantalla * 57 / 100,
-					AltoBoton / 2, AltoBoton / 2);
-			game.music.setVolume(Volumen);
-
+					altoBoton / 2, altoBoton / 2);
+			if (code.music != null) {
+				code.music.setVolume(volumen);
+			}
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
@@ -261,7 +266,7 @@ public class OpcionesSonido implements Screen {
 		if (Gdx.graphics.isFullscreen()) {
 
 			batch.draw(seleccionar, anchoPantalla * 39 / 100,
-					altoPantalla * 65 / 100 - altoPantalla * 10 / 100 * commandnum, AnchoBoton / 2, AltoBoton); // Pantalla
+					altoPantalla * 65 / 100 - altoPantalla * 10 / 100 * commandnum, anchoBoton / 2, altoBoton); // Pantalla
 																												// completa
 
 		} else {
@@ -273,37 +278,37 @@ public class OpcionesSonido implements Screen {
 		case 0:
 
 			if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-				Volumen += 0.1f;
+				volumen += 0.1f;
 
-				if (Volumen > 1f) {
-					Volumen = 1f;
+				if (volumen > 1f) {
+					volumen = 1f;
 				}
 
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 
-				Volumen -= 0.1f;
-				if (Volumen < 0f) {
-					Volumen = 0f;
+				volumen -= 0.1f;
+				if (volumen < 0f) {
+					volumen = 0f;
 				}
 			}
 
-			if (!Silenciar) {
-				game.music.setVolume(Volumen);
+			if (!silenciar && code.music != null) {
+				code.music.setVolume(volumen);
 			}
 			break;
 		case 1:
 
 			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 
-				Silenciar = !Silenciar;
+				silenciar = !silenciar;
 
 			}
 			break;
 		case 2:
 			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 
-				game.setScreen(new Opciones(game));
+				code.setScreen(new Opciones(code));
 
 				// game.setScreen(new OpcionesSonido(game));
 			}

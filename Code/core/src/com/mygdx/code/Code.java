@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+
+import java.util.ArrayList;
+
 import javax.sound.sampled.AudioSystem;
 import com.badlogic.gdx.audio.Music;
 import javax.sound.sampled.Mixer;
@@ -17,7 +20,9 @@ public class Code extends Game {
 	Music music;
 	private MyInputProcessor inputProcessor;
 	Pais paisSeleccionado;
-	Barco barcoSeleccionado;
+	TipoBarco tipoBarcoSeleccionado;
+	ArrayList<TipoBarco> tipoBarcos = new ArrayList(); // Lista de tipos de barcos a mostrar
+	ArrayList<Pais> paises = new ArrayList(); // Lista de paises a mostrar
 
 	//////
 
@@ -56,11 +61,54 @@ public class Code extends Game {
 		manager = new AssetManager();
 		manager.load("Fondo_Inicio.jpg", Texture.class);
 		manager.finishLoading();
-		setScreen(new PantallaDeInicio(this));
 		paisSeleccionado = new Pais("ES", "España", "espana.png");
-		barcoSeleccionado = new Barco(new TipoBarco(5f, 5f, "barquito.png", 10f, 10f), null);
-
+		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barquito.png", 10f, 10f);
+		cargarPaises();
+		setScreen(new PantallaDeInicio(this));
+		cargarTiposBarcos();
 	}
+	
+	// Método que añade todos los tipos de barcos al array
+	private void cargarTiposBarcos() {
+		tipoBarcos.add(new TipoBarco(5f, 5f, "barquito.png", 10f, 10f));
+		// TODO meter los barcos
+	}
+	
+	// Método que añade todos los países al array para mostrarlos
+		private void cargarPaises() {
+			paises.add(new Pais("ES", "España", "espana.png"));
+			paises.add(new Pais("CH", "China", "china.png"));
+			paises.add(new Pais("JP", "Japon", "japon.png"));
+			paises.add(new Pais("CS", "Corea del Sur", "coreaSur.png"));
+			paises.add(new Pais("BR", "Brasil", "brasil.png"));
+			paises.add(new Pais("RU", "Reino Unido", "reinoUnido.png"));
+			paises.add(new Pais("ID", "Indonesia", "indonesia.png"));
+			paises.add(new Pais("AU", "Australia", "australia.png"));
+			paises.add(new Pais("EU", "Estados Unidos", "estadosUnidos.png"));
+			paises.add(new Pais("RU", "Rusia", "rusia.png"));
+			paises.add(new Pais("SD", "Sudáfrica", "sudafrica.png"));
+			paises.add(new Pais("BO", "Bolivia", "bolivia.png"));
+			paises.add(new Pais("AL", "Alemania", "alemania.png"));
+			paises.add(new Pais("FR", "Francia", "francia.png"));
+			paises.add(new Pais("CHAD", "Chad", "chad.png"));
+			paises.add(new Pais("NIG", "Nigeria", "nigeria.png"));
+			paises.add(new Pais("CM", "Costa de Marfil", "costaMarfil.png"));
+			paises.add(new Pais("CAM", "Camerún", "camerun.png"));
+			paises.add(new Pais("GR", "Grecia", "grecia.png"));
+			paises.add(new Pais("EG", "Egipto", "egipto.png"));
+			paises.add(new Pais("SU", "Suecia", "suecia.png"));
+			paises.add(new Pais("SUI", "Suiza", "suiza.png"));
+			paises.add(new Pais("CA", "Canada", "canada.png"));
+			paises.add(new Pais("MX", "México", "mexico.png"));
+			paises.add(new Pais("AR", "Argentina", "argentina.png"));
+			paises.add(new Pais("CU", "Cuba", "cuba.png"));
+			paises.add(new Pais("SL", "SriLanka", "sriLanka.png"));
+			paises.add(new Pais("MAU", "Islas Mauricio", "mauricio.png"));
+			paises.add(new Pais("MA", "Madagascar", "madagascar.png"));
+			paises.add(new Pais("VA", "Vaticano", "vaticano.png"));
+			paises.add(new Pais("IT", "Italia", "italia.png"));
+			paises.add(new Pais("IN", "India", "india.png"));
+		}
 
 	@Override
 	public void dispose() {

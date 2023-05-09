@@ -22,7 +22,7 @@ public class OpcionesControles implements Screen {
 
 	
 	
-	final Code game;
+	final Code code;
 	
 	private Stage stage;
 	
@@ -30,8 +30,8 @@ public class OpcionesControles implements Screen {
 	private float altoPantalla;
 	
 	private SpriteBatch batch;
-	private Texture Fondo;
-	private Texture Tabla;
+	private Texture fondo;
+	private Texture tabla;
 	
 	private Texture seleccionar;
 	
@@ -45,21 +45,21 @@ public class OpcionesControles implements Screen {
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	//Preferences prefs;
 	
-	public OpcionesControles(final Code game) {
+	public OpcionesControles(final Code code) {
 
-		this.game = game;
+		this.code = code;
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 		
 		
 		commandnum = 0;
 		
-		arrows = game.moverIzquierda == Keys.LEFT;;
+		arrows = code.moverIzquierda == Keys.LEFT;;
 		
 		AnchoBoton = anchoPantalla *15/100;
 		AltoBoton = altoPantalla *5/100;
 		
-		seleccionar = new Texture("seleccionar.png");
+		seleccionar = code.manager.get("seleccionar.png", Texture.class);
 		//cargarPantalla();
 	}
 	
@@ -77,8 +77,8 @@ public class OpcionesControles implements Screen {
     	stage = new Stage();
 		batch = new SpriteBatch();
 		
-		Fondo = new Texture("fondoMenuPrincipal.png");
-		Tabla = new Texture("opciones.png");
+		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
+		tabla = code.manager.get("opciones.png", Texture.class);
     	
 		Table table2 = new Table();
 	    table2.setPosition(0,0);
@@ -96,8 +96,8 @@ public class OpcionesControles implements Screen {
 	    	TextButtonStyle styleb = new TextButtonStyle();
 		
 		
-	    	Texture buttondown = new Texture("botondownplchld.png");
-	    	Texture buttonup = new Texture("botonplchld.png");
+	    	Texture buttondown = code.manager.get("botondownplchld.png", Texture.class);
+	    	Texture buttonup = code.manager.get("botonplchld.png", Texture.class);
 		
 	    	styleb.down = new TextureRegionDrawable(new TextureRegion(buttondown));
 	    	styleb.up = new TextureRegionDrawable(new TextureRegion(buttonup));
@@ -163,7 +163,7 @@ public class OpcionesControles implements Screen {
 						
 						dispose();
 						
-						game.setScreen(new Opciones(game));
+						code.setScreen(new Opciones(code));
 					}
 				});
 				
@@ -191,13 +191,13 @@ public class OpcionesControles implements Screen {
 
 			dispose();
 			
-			game.setScreen(new Opciones(game));
+			code.setScreen(new Opciones(code));
 		}
 		
 		
 		batch.begin();
-	    batch.draw(Fondo, 0, 0, anchoPantalla, altoPantalla);
-	    batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
+	    batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
+	    batch.draw(tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10);
 
 	    
 	    
@@ -262,26 +262,26 @@ public class OpcionesControles implements Screen {
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
     			
-	    		 game.moverIzquierda = arrows ? Keys.LEFT : Keys.A;
-	    		 game.moverDerecha = arrows ? Keys.RIGHT : Keys.D;
-	    		 game.moverArriba = arrows ? Keys.UP : Keys.W;
-	    		 game.frenar = arrows ? Keys.DOWN : Keys.S;
+	    		 code.moverIzquierda = arrows ? Keys.LEFT : Keys.A;
+	    		 code.moverDerecha = arrows ? Keys.RIGHT : Keys.D;
+	    		 code.moverArriba = arrows ? Keys.UP : Keys.W;
+	    		 code.frenar = arrows ? Keys.DOWN : Keys.S;
 
 	    		 
-	    		 game.setScreen(new Opciones(game));
+	    		 code.setScreen(new Opciones(code));
 	    		 
 	    	}
 	    		
 	    	
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    		game.moverIzquierda = Keys.LEFT;
+	    		code.moverIzquierda = Keys.LEFT;
 	    		
 	    		
 	    		arrows = true;
 	    	}
 	    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    		game.moverIzquierda = Keys.A;
+	    		code.moverIzquierda = Keys.A;
 	    		
 	    		arrows = false;
 	    	}
@@ -293,7 +293,7 @@ public class OpcionesControles implements Screen {
 	    case 1:
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-	    		game.setScreen(new Opciones(game));
+	    		code.setScreen(new Opciones(code));
 	    	}
 	    	break;
 	    

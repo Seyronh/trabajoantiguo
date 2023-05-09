@@ -92,7 +92,7 @@ public class Opciones implements Screen {
 		
 		
 		
-		// Crea una tabla, donde añadiremos los elementos de menú
+		// Crea una tabla, donde aÃ±adiremos los elementos de menÃº
 //		Table table2 = new Table();
 //		
 //		table2.setPosition(0, 300);
@@ -109,7 +109,7 @@ public class Opciones implements Screen {
 			
 			
 			fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
-			tabla = code.manager.get("opciones.png", Texture.class);
+			tabla = code.manager.get("Menu.png", Texture.class);
 			
 			
 	    	

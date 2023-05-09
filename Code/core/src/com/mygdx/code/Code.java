@@ -114,4 +114,17 @@ public class Code extends Game {
 	public void dispose() {
 		batch.dispose();
 	}
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+		
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
 }

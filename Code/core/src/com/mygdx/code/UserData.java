@@ -8,6 +8,7 @@ public class UserData {
 	public int tipo;
 	public PowerUp poder;
 	public Barco barco;
+	public Obstaculo obstaculo;
 	public UserData(Sprite foto,int id,Barco barco) {
 		this.foto = foto;
 		this.id = id;
@@ -19,5 +20,11 @@ public class UserData {
 		this.id = id;
 		this.tipo = 2;
 		this.poder = poder;
+	}
+	public UserData(Sprite foto,int id,Obstaculo obstaculo) {
+		this.foto = foto;
+		this.id = id;
+		this.tipo = 3;
+		this.obstaculo = obstaculo;
 	}
 }

@@ -15,6 +15,7 @@ import javax.sound.sampled.Mixer;
 public class Code extends Game {
 	SpriteBatch batch;
   AssetManager manager;
+  	int dificultad;
 	Music music;
 	private MyInputProcessor inputProcessor;
 
@@ -38,6 +39,7 @@ public class Code extends Game {
 
 	@Override
 	public void create() {
+		dificultad = 1;
 		batch = new SpriteBatch();
     		/**
 		 * Quita el puntero del rat�n

@@ -62,15 +62,19 @@ public class Code extends Game {
 		manager.load("Fondo_Inicio.jpg", Texture.class);
 		manager.finishLoading();
 		paisSeleccionado = new Pais("ES", "España", "espana.png");
-		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barquito.png", 10f, 10f);
+		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f);
 		cargarPaises();
-		setScreen(new PantallaDeInicio(this));
 		cargarTiposBarcos();
+		setScreen(new PantallaDeInicio(this));
 	}
 	
 	// Método que añade todos los tipos de barcos al array
 	private void cargarTiposBarcos() {
-		tipoBarcos.add(new TipoBarco(5f, 5f, "barquito.png", 10f, 10f));
+		tipoBarcos.add(new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f));
+		tipoBarcos.add(new TipoBarco(3f, 8f, "barcoMovilidad.png", 6f, 3f));
+		tipoBarcos.add(new TipoBarco(2f, 5f, "barcoVida.png", 10f, 3f));
+		tipoBarcos.add(new TipoBarco(4f, 3f, "barcoSpeed.png", 5f, 8f));
+		tipoBarcos.add(new TipoBarco(8f, 6f, "barcoAceleracion.png", 3f, 3f));
 		// TODO meter los barcos
 	}
 	

@@ -23,7 +23,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class PantallaPartida implements Screen {
 	static final float relation = (Gdx.graphics.getWidth()/Gdx.graphics.getHeight())+15;
 	static final float STEP_TIME = 1f/60f;
-	static int numObstaculos = 20;
+	static int numObstaculos = 50;
 	float accumulator = 0;
 	private int ids=0;
 	private float tiempo = 0;
@@ -37,6 +37,7 @@ public class PantallaPartida implements Screen {
 	Box2DDebugRenderer debugRenderer;
 	Code code;
 	BackgroundPartida background;
+	Carriles carriles;
 	ArrayList<Body> borrar = new ArrayList<Body>();
 	public PantallaPartida(Code code) {
 		this.code = code;
@@ -66,10 +67,10 @@ public class PantallaPartida implements Screen {
 		 */
 		camara = new OrthographicCamera(Gdx.graphics.getWidth()/relation,Gdx.graphics.getHeight()/relation);  
 		background = new BackgroundPartida(relation,camara, this.code);
+		carriles = new Carriles(this.code,camara);
 		Box2D.init();
-		debugRenderer = new Box2DDebugRenderer();
 		fisicas = new World(new Vector2(0, 0), true);
-		fisicas.setContactListener(new Colisiones(borrar,this.code.dificultad));
+		fisicas.setContactListener(new Colisiones(borrar,this.code.dificultad,this.code));
 		/*
 		 * FIN CREACION FISICAS
 		 */
@@ -79,14 +80,15 @@ public class PantallaPartida implements Screen {
 		Sprite barquito = new Sprite(this.code.manager.get("barquito.png",Texture.class),294,886);
 		barquito.setScale(0.20f/relation);
 		
-		Body barcoj = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(20,85));
-		jugador = new Barco(new TipoBarco(5f,5f,"Neutro",5f,5f),barcoj);
+		Body barcoj = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
+		jugador = new Barco(new TipoBarco(6f,5f,"Neutro",5f,5f),barcoj);
 		barcoj.setUserData(new UserData(barquito,ids,jugador));
 		ids++;
 		
 		for(int i = 0;i<3;i++) {
-			Body barcoia = crearCuerpo(new Vector2(10+10*i,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(20,85));
-			Barco bia = new Barco(new TipoBarco(5f,5f,"Neutro",5f,5f),barcoia);
+			Body barcoia = crearCuerpo(new Vector2(10+10*i,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
+			barcoia.setTransform(carriles.obtenerMedio(i+2), barcoia.getAngle());
+			Barco bia = new Barco(new TipoBarco(5f,5f,"Neutro",5f,5f),barcoia,true);
 			IA ia = new IA(this.code.dificultad);
 			barcoia.setUserData(new UserData(barquito,ids,bia));
 			BarcosIA.add(bia);
@@ -102,8 +104,8 @@ public class PantallaPartida implements Screen {
 		 */
 		for(int i = 0;i<PantallaPartida.numObstaculos;i++) {
 			Vector3 posc = this.camara.position;
-			float posx = (float) Math.random()*Gdx.graphics.getWidth()/relation;
-			float posy = (float) Math.random()*Gdx.graphics.getHeight()/relation;
+			float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
+			float posy = (float) Math.random()*camara.viewportHeight;
 			posy += Gdx.graphics.getHeight()/relation;
 			if(Math.random()<0.5f) {
 				posx = -posx;
@@ -111,7 +113,7 @@ public class PantallaPartida implements Screen {
 			Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
 			Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
 			obst.setScale(0.003f*obstaculo.tamanio/relation);
-			Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,false,new Vector2(obstaculo.tamanio,obstaculo.tamanio));
+			Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
 			obstaculob.setUserData(new UserData(obst,ids,obstaculo));
 			obstaculos.add(obstaculob);
 			ids++;
@@ -134,6 +136,7 @@ public class PantallaPartida implements Screen {
 		powerup2.setUserData(new UserData(power,ids,new PowerUp(20f, 20f, 0f, false, 0f)));
 		ids++;
 		*/
+		barcoj.setTransform(carriles.obtenerMedio(1), barcoj.getAngle());
 	}
 
 	@Override
@@ -169,17 +172,17 @@ public class PantallaPartida implements Screen {
 		for(int i = 0;i<this.BarcosIA.size();i++) {
 			IA ia = this.IAs.get(i);
 			Barco bia = this.BarcosIA.get(i);
-			float accion = ia.getAccion(bia.body.getPosition(),bia.body.getAngle(),obstaculos);
-			if(accion<0.1f) {
+			float accion = ia.getAccion(bia.body.getPosition(),bia.body.getAngle(),obstaculos,carriles.obtenerMedio(i+2),new Vector2(10,10));
+			if(accion == 0) {
 				bia.girarDerecha();
 			}
-			if(accion>0.1f&&accion<0.2f) {
+			if(accion == 1) {
 				bia.girarIzquierda();
 			}
-			if(accion>=0.2f&&accion<=0.7f) {
+			if(accion == 2) {
 				bia.acelerar();
 			}
-			if(accion>0.7f) {
+			if(accion == 3) {
 				bia.frenar();
 			}
 		}
@@ -205,27 +208,38 @@ public class PantallaPartida implements Screen {
 		}
 		
 		Vector2 pos2 = jugador.body.getPosition();
-		camara.position.set(new Vector3(pos2.x,pos2.y,0));
+		camara.position.set(new Vector3(camara.position.x,pos2.y,0));
 		camara.update();
 		BitmapFont fuente = new BitmapFont();
 		fuente.setColor(Color.GOLDENROD);
 		fuente.getData().setScale(5.0f/relation, 5.0f/relation);
-		debugRenderer.render(fisicas, camara.combined);
 		Array<Body> lista = new Array<Body>();
 		fisicas.getBodies(lista);
 		Iterator<Body> iter = lista.iterator();
 	    Body body;
 	    Sprite sprite;
+	    Vector2 playerposition = new Vector2(0,0);
 	    background.animate(delta);
+	    carriles.update();
 	    this.code.batch.setProjectionMatrix(camara.combined);
 	    this.code.batch.begin();
 	    background.draw(this.code.batch);
+	    carriles.draw(this.code.batch);
 	    fuente.draw(this.code.batch,"Vida:"+jugador.vida,camara.position.x,camara.position.y);
 	    while (iter.hasNext()) {
 	        body = iter.next();
 	        UserData data = (UserData) body.getUserData();
 	        sprite = (Sprite) data.foto;
 	        Vector2 pos = body.getPosition();
+	        if(data.tipo == 1 && !data.barco.ia) {
+	        	playerposition.set(pos);
+	        }
+	        if(body.getPosition().x<-camara.viewportWidth/2) {
+	        	body.setTransform(-camara.viewportWidth/2,body.getPosition().y,body.getAngle());
+	        }
+	        if(body.getPosition().x>camara.viewportWidth/2) {
+	        	body.setTransform(camara.viewportWidth/2,body.getPosition().y,body.getAngle());
+	        }
 	        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
 	        sprite.setCenter(pos.x, pos.y);
 	        sprite.draw(this.code.batch);
@@ -238,11 +252,61 @@ public class PantallaPartida implements Screen {
 
 	        fisicas.step(STEP_TIME, 6, 2);
 	    }
+	    ArrayList<Body> aux = new ArrayList<Body>();
+	    for(int i = 0;i<obstaculos.size();i++) {
+	    	Body obs = obstaculos.get(i);
+	    	if(!this.borrar.contains(obs)) {
+	    	Vector2 pos = obs.getPosition();
+	    	if(pos.x<playerposition.x-camara.viewportWidth) {
+	    		if(!this.borrar.contains(obs)) {
+	    			this.borrar.add(obs);
+	    		}
+	    		if(!aux.contains(obs)) {
+	    			aux.add(obs);
+	    		}
+	    	} else
+	    	if(pos.x>playerposition.x+camara.viewportWidth) {
+	    		if(!this.borrar.contains(obs)) {
+	    			this.borrar.add(obs);
+	    		}
+	    		if(!aux.contains(obs)) {
+	    			aux.add(obs);
+	    		}
+	    	} else
+	    	if(pos.y<playerposition.y-camara.viewportHeight) {
+	    		if(!this.borrar.contains(obs)) {
+	    			this.borrar.add(obs);
+	    		}
+	    		if(!aux.contains(obs)) {
+	    			aux.add(obs);
+	    		}
+	    	}
+	    	} else {
+	    		aux.add(obs);
+	    	}
+	    }
+	    obstaculos.removeAll(aux);
 	    for(int i = 0;i<this.borrar.size();i++) {
 	    	fisicas.destroyBody(this.borrar.get(i));
-	    	if(i == this.borrar.size()-1) {
-	    		this.borrar.clear();
-	    	}
+	    }
+	    this.borrar.clear();
+	    if(obstaculos.size()<PantallaPartida.numObstaculos) {
+			for(int i = 0;i<PantallaPartida.numObstaculos-obstaculos.size();i++) {
+				Vector3 posc = this.camara.position;
+				float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
+				float posy = (float) Math.random()*camara.viewportHeight;
+				posy += Gdx.graphics.getHeight()/relation;
+				if(Math.random()<0.5f) {
+					posx = -posx;
+				}
+				Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
+				Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
+				obst.setScale(0.003f*obstaculo.tamanio/relation);
+				Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
+				obstaculob.setUserData(new UserData(obst,ids,obstaculo));
+				obstaculos.add(obstaculob);
+				ids++;
+			}
 	    }
 	  
 	}

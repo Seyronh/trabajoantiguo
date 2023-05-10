@@ -1,6 +1,7 @@
 package com.mygdx.code;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -12,7 +13,9 @@ public class Colisiones implements ContactListener{
 	static int danioBaseBarcos = 1;
 	int dificultad;
 	ArrayList<Body> borrar;
-	public Colisiones(ArrayList<Body> borrar,int dificultad) {
+	Code code;
+	public Colisiones(ArrayList<Body> borrar,int dificultad,Code code) {
+		this.code = code;
 		this.borrar = borrar;
 		this.dificultad = dificultad;
 	}
@@ -49,14 +52,30 @@ public class Colisiones implements ContactListener{
 		if((Data1.tipo == 1 && Data2.tipo == 3) || (Data1.tipo == 3 && Data2.tipo == 1)) { //CHOQUE OBSTACULO
 			if(Data1.tipo == 1) {
 				this.borrar.add(Cuerpo2);
+				Vector2 vel = Cuerpo1.getLinearVelocity();
+				Vector2 velco = new Vector2(vel.x,vel.y);
+				velco.rotateDeg(180);
+				velco.scl(1.5f);
+				Cuerpo1.applyLinearImpulse(velco, Cuerpo1.getPosition(),true);
 				boolean muerto = Data1.barco.recibirDanio(Data2.obstaculo.danio*this.dificultad);
 				if(muerto) {
+					if(!Data1.barco.ia) {
+						this.code.setScreen(new MainMenuScreen(this.code));
+					}
 					this.borrar.add(Cuerpo1);
 				}
 			} else {
 				this.borrar.add(Cuerpo1);
+				Vector2 vel = Cuerpo1.getLinearVelocity();
+				Vector2 velco = new Vector2(vel.x,vel.y);
+				velco.rotateDeg(180);
+				velco.scl(1.5f);
+				Cuerpo1.applyLinearImpulse(velco, Cuerpo1.getPosition(),true);
 				boolean muerto = Data2.barco.recibirDanio(Data1.obstaculo.danio*this.dificultad);
 				if(muerto) {
+					if(!Data2.barco.ia) {
+						this.code.setScreen(new MainMenuScreen(this.code));
+					}
 					this.borrar.add(Cuerpo2);
 				}
 			}

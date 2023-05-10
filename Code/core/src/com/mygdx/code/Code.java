@@ -39,7 +39,7 @@ public class Code extends Game {
 
 	@Override
 	public void create() {
-		dificultad = 1;
+		dificultad = 2;
 		batch = new SpriteBatch();
     		/**
 		 * Quita el puntero del rat�n

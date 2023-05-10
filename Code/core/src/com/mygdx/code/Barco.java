@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Barco {
 	static float basemovilidad = 20f;
-	static float baseaceleracion = 20f;
+	static float baseaceleracion = 10f;
 	static float basevidamax = 100f;
 	static float basevelocidadmax = 100f;
 	static float basecansamiento = 0.5f;
@@ -19,8 +19,16 @@ public class Barco {
 	public PowerUp poder = null;
 	public float tiempo = 0;
 	public boolean aplicado = false;
+	public boolean ia = false;
 	
 	public Barco(TipoBarco elegido,Body body) {
+		this.elegidoOriginal = new TipoBarco(elegido.aceleracion,elegido.movilidad,elegido.barco,elegido.vidamax,elegido.velocidadmax);
+		this.elegido = elegido;
+		this.vida = Barco.basevidamax*this.elegido.vidamax/5;
+		this.body = body;
+	}
+	public Barco(TipoBarco elegido,Body body,boolean ia) {
+		this.ia = ia;
 		this.elegidoOriginal = new TipoBarco(elegido.aceleracion,elegido.movilidad,elegido.barco,elegido.vidamax,elegido.velocidadmax);
 		this.elegido = elegido;
 		this.vida = Barco.basevidamax*this.elegido.vidamax/5;

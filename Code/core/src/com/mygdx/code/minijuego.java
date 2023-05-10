@@ -40,8 +40,7 @@ public class minijuego implements Screen{
         this.game = game;
         anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
-        puntuacion = 0;
-        strPuntuacion = puntuacion + "/3";
+        
         MAX_PUNTOS = 3;
         rnd = new Random();
         subir = 0;
@@ -52,6 +51,8 @@ public class minijuego implements Screen{
         stage = new Stage();
         batch = new SpriteBatch();
         //puntuacion
+        puntuacion = 0;
+        
         fuente = new BitmapFont();
         fuente.setColor(0, 0, 0, 1);
         fuente.getData().setScale(5, 5);
@@ -69,8 +70,8 @@ public class minijuego implements Screen{
         indicador = new Texture("indicadorVertical.png");
 
         //barraProgresp
-        Pixmap pixmap = new Pixmap(100, 20, Format.RGBA8888);
-        pixmap.setColor(Color.RED);
+        Pixmap pixmap = new Pixmap(25, 9000, Format.RGBA8888);
+        pixmap.setColor(Color.SCARLET);
         pixmap.fill();
         TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
         pixmap.dispose();
@@ -78,25 +79,27 @@ public class minijuego implements Screen{
         ProgressBarStyle progressBarStyle = new ProgressBarStyle();
         progressBarStyle.background = drawable;
 
-        Pixmap pixmap2 = new Pixmap(0, 20, Format.RGBA8888);
-        pixmap2.setColor(Color.GREEN);
+        Pixmap pixmap2 = new Pixmap(25, 10, Format.RGBA8888);
+        pixmap2.setColor(Color.FOREST);
         pixmap2.fill();
-        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap2)));
+        TextureRegionDrawable drawable2 = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap2)));
         pixmap2.dispose();
  
-        progressBarStyle.knob = drawable;
+        progressBarStyle.knob = drawable2;
 
-        Pixmap pixmap3 = new Pixmap(100, 20, Format.RGBA8888);
-        pixmap3.setColor(Color.GREEN);
+        Pixmap pixmap3 = new Pixmap(25, 9000, Format.RGBA8888);
+        pixmap3.setColor(Color.CHARTREUSE);
         pixmap3.fill();
-        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap3)));
+        TextureRegionDrawable drawable3 = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap3)));
         pixmap3.dispose();
+        progressBarStyle.knobBefore = drawable3;
 
-        ProgressBar barraProgreso = new ProgressBar(0.0f, 1.0f, 0.01f, false, progressBarStyle);
-        barraProgreso.setValue(1.0f);
+        barraProgreso = new ProgressBar(0.0f, 1.0f, 0.02f, true, progressBarStyle);
+        barraProgreso.setValue(0.0f);
         barraProgreso.setAnimateDuration(0.25f);
-        barraProgreso.setBounds(10, 10, 100, 20);
- 
+        barraProgreso.setBounds(anchoPantalla/2 + 75 , altoPantalla/2 - 30, 30, 300);
+        //barraProgreso.setPosition(anchoPantalla/2 + 75 , altoPantalla/2 - 30);
+        
         stage.addActor(barraProgreso);      
 
         //pez
@@ -133,7 +136,7 @@ public class minijuego implements Screen{
         Boolean empezar = false; 
         
         batch.draw(pezV, anchoPantalla/2 + 130, posY, 30, 50);
-        //Colisiones
+        //Colisiones pez y barra
         if (posY > minY && posY < maxY){
             posY += -10 + rnd.nextFloat() * 20 ;
         } else if (posY <= minY){
@@ -143,16 +146,11 @@ public class minijuego implements Screen{
         }
 
         //dibujar puntuacion
+        strPuntuacion = puntuacion + "/3";
         fuente.draw(batch, strPuntuacion, 100, altoPantalla-70);
         batch.draw(pezH, 230, altoPantalla-125, 80, 50);
 
-        /* 
-        if(pescado()){
-            puntuacion++;
-            fuente.draw(batch, strPuntuacion, 100, altoPantalla-70);
-        } */
-
-        //Colisiones
+        //Colisiones indicador y barra
         if(Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY < maxY){
             if((maxY - indicadorY) >= 8){
                 subir+=8;
@@ -170,9 +168,24 @@ public class minijuego implements Screen{
         } else if (indicadorY >= minY){
             indicadorY -= 50;
         }
+        
         batch.end();
         stage.draw();
         stage.act();
+
+        //pescar
+        if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
+            barraProgreso.setValue(barraProgreso.getValue() + 0.02f);
+            if(barraProgreso.getValue() == barraProgreso.getMaxValue()){
+                puntuacion++;
+                barraProgreso.setValue(0.0f);
+                if(puntuacion == 3){
+                    
+                }
+            }
+        }
+
+        //ganar
     }
 
     @Override

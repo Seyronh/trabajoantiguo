@@ -40,7 +40,7 @@ public class SeleccionBarco implements Screen {
 	private int commandnum;
 
 	private boolean arrows;
-	private int posPais, posTipoBarco; // Posición cogida de país y barco del array
+	private int posPais, posTipoBarco; // Posiciï¿½n cogida de paï¿½s y barco del array
 
 	float anchoBoton;
 	float altoBoton;
@@ -52,6 +52,8 @@ public class SeleccionBarco implements Screen {
 	private Texture barraVelocidad;
 	private Texture barraMovilidad;
 	private Texture barraAceleracion;
+	private boolean delay;
+	private float delayi;
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	// Preferences prefs;
 
@@ -140,17 +142,27 @@ public class SeleccionBarco implements Screen {
 
 	@Override
 	public void render(float delta) {
+		delayi+=delta;
+		if(delayi > 0.3f) {
+			delayi = 0f;
+			delay=false;
+		}
 		// TODO Auto-generated method stub
 
 		// SALIR
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-
+			
 			code.setScreen(new MainMenuScreen(code));
 		}
 		
 		// Inicia Juego
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-
+    		try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			code.setScreen(new PantallaPartida(code));
 		}
 
@@ -168,8 +180,8 @@ public class SeleccionBarco implements Screen {
 		// batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4,
 		// altoPantalla*6/10);
 
-		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-
+		if (Gdx.input.isKeyPressed(Keys.DOWN) && !delay) {
+			delay = true;
 			commandnum++;
 
 			if (commandnum > 1) {
@@ -178,8 +190,8 @@ public class SeleccionBarco implements Screen {
 			}
 
 		}
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
-
+		if (Gdx.input.isKeyPressed(Keys.UP) && !delay) {
+			delay = true;
 			commandnum--;
 
 			if (commandnum < 0) {
@@ -189,7 +201,8 @@ public class SeleccionBarco implements Screen {
 
 		}
 
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		if (Gdx.input.isKeyPressed(Keys.RIGHT) && !delay) {
+			delay = true;
 			if (commandnum == 0) {
 				posPais++;
 
@@ -212,7 +225,8 @@ public class SeleccionBarco implements Screen {
 			}
 		}
 		
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Keys.LEFT) && !delay) {
+			delay = true;
 			if (commandnum == 0) {
 				posPais--;
 
@@ -254,22 +268,9 @@ public class SeleccionBarco implements Screen {
 
 		}
 
-		switch (commandnum) {
-		case 0:
+		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 
-			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-
-				code.setScreen(new PantallaPartida(code));
-			}
-			break;
-		case 1:
-
-			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-
-				code.setScreen(new Opciones(code));
-			}
-			break;
-
+			code.setScreen(new PantallaPartida(code));
 		}
 
 		batch.end();

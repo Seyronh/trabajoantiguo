@@ -158,13 +158,13 @@ public class PantallaSalir implements Screen{
 		
 		
 		
-		
+		/*
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 
 			dispose();
 			
 			game.setScreen(new Opciones(game));
-		}
+		}*/
 		
 		
 		batch.begin();

@@ -46,7 +46,8 @@ public class MainMenuScreen implements Screen {
     float altoBoton;
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	//Preferences prefs;
-	
+	private boolean delay;
+	private float delayi;
 	public MainMenuScreen(final Code code) {
 
 		this.code = code;
@@ -62,6 +63,8 @@ public class MainMenuScreen implements Screen {
 		altoBoton = altoPantalla *10/100;
 
 		seleccionar = this.code.manager.get("Menus/madera.png",Texture.class);
+		this.delay = false;
+		this.delayi = 0f;
 		//cargarPantalla();
 	}
 	
@@ -187,12 +190,23 @@ public class MainMenuScreen implements Screen {
 	
 	@Override
 	public void show() {
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// TODO Auto-generated method stub
 		cargarPantalla();
 	}
 
 	@Override
 	public void render(float delta) {
+		delayi += delta;
+		if(delayi > 0.3f) {
+			delayi = 0f;
+			delay = false;
+		}
 		// TODO Auto-generated method stub	
 	
 //		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
@@ -202,7 +216,7 @@ public class MainMenuScreen implements Screen {
 //			System.exit(0);
 //		}
 	    
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act(delta);
 		stage.getBatch().begin();
 		stage.getBatch().draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 		stage.getBatch().draw(titulo,anchoPantalla*5/100,altoPantalla*70/100,anchoPantalla*95/100/(16/9) , altoPantalla*18/100/(16/9));
@@ -229,8 +243,8 @@ public class MainMenuScreen implements Screen {
 	   // batch.draw(new Texture("sliderknob.png"), anchoPantalla/2, altoPantalla/2, 2, 200);
 	    
 	    
-	    if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-    		
+	    if(Gdx.input.isKeyPressed(Keys.DOWN) && !delay) {
+	    	delay = true;
     		commandnum++;
     		
     		if(commandnum > 3) {
@@ -239,8 +253,8 @@ public class MainMenuScreen implements Screen {
     		}
     		
     	}
-	    if(Gdx.input.isKeyPressed(Keys.UP)) {
-    		
+	    if(Gdx.input.isKeyPressed(Keys.UP)&& !delay) {
+    		delay = true;
     		commandnum--;
     		
     		if(commandnum < 0) {
@@ -265,26 +279,40 @@ public class MainMenuScreen implements Screen {
 	    	
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-	    		
+	    		try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    		code.setScreen(new SeleccionBarco(code));
 	    	}
 	    	break;
 	    case 1:
 	    	
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-	    		
+	    		try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    		code.setScreen(new OpcionesControles(code));
 	    	}
 	    	break;
 	    case 2:
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-	    		
+	    		try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    		code.setScreen(new OpcionesSonido(code));
 	    	}
 	    	break;
 	    case 3:
 	    	if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-	    		
 	    		System.exit(0);
 	    	}
 	    	break;

@@ -42,7 +42,8 @@ public class OpcionesControles implements Screen {
 	
 	float anchoBoton;
     float altoBoton;
-    
+    private float delayi;
+    private boolean delay;
    
     
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
@@ -193,7 +194,11 @@ public class OpcionesControles implements Screen {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		
+		delayi += delta;
+		if(delayi > 0.3f) {
+			delayi = 0f;
+			delay = false;
+		}
 		
 		
 		
@@ -255,8 +260,8 @@ public class OpcionesControles implements Screen {
 			stage.getBatch().draw(code.manager.get("Menus/Volver.png", Texture.class), medidax + anchoPantalla*5/100, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 			
 		    
-		    if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-	    		
+		    if(Gdx.input.isKeyPressed(Keys.DOWN) && !delay) {
+	    		delay = true;
 	    		commandnum++;
 	    		
 	    		if(commandnum > 1) {
@@ -265,8 +270,8 @@ public class OpcionesControles implements Screen {
 	    		}
 	    		
 	    	}
-		    if(Gdx.input.isKeyPressed(Keys.UP)) {
-	    		
+		    if(Gdx.input.isKeyPressed(Keys.UP) && !delay) {
+	    		delay = true;
 	    		commandnum--;
 	    		
 	    		if(commandnum < 0) {

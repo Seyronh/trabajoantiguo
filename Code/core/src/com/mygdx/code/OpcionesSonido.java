@@ -46,6 +46,8 @@ public class OpcionesSonido implements Screen {
 
 	boolean silenciar;
 	float volumen;
+    private float delayi;
+    private boolean delay;
 
 	// Almacena las preferencias (en %UserProfile%/.prefs/PreferencesName)
 	// Preferences prefs;
@@ -216,6 +218,11 @@ public class OpcionesSonido implements Screen {
 
 	@Override
 	public void render(float delta) {
+		delayi += delta;
+		if(delayi > 0.3f) {
+			delayi = 0f;
+			delay = false;
+		}
 		// TODO Auto-generated method stub
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 
@@ -272,8 +279,8 @@ public class OpcionesSonido implements Screen {
 			//	game.music.setVolume(Volumen);
 		}
 
-		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-
+		if (Gdx.input.isKeyPressed(Keys.DOWN) && !delay) {
+			delay = true;
 			commandnum++;
 
 			if (commandnum > 2) {
@@ -282,8 +289,8 @@ public class OpcionesSonido implements Screen {
 			}
 
 		}
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
-
+		if (Gdx.input.isKeyPressed(Keys.UP) && !delay) {
+			delay = true;
 			commandnum--;
 
 			if (commandnum < 0) {
@@ -303,7 +310,8 @@ public class OpcionesSonido implements Screen {
 		switch (commandnum) {
 		case 0:
 
-			if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			if (Gdx.input.isKeyPressed(Keys.RIGHT) && !delay) {
+				delay = true;
 				volumen += 0.1f;
 
 				if (volumen > 1f) {
@@ -311,8 +319,8 @@ public class OpcionesSonido implements Screen {
 				}
 
 			}
-			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-
+			if (Gdx.input.isKeyPressed(Keys.LEFT) && !delay) {
+				delay = true;
 				volumen -= 0.1f;
 				if (volumen < 0f) {
 					volumen = 0f;
@@ -325,8 +333,8 @@ public class OpcionesSonido implements Screen {
 			break;
 		case 1:
 
-			if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-
+			if (Gdx.input.isKeyPressed(Keys.ENTER) && !delay) {
+				delay = true;
 				silenciar = !silenciar;
 
 			}

@@ -48,7 +48,6 @@ public class PantallaDeInicio implements Screen {
 	private void cargarImagenes() {
 		this.code.manager.load("aguaMar.png", Texture.class);
 		this.code.manager.load("aguaRio.png", Texture.class);
-		this.code.manager.load("barcoNormal.png", Texture.class);
 		this.code.manager.load("bronce.png", Texture.class);
 		this.code.manager.load("oro.png", Texture.class);
 		this.code.manager.load("plata.png", Texture.class);

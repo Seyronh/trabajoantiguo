@@ -87,7 +87,7 @@ public class PantallaPartida implements Screen {
 		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		Body powerup2 = crearCuerpo(new Vector2(20,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		boat = new Barco(new TipoBarco(20f,20f,"Neutro",10f,100f),barco);
-		Sprite barquito = new Sprite(this.code.manager.get("barquito.png",Texture.class),294,886);
+		Sprite barquito = new Sprite(this.code.manager.get("barcoNormal.png",Texture.class),1024,1024);
 		barquito.setScale(0.20f/relation);
 		barco.setUserData(new UserData(barquito,ids,boat));
 		ids++;

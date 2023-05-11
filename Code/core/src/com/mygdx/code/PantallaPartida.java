@@ -23,10 +23,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class PantallaPartida implements Screen {
 	static final float relation = (Gdx.graphics.getWidth()/Gdx.graphics.getHeight())+15;
 	static final float STEP_TIME = 1f/60f;
-	static int numObstaculos = 50;
+	static int numObstaculos = 20;
 	float accumulator = 0;
 	private int ids=0;
-	private float tiempo = 0;
+	//private float tiempo = 0;
 	World fisicas;
 	Barco jugador;
 	ArrayList<Barco> BarcosIA = new ArrayList<Barco>();
@@ -81,15 +81,16 @@ public class PantallaPartida implements Screen {
 		barquito.setScale(0.20f/relation);
 		
 		Body barcoj = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
-		jugador = new Barco(new TipoBarco(6f,5f,"Neutro",5f,5f),barcoj);
+		jugador = new Barco(new TipoBarco(6f,5f,"Neutro",5f,6f),barcoj);
 		barcoj.setUserData(new UserData(barquito,ids,jugador));
 		ids++;
 		
-		for(int i = 0;i<3;i++) {
+		for(int i = 0;i<1;i++) {
 			Body barcoia = crearCuerpo(new Vector2(10+10*i,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
 			barcoia.setTransform(carriles.obtenerMedio(i+2), barcoia.getAngle());
-			Barco bia = new Barco(new TipoBarco(5f,5f,"Neutro",5f,5f),barcoia,true);
-			IA ia = new IA(this.code.dificultad);
+			TipoBarco iab = new TipoBarco(5f,5f,"Neutro",5f,5f);
+			Barco bia = new Barco(iab,barcoia,true);
+			IA ia = new IA(this.code.dificultad,iab);
 			barcoia.setUserData(new UserData(barquito,ids,bia));
 			BarcosIA.add(bia);
 			IAs.add(ia);
@@ -105,7 +106,7 @@ public class PantallaPartida implements Screen {
 		for(int i = 0;i<PantallaPartida.numObstaculos;i++) {
 			Vector3 posc = this.camara.position;
 			float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
-			float posy = (float) Math.random()*camara.viewportHeight;
+			float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
 			posy += Gdx.graphics.getHeight()/relation;
 			if(Math.random()<0.5f) {
 				posx = -posx;
@@ -172,17 +173,19 @@ public class PantallaPartida implements Screen {
 		for(int i = 0;i<this.BarcosIA.size();i++) {
 			IA ia = this.IAs.get(i);
 			Barco bia = this.BarcosIA.get(i);
-			float accion = ia.getAccion(bia.body.getPosition(),bia.body.getAngle(),obstaculos,carriles.obtenerMedio(i+2),new Vector2(10,10));
-			if(accion == 0) {
+			float[] accion = ia.getAccion(bia.body.getPosition(),bia.body.getAngle(),obstaculos,carriles.obtenerMedio(i+2),new Vector2(10,10),bia.body.getAngularVelocity());
+			if(accion[1] == 0) {
+				bia.fuerzaia = accion[2];
 				bia.girarDerecha();
 			}
-			if(accion == 1) {
+			if(accion[1] == 1) {
+				bia.fuerzaia = accion[2];
 				bia.girarIzquierda();
 			}
-			if(accion == 2) {
+			if(accion[0] == 1) {
 				bia.acelerar();
 			}
-			if(accion == 3) {
+			if(accion[0] == 0) {
 				bia.frenar();
 			}
 		}
@@ -234,11 +237,20 @@ public class PantallaPartida implements Screen {
 	        if(data.tipo == 1 && !data.barco.ia) {
 	        	playerposition.set(pos);
 	        }
+	        if(data.tipo == 1 && data.barco.ia && body.getPosition().y>(camara.viewportHeight+playerposition.y)+camara.viewportHeight/2) {
+				Vector2 vel = body.getLinearVelocity();
+				Vector2 velco = new Vector2(vel.x,vel.y);
+				velco.rotateDeg(180);
+				velco.scl(1.5f);
+				body.applyForce(velco, body.getPosition(),true);
+	        }
 	        if(body.getPosition().x<-camara.viewportWidth/2) {
 	        	body.setTransform(-camara.viewportWidth/2,body.getPosition().y,body.getAngle());
+	        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
 	        }
 	        if(body.getPosition().x>camara.viewportWidth/2) {
 	        	body.setTransform(camara.viewportWidth/2,body.getPosition().y,body.getAngle());
+	        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
 	        }
 	        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
 	        sprite.setCenter(pos.x, pos.y);
@@ -294,7 +306,7 @@ public class PantallaPartida implements Screen {
 			for(int i = 0;i<PantallaPartida.numObstaculos-obstaculos.size();i++) {
 				Vector3 posc = this.camara.position;
 				float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
-				float posy = (float) Math.random()*camara.viewportHeight;
+				float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
 				posy += Gdx.graphics.getHeight()/relation;
 				if(Math.random()<0.5f) {
 					posx = -posx;

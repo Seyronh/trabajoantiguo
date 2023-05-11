@@ -29,49 +29,51 @@ public class IA {
         return null;
     }
 	int dificultad;
-	public IA(int dificultad){
+	TipoBarco barco;
+	float cooldown = 0f;
+	public IA(int dificultad,TipoBarco b){
 		this.dificultad = dificultad;
+		this.barco = b;
 	}
-	public float getAccion(Vector2 posicion,float angulo,ArrayList<Body> obstaculos,Vector2 posicionmediobarreras,Vector2 meta) {
+	public float[] getAccion(Vector2 posicion,float angulo,ArrayList<Body> obstaculos,Vector2 posicionmediobarreras,Vector2 meta,float velangular) {
+		cooldown -= Gdx.graphics.getDeltaTime();
+		if(cooldown <0f) {
+			cooldown = 0f;
+		}
 		float accion = -1f;
-		ArrayList<Integer> actions = new ArrayList<Integer>();
-		ArrayList<Integer> pesos = new ArrayList<Integer>();
-		actions.add(0);
-		actions.add(1);
-		actions.add(2);
-		actions.add(3);
-		int piz = 0;
-		int pde = 0;
-		int pa = 1;
-		int pf = 1;
+		float accion2 = -1f;
+		float fuerza = 1f;
+		/*ACCION
+		 * -1 - no hacer nada
+		 * 0 - frenar
+		 * 1 - acelerar
+		*/
+		/*ACCION2
+		 * -1 - no hacer nada
+		 * 0 - derecha
+		 * 1 - izquierda
+		*/
 		switch (this.dificultad) {
-			case 1:
-				piz = 0;
-				pde = 0;
-				pf = 0;
-				break;
-			case 2:
-				float dist = posicionmediobarreras.x-posicion.x;
-				float dista = (float) (Math.toDegrees(angulo));
-				float n = (float) Math.floor(dista/180);
-				n = (float) Math.abs(n%2);
-				if(n==0f) {
-					piz += 2*Math.abs(Math.sin(dista));
-				} else if(n==1f){
-					pde += 2*Math.abs(Math.sin(dista));
-				} else {
-					piz = 0;
-					pde = 0;
+		case 1:
+			accion = 1;
+			break;
+		case 2:
+			float disp = (float) Math.abs(angulo*velangular);
+			if(Math.abs(angulo)>0f && cooldown>0) {
+				if(angulo>0) {
+					accion2 = 0;
+				} else if(angulo<0){
+					accion2 = 1;
 				}
-				break;
-		} 
-		pesos.add(pde);
-		pesos.add(piz);
-		pesos.add(pa);
-		pesos.add(pf);
-		int a = IA.getWeightedRandomString(actions, pesos);
-		accion = (float) a;
-		return accion;
+				cooldown = 0.01f*(float) Math.abs(Math.cos(angulo+0.01));
+			}
+			if(Math.abs(angulo)<0.5) {
+				accion = 1;
+			}
+			break;
+	} 
+		float[] acciones = {accion,accion2,fuerza};
+		return acciones;
 	}
 }
 /*

@@ -3,7 +3,7 @@ package com.mygdx.code;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+//import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Barco {
 	static float basemovilidad = 20f;
@@ -20,6 +20,7 @@ public class Barco {
 	public float tiempo = 0;
 	public boolean aplicado = false;
 	public boolean ia = false;
+	public float fuerzaia = 1f;
 	
 	public Barco(TipoBarco elegido,Body body) {
 		this.elegidoOriginal = new TipoBarco(elegido.aceleracion,elegido.movilidad,elegido.barco,elegido.vidamax,elegido.velocidadmax);
@@ -44,17 +45,25 @@ public class Barco {
 		return muerto;
 	}
 	public void girarDerecha() {
-		Vector2 pos = this.body.getPosition();
+		//Vector2 pos = this.body.getPosition();
 		if(Math.abs(this.body.getAngularVelocity()) < Barco.basevelocidadmax*this.elegido.velocidadmax/5) {
-			this.body.applyTorque(-(Barco.basemovilidad*this.elegido.movilidad/5)*(this.cansancio/100), true);
+			if(this.ia) {
+				this.body.applyTorque(-(Barco.basemovilidad*this.elegido.movilidad/5)*(this.cansancio/100)*this.fuerzaia, true);
+			} else {
+				this.body.applyTorque(-(Barco.basemovilidad*this.elegido.movilidad/5)*(this.cansancio/100)*this.fuerzaia, true);
+			}
 		}
 		this.cansancio -= Barco.basecansamiento* Gdx.graphics.getDeltaTime();
 		if(this.cansancio < 0) this.cansancio = 0;
 	}
 	public void girarIzquierda() {
-		Vector2 pos = this.body.getPosition();
+		//Vector2 pos = this.body.getPosition();
 		if(Math.abs(this.body.getAngularVelocity()) < Barco.basevelocidadmax*this.elegido.velocidadmax/5) {
-			this.body.applyTorque((Barco.basemovilidad*this.elegido.movilidad/5)*(this.cansancio/100), true);
+			if(this.ia) {
+				this.body.applyTorque((Barco.basemovilidad*this.elegido.movilidad/5)*(this.cansancio/100)*this.fuerzaia, true);
+			} else {
+				this.body.applyTorque((Barco.basemovilidad*this.elegido.movilidad/5)*(this.cansancio/100)*this.fuerzaia, true);
+			}
 		}
 		this.cansancio -= Barco.basecansamiento * Gdx.graphics.getDeltaTime();
 		if(this.cansancio < 0) this.cansancio = 0;

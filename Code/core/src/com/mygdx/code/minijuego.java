@@ -99,7 +99,7 @@ public class minijuego implements Screen{
 
         barraProgreso = new ProgressBar(0.0f, 1.0f, 0.02f, true, progressBarStyle);
         barraProgreso.setValue(0.0f);
-        barraProgreso.setAnimateDuration(0.25f);
+        barraProgreso.setAnimateDuration(0.1f);
         barraProgreso.setBounds(anchoPantalla/2 + 75 , altoPantalla/2 - 30, 30, 300);
         //barraProgreso.setPosition(anchoPantalla/2 + 75 , altoPantalla/2 - 30);
         
@@ -185,7 +185,7 @@ public class minijuego implements Screen{
         fuente2.setColor(0, 0, 0, 1);
         fuente2.getData().setScale(10, 10);
         if(hasGanado) {
-        	fuente2.draw(batch, "¡HAS GANADO!", 450, altoPantalla-700);
+        	fuente2.draw(batch, "HAS GANADO!", 450, altoPantalla-700);
         }
         
         /* 	MOSTRAR LIMITES COLISIONES
@@ -201,10 +201,13 @@ public class minijuego implements Screen{
         //pescar
     	//if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
     	if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
-        	barraProgreso.setValue(barraProgreso.getValue() + 0.06f);
-            if(barraProgreso.getValue() == barraProgreso.getMaxValue()){
+        	barraProgreso.setValue(barraProgreso.getValue() + 0.08f);
+            Gdx.app.log("Puntuacion", " " + barraProgreso.getValue());
+            Gdx.app.log("Puntos", " " + puntuacion);
+            if(barraProgreso.getValue() >= 1.5f){
                 puntuacion++;
                 barraProgreso.setValue(0.0f);
+
                 if(posY>min+200) {
                     posY = 520;
                 } else {

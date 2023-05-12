@@ -138,9 +138,14 @@ public class minijuego implements Screen{
         Boolean empezar = false; 
         
         batch.draw(pezV, anchoPantalla/2 + 130, posY, 30, 50);
-        //Colisiones pez y barra
+        //movimiento pez
         if (posY > minY && posY < maxY){
-            posY += -10 + rnd.nextFloat() * 20 ;
+            //posY += -10 + rnd.nextFloat() * 20 ;
+        	if (rnd.nextFloat()>0.5) {
+        		posY += -5;
+        	} else {
+        		posY += 5;
+        	}
         } else if (posY <= minY){
             posY += 5;
         } else if (posY >= minY){

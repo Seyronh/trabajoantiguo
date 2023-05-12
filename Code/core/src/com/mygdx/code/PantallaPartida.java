@@ -173,7 +173,7 @@ public class PantallaPartida implements Screen {
 		for(int i = 0;i<this.BarcosIA.size();i++) {
 			IA ia = this.IAs.get(i);
 			Barco bia = this.BarcosIA.get(i);
-			float[] accion = ia.getAccion(bia.body.getPosition(),bia.body.getAngle(),obstaculos,carriles.obtenerMedio(i+2),new Vector2(10,10),bia.body.getAngularVelocity());
+			float[] accion = ia.getAccion(bia.body.getPosition(),bia.body.getAngle(),obstaculos,carriles.obtenerMedio(i+2),new Vector2(10,10),bia.body.getAngularVelocity(),bia.body.getLinearVelocity());
 			if(accion[1] == 0) {
 				bia.fuerzaia = accion[2];
 				bia.girarDerecha();
@@ -182,6 +182,32 @@ public class PantallaPartida implements Screen {
 				bia.fuerzaia = accion[2];
 				bia.girarIzquierda();
 			}
+			if(accion[1] == 2) {
+				float angle = bia.body.getAngle();
+				float nangle = 0;
+				if(Math.abs(angle)>0.01f) {
+					if(angle>0) {
+						nangle = angle-0.007f;
+					} else {
+						nangle = angle+0.007f;
+					}
+				} else {
+					nangle = angle;
+				}
+				bia.body.setTransform(bia.body.getPosition(), nangle);
+			}
+			/*
+			if(accion[1] == 3) {
+				float angle = bia.body.getAngle();
+				float nangle = angle;
+				Vector2 vel = bia.body.getLinearVelocity();
+				if(vel.x>0f) {
+					if(nangle<1.5708f) {
+						nangle = angle+0.007f;
+					}
+				}
+				bia.body.setTransform(bia.body.getPosition(), nangle);
+			}*/
 			if(accion[0] == 1) {
 				bia.acelerar();
 			}

@@ -19,11 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 
 public class minijuego implements Screen{
     final Code game;
     //private Stage stage;Âº
-	private float anchoPantalla, altoPantalla;
+	private float anchoPantalla, altoPantalla, max, min;
 	private Texture fondo, pescador, canaPescar, barraVertical, indicador, pezV, pezH;
     private SpriteBatch batch;
     private float posY;
@@ -35,6 +36,7 @@ public class minijuego implements Screen{
     private int subir;
     private ProgressBar barraProgreso;
     private Stage stage;
+    private boolean estaBajando, hasGanado;
 
     public minijuego(final Code game){
         this.game = game;
@@ -44,6 +46,7 @@ public class minijuego implements Screen{
         MAX_PUNTOS = 3;
         rnd = new Random();
         subir = 0;
+        hasGanado = false;
     }
 
     @Override
@@ -105,8 +108,8 @@ public class minijuego implements Screen{
         //pez
         pezV = new Texture("pezVertical.png");
         Random rnd = new Random();
-        float max = (altoPantalla/2 + 211);
-        float min = (altoPantalla/2 - 22);
+        max = (altoPantalla/2 + 211);
+        min = (altoPantalla/2 - 22);
         posY = min + rnd.nextFloat() * (max - min);
     }
 /*
@@ -116,7 +119,6 @@ public class minijuego implements Screen{
 */
     @Override
     public void render(float delta) {
-        
         batch.begin();
         batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 
@@ -163,29 +165,59 @@ public class minijuego implements Screen{
             } else {
                 subir -= (indicadorY - minY) + 5;
             }
+            }
+        /*
         } else if (indicadorY <= minY){
             indicadorY += 50;
         } else if (indicadorY >= minY){
             indicadorY -= 50;
         }
+        */
+        //timeSeconds +=Gdx.graphics.getDeltaTime();
+        float t1, t2;
         
-        batch.end();
-        stage.draw();
-        stage.act();
-
+        BitmapFont fuente2 = new BitmapFont();
+        fuente2.setColor(0, 0, 0, 1);
+        fuente2.getData().setScale(10, 10);
+        if(hasGanado) {
+        	fuente2.draw(batch, "¡HAS GANADO!", 450, altoPantalla-700);
+        }
+        
+        /* 	MOSTRAR LIMITES COLISIONES
+        BitmapFont fuente3 = new BitmapFont();
+        fuente2.setColor(0, 0, 0, 1);
+        fuente2.getData().setScale(1, 1);
+    	fuente3.draw(batch, "-------------------", 1000, posY+50);
+    	fuente3.draw(batch, "-------------------", 1000, posY+10);
+    	fuente3.draw(batch, "===================", 1000, indicadorY+50);
+    	fuente3.draw(batch, "===================", 1000, indicadorY+10);
+    		MOSTRAR LIMITES COLISIONES 		*/
+    	
         //pescar
-        if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
-            barraProgreso.setValue(barraProgreso.getValue() + 0.02f);
+    	//if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
+    	if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
+        	barraProgreso.setValue(barraProgreso.getValue() + 0.06f);
             if(barraProgreso.getValue() == barraProgreso.getMaxValue()){
                 puntuacion++;
                 barraProgreso.setValue(0.0f);
-                if(puntuacion == 3){
-                    
+                if(posY>min+200) {
+                    posY = 520;
+                } else {
+                	posY = 750;
+                }
+                if(puntuacion >= 3){
+                	hasGanado = true;
                 }
             }
         }
 
+        
         //ganar
+        
+        batch.end();
+        stage.draw();
+        stage.act();
+                
     }
 
     @Override
@@ -194,7 +226,7 @@ public class minijuego implements Screen{
     } 
     @Override
     public void pause() {
-
+    	
     }
 
     @Override

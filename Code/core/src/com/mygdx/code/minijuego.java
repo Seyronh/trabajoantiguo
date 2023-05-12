@@ -204,7 +204,7 @@ public class minijuego implements Screen{
         	barraProgreso.setValue(barraProgreso.getValue() + 0.08f);
             Gdx.app.log("Puntuacion", " " + barraProgreso.getValue());
             Gdx.app.log("Puntos", " " + puntuacion);
-            if(barraProgreso.getValue() >= 1.5f){
+            if(barraProgreso.getValue() >= 1.0f){
                 puntuacion++;
                 barraProgreso.setValue(0.0f);
 

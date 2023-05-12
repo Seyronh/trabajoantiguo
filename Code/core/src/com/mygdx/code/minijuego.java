@@ -119,26 +119,11 @@ public class minijuego implements Screen{
 */
     @Override
     public void render(float delta) {
-        batch.begin();
-        batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
-
         //Para hacer las colisiones
         float maxY = (altoPantalla/2 - 30) + 300 - 60; //50 altura barra
         float minY = (altoPantalla/2 - 30) + 13;
-
-        batch.draw(pescador, anchoPantalla/2 + 225, altoPantalla/2 - 15, 90, 150);
-        batch.draw(canaPescar,anchoPantalla/2 + 270, altoPantalla/2 - 15, 180, 150);
-        batch.draw(barraVertical, anchoPantalla/2 + 120, altoPantalla/2 - 30, 50, 300);
-
         float indicadorY = (altoPantalla/2 - 22) + subir;
-        //posicion inicial indicador
-        batch.draw(indicador, anchoPantalla/2 + 130, indicadorY, 30, 50);
-
-        //dibujar pez en una posicion aleatoria de la barra
-        Boolean empezar = false; 
-        
-        batch.draw(pezV, anchoPantalla/2 + 130, posY, 30, 50);
-        //movimiento pez
+        boolean empezar = false; 
         if (posY > minY && posY < maxY){
             //posY += -10 + rnd.nextFloat() * 20 ;
         	if (rnd.nextFloat()>0.5) {
@@ -151,13 +136,6 @@ public class minijuego implements Screen{
         } else if (posY >= minY){
             posY -= 5;
         }
-
-        //dibujar puntuacion
-        strPuntuacion = puntuacion + "/3";
-        fuente.draw(batch, strPuntuacion, 100, altoPantalla-70);
-        batch.draw(pezH, 230, altoPantalla-125, 80, 50);
-
-        //Colisiones indicador y barra
         if(Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY < maxY){
             if((maxY - indicadorY) >= 8){
                 subir+=8;
@@ -171,6 +149,42 @@ public class minijuego implements Screen{
                 subir -= (indicadorY - minY) + 5;
             }
             }
+    	if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
+        	barraProgreso.setValue(barraProgreso.getValue() + 0.5f*Gdx.graphics.getDeltaTime());
+            if(barraProgreso.getValue() >= 1f){
+                puntuacion++;
+                barraProgreso.setValue(0.0f);
+
+                if(posY>min+200) {
+                    posY = 520;
+                } else {
+                	posY = 750;
+                }
+                if(puntuacion >= 3){
+                	hasGanado = true;
+                }
+            }
+        }
+        //dibujar puntuacion
+        strPuntuacion = puntuacion + "/3";
+        batch.begin();
+        batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
+
+        batch.draw(pescador, anchoPantalla/2 + 225, altoPantalla/2 - 15, 90, 150);
+        batch.draw(canaPescar,anchoPantalla/2 + 270, altoPantalla/2 - 15, 180, 150);
+        batch.draw(barraVertical, anchoPantalla/2 + 120, altoPantalla/2 - 30, 50, 300);
+
+        //posicion inicial indicador
+        batch.draw(indicador, anchoPantalla/2 + 130, indicadorY, 30, 50);
+
+        //dibujar pez en una posicion aleatoria de la barra
+ 
+        fuente.draw(batch, strPuntuacion, 100, altoPantalla-70);
+        batch.draw(pezH, 230, altoPantalla-125, 80, 50);
+        batch.draw(pezV, anchoPantalla/2 + 130, posY, 30, 50);
+
+        //Colisiones indicador y barra
+       
         /*
         } else if (indicadorY <= minY){
             indicadorY += 50;
@@ -200,24 +214,6 @@ public class minijuego implements Screen{
     	
         //pescar
     	//if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
-    	if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
-        	barraProgreso.setValue(barraProgreso.getValue() + 0.08f);
-            Gdx.app.log("Puntuacion", " " + barraProgreso.getValue());
-            Gdx.app.log("Puntos", " " + puntuacion);
-            if(barraProgreso.getValue() >= 1.5f){
-                puntuacion++;
-                barraProgreso.setValue(0.0f);
-
-                if(posY>min+200) {
-                    posY = 520;
-                } else {
-                	posY = 750;
-                }
-                if(puntuacion >= 3){
-                	hasGanado = true;
-                }
-            }
-        }
 
         
         //ganar

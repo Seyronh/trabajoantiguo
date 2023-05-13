@@ -33,7 +33,7 @@ public class IA {
 			if(Math.abs(angulo)<0.5) {
 				accion = 1;
 			}
-			if(Math.abs(velangular)<0.1f && Math.abs(angulo)>0.01f) {
+			if(Math.abs(velangular)<0.1f && Math.abs(angulo)>0.02f) {
 				accion2 = 2;
 			}
 			/*

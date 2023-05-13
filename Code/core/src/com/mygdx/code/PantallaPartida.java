@@ -39,6 +39,7 @@ public class PantallaPartida implements Screen {
 	BackgroundPartida background;
 	Carriles carriles;
 	ArrayList<Body> borrar = new ArrayList<Body>();
+	Vector2 jugadorpos;
 	public PantallaPartida(Code code) {
 		this.code = code;
 	}
@@ -79,13 +80,13 @@ public class PantallaPartida implements Screen {
 		 */
 		Sprite barquito = new Sprite(this.code.manager.get("barquito.png",Texture.class),294,886);
 		barquito.setScale(0.20f/relation);
-		
-		Body barcoj = crearCuerpo(new Vector2(0,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
+		jugadorpos = new Vector2(0,0);
+		Body barcoj = crearCuerpo(jugadorpos,BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
 		jugador = new Barco(new TipoBarco(6f,5f,"Neutro",5f,6f),barcoj);
 		barcoj.setUserData(new UserData(barquito,ids,jugador));
 		ids++;
 		
-		for(int i = 0;i<1;i++) {
+		for(int i = 0;i<3;i++) {
 			Body barcoia = crearCuerpo(new Vector2(10+10*i,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
 			barcoia.setTransform(carriles.obtenerMedio(i+2), barcoia.getAngle());
 			TipoBarco iab = new TipoBarco(5f,5f,"Neutro",5f,5f);
@@ -247,7 +248,6 @@ public class PantallaPartida implements Screen {
 		Iterator<Body> iter = lista.iterator();
 	    Body body;
 	    Sprite sprite;
-	    Vector2 playerposition = new Vector2(0,0);
 	    background.animate(delta);
 	    carriles.update();
 	    this.code.batch.setProjectionMatrix(camara.combined);
@@ -261,21 +261,32 @@ public class PantallaPartida implements Screen {
 	        sprite = (Sprite) data.foto;
 	        Vector2 pos = body.getPosition();
 	        if(data.tipo == 1 && !data.barco.ia) {
-	        	playerposition.set(pos);
+	        	jugadorpos = new Vector2(pos.x,pos.y);
 	        }
-	        if(data.tipo == 1 && data.barco.ia && body.getPosition().y>(camara.viewportHeight+playerposition.y)+camara.viewportHeight/2) {
+	        if(data.tipo == 1 && data.barco.ia && pos.y>(camara.viewportHeight+jugadorpos.y)+camara.viewportHeight/2) {
 				Vector2 vel = body.getLinearVelocity();
 				Vector2 velco = new Vector2(vel.x,vel.y);
 				velco.rotateDeg(180);
-				velco.scl(1.5f);
-				body.applyForce(velco, body.getPosition(),true);
+				velco.scl(0.8f);
+				body.applyForce(velco, pos,true);
+	        }
+	        if(data.tipo == 1 && (data.id == 0 || data.id == 1 || data.id == 2 || data.id == 3)) {
+        		Vector2 poscade = carriles.obtenerCarril(data.id+2);//CARRIL DERECHO
+        		Vector2 poscaiz = carriles.obtenerCarril(data.id+1);//CARRIL IZQUIERDO
+	        	if(pos.x>poscade.x||pos.x<poscaiz.x) {
+					Vector2 vel = body.getLinearVelocity();
+					Vector2 velco = new Vector2(vel.x,vel.y);
+					velco.rotateDeg(180);
+					velco.scl(0.8f);
+					body.applyForce(velco, pos,true);
+	        	}
 	        }
 	        if(body.getPosition().x<-camara.viewportWidth/2) {
-	        	body.setTransform(-camara.viewportWidth/2,body.getPosition().y,body.getAngle());
+	        	body.setTransform(-camara.viewportWidth/2,pos.y,body.getAngle());
 	        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
 	        }
 	        if(body.getPosition().x>camara.viewportWidth/2) {
-	        	body.setTransform(camara.viewportWidth/2,body.getPosition().y,body.getAngle());
+	        	body.setTransform(camara.viewportWidth/2,pos.y,body.getAngle());
 	        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
 	        }
 	        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
@@ -295,7 +306,7 @@ public class PantallaPartida implements Screen {
 	    	Body obs = obstaculos.get(i);
 	    	if(!this.borrar.contains(obs)) {
 	    	Vector2 pos = obs.getPosition();
-	    	if(pos.x<playerposition.x-camara.viewportWidth) {
+	    	if(pos.x<jugadorpos.x-camara.viewportWidth) {
 	    		if(!this.borrar.contains(obs)) {
 	    			this.borrar.add(obs);
 	    		}
@@ -303,7 +314,7 @@ public class PantallaPartida implements Screen {
 	    			aux.add(obs);
 	    		}
 	    	} else
-	    	if(pos.x>playerposition.x+camara.viewportWidth) {
+	    	if(pos.x>jugadorpos.x+camara.viewportWidth) {
 	    		if(!this.borrar.contains(obs)) {
 	    			this.borrar.add(obs);
 	    		}
@@ -311,7 +322,7 @@ public class PantallaPartida implements Screen {
 	    			aux.add(obs);
 	    		}
 	    	} else
-	    	if(pos.y<playerposition.y-camara.viewportHeight) {
+	    	if(pos.y<jugadorpos.y-camara.viewportHeight) {
 	    		if(!this.borrar.contains(obs)) {
 	    			this.borrar.add(obs);
 	    		}

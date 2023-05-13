@@ -50,6 +50,27 @@ public class Carriles {
 		}
 		return pos;
 	}
+	public Vector2 obtenerCarril(int carril) {
+		Vector2 pos = new Vector2(0,0);
+		switch(carril) {
+		case 1:
+			pos = new Vector2(carril1.x,carril1.y);
+			break;
+		case 2:
+			pos = new Vector2(carril2.x,carril2.y);
+			break;
+		case 3:
+			pos = new Vector2(carril3.x,carril3.y);
+			break;
+		case 4:
+			pos = new Vector2(carril4.x,carril4.y);
+			break;
+		case 5:
+			pos = new Vector2(carril5.x,carril5.y);
+			break;
+		}
+		return pos;
+	}
 	public void draw(SpriteBatch batch) {
 		Texture text = this.code.manager.get("carril.jpg",Texture.class);
 		Sprite barrera1 = new Sprite(text,29,1079);

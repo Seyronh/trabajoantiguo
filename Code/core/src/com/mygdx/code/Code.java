@@ -1,8 +1,5 @@
 package com.mygdx.code;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Mixer;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,30 +7,32 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+
+import java.util.ArrayList;
+
+import javax.sound.sampled.AudioSystem;
 import com.badlogic.gdx.audio.Music;
+import javax.sound.sampled.Mixer;
 
 public class Code extends Game {
 	SpriteBatch batch;
-	Texture img;
-	Sprite barquito;
-	Barco boat;
-	TipoBarco elegido;
+	AssetManager manager;
 	Music music;
 	private MyInputProcessor inputProcessor;
+	Pais paisSeleccionado;
+	TipoBarco tipoBarcoSeleccionado;
+	ArrayList<TipoBarco> tipoBarcos = new ArrayList(); // Lista de tipos de barcos a mostrar
+	ArrayList<Pais> paises = new ArrayList(); // Lista de paises a mostrar
 
-	
-	
-	
 	//////
 
 	public int moverIzquierda = Keys.A;
 	public int moverDerecha = Keys.D;
 	public int moverArriba = Keys.W;
 	public int frenar = Keys.S;
-	
+
 	public int usarPowerUp = Keys.SPACE; // Provisional
-	
-	
+
 	public Code() {
 
 		super();
@@ -43,56 +42,93 @@ public class Code extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		/**
-		 * Activar para escuchar m�sica, para probarlo hay que poner el nombre del
+		 * Quita el puntero del ratï¿½n
+		 */
+//		Gdx.input.setCursorCatched(true);
+		/**
+		 * Quita la interacciï¿½n con el ratï¿½n
+		 */
+//		inputProcessor = new MyInputProcessor();
+//		Gdx.input.setInputProcessor(inputProcessor);
+		/**
+		 * Activar para escuchar mï¿½sica, para probarlo hay que poner el nombre del
 		 * fichero .ogg en la carpeta sonidos dentro de assets
 		 */
 //		music = Gdx.audio.newMusic(Gdx.files.internal("sonidos/juego.ogg"));
 //		music.setLooping(true);
 //		music.play();
-		setScreen(new minijuego(this));
-		/*
-		 * Vector2 pos = new Vector2(100,100); img = new Texture("barquito.png");
-		 * barquito = new Sprite(img, 1024, 1024); barquito.setScale(0.3f); elegido =
-		 * new TipoBarco(10f, 10f, "Neutro", 10f, 20f); boat = new Barco(elegido, pos);
-		 * 
-		 * setScreen(new MainMenuScreen(this));
-		 */
 
-		/**
-		 * Quita la interacci�n con el rat�n
-		 */
-//		inputProcessor = new MyInputProcessor();
-//		Gdx.input.setInputProcessor(inputProcessor);
-
-		/**
-		 * Quita el puntero del rat�n
-		 */
-//		Gdx.input.setCursorCatched(true);
+		manager = new AssetManager();
+		manager.load("Fondo_Inicio.jpg", Texture.class);
+		manager.finishLoading();
+		paisSeleccionado = new Pais("ES", "España", "espana.png");
+		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f);
+		cargarPaises();
+		cargarTiposBarcos();
+		setScreen(new PantallaDeInicio(this));
 	}
+	
+	// Método que añade todos los tipos de barcos al array
+	private void cargarTiposBarcos() {
+		tipoBarcos.add(new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f));
+		tipoBarcos.add(new TipoBarco(3f, 8f, "barcoMovilidad.png", 6f, 3f));
+		tipoBarcos.add(new TipoBarco(2f, 5f, "barcoVida.png", 10f, 3f));
+		tipoBarcos.add(new TipoBarco(4f, 3f, "barcoSpeed.png", 5f, 8f));
+		tipoBarcos.add(new TipoBarco(8f, 6f, "barcoAceleracion.png", 3f, 3f));
+		// TODO meter los barcos
+	}
+	
+	// Método que añade todos los países al array para mostrarlos
+		private void cargarPaises() {
+			paises.add(new Pais("ES", "España", "espana.png"));
+			paises.add(new Pais("CH", "China", "china.png"));
+			paises.add(new Pais("JP", "Japon", "japon.png"));
+			paises.add(new Pais("CS", "Corea del Sur", "coreaSur.png"));
+			paises.add(new Pais("BR", "Brasil", "brasil.png"));
+			paises.add(new Pais("RU", "Reino Unido", "reinoUnido.png"));
+			paises.add(new Pais("ID", "Indonesia", "indonesia.png"));
+			paises.add(new Pais("AU", "Australia", "australia.png"));
+			paises.add(new Pais("EU", "Estados Unidos", "estadosUnidos.png"));
+			paises.add(new Pais("RU", "Rusia", "rusia.png"));
+			paises.add(new Pais("SD", "Sudáfrica", "sudafrica.png"));
+			paises.add(new Pais("BO", "Bolivia", "bolivia.png"));
+			paises.add(new Pais("AL", "Alemania", "alemania.png"));
+			paises.add(new Pais("FR", "Francia", "francia.png"));
+			paises.add(new Pais("CHAD", "Chad", "chad.png"));
+			paises.add(new Pais("NIG", "Nigeria", "nigeria.png"));
+			paises.add(new Pais("CM", "Costa de Marfil", "costaMarfil.png"));
+			paises.add(new Pais("CAM", "Camerún", "camerun.png"));
+			paises.add(new Pais("GR", "Grecia", "grecia.png"));
+			paises.add(new Pais("EG", "Egipto", "egipto.png"));
+			paises.add(new Pais("SU", "Suecia", "suecia.png"));
+			paises.add(new Pais("SUI", "Suiza", "suiza.png"));
+			paises.add(new Pais("CA", "Canada", "canada.png"));
+			paises.add(new Pais("MX", "México", "mexico.png"));
+			paises.add(new Pais("AR", "Argentina", "argentina.png"));
+			paises.add(new Pais("CU", "Cuba", "cuba.png"));
+			paises.add(new Pais("SL", "SriLanka", "sriLanka.png"));
+			paises.add(new Pais("MAU", "Islas Mauricio", "mauricio.png"));
+			paises.add(new Pais("MA", "Madagascar", "madagascar.png"));
+			paises.add(new Pais("VA", "Vaticano", "vaticano.png"));
+			paises.add(new Pais("IT", "Italia", "italia.png"));
+			paises.add(new Pais("IN", "India", "india.png"));
+		}
 
-	/*
-	 * @Override public void render() {
-	 * 
-	 * super.render(); //ScreenUtils.clear(1, 1, 1, 1); if
-	 * (Gdx.input.isKeyPressed(moverizq)) { boat.girarIzquierda(); } // if
-	 * (Gdx.input.isKeyPressed(Keys.D)) { // boat.girarDerecha(); // } // if
-	 * (Gdx.input.isKeyPressed(Keys.W)) { // boat.acelerar(); // } // if
-	 * (Gdx.input.isKeyPressed(Keys.S)) { // boat.frenar(false); // } else { //
-	 * boat.frenar(true); // } //
-	 * 
-	 * // // boat.actualizarposicion(); // barquito.setPosition(boat.posicion.x,
-	 * boat.posicion.y); // barquito.setRotation(boat.angulo - 90); //
-	 * batch.begin(); // barquito.draw(batch); // // batch.end();
-	 * 
-	 * // setScreen(new Opciones(this));
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
 	@Override
 	public void dispose() {
 		batch.dispose();
-		// img.dispose();
+	}
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+		
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
 	}
 }

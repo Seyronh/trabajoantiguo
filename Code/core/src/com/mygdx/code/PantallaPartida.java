@@ -130,32 +130,6 @@ public class PantallaPartida implements Screen {
 		 * FIN CREACION FISICAS
 		 */
 		/*
-		 * CREACION JUGADOR Y IA
-		 */
-		Sprite barquito = new Sprite(this.code.manager.get("barcoNormal.png",Texture.class),1024,1024);
-		barquito.setScale(0.20f/relation);
-		jugadorpos = new Vector2(0,0);
-		Body barcoj = crearCuerpo(jugadorpos,BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
-		jugador = new Barco(new TipoBarco(6f,5f,"Neutro",5f,6f),barcoj);
-		barcoj.setUserData(new UserData(barquito,ids,jugador));
-		ids++;
-		
-		for(int i = 0;i<3;i++) {
-			Body barcoia = crearCuerpo(new Vector2(10+10*i,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
-			barcoia.setTransform(carriles.obtenerMedio(i+2), barcoia.getAngle());
-			TipoBarco iab = new TipoBarco(5f,5f,"Neutro",5f,5f);
-			Barco bia = new Barco(iab,barcoia,true);
-			IA ia = new IA(this.code.dificultad,iab);
-			barcoia.setUserData(new UserData(barquito,ids,bia));
-			BarcosIA.add(bia);
-			IAs.add(ia);
-			ids++;
-		}
-		
-		/*
-		 * FIN CREACION JUGADOR Y IA
-		 */
-		/*
 		 * CREACION OBSTACULOS INICIALES
 		 */
 		for(int i = 0;i<PantallaPartida.numObstaculos;i++) {
@@ -188,6 +162,34 @@ public class PantallaPartida implements Screen {
 		powerup2.setUserData(new UserData(power,ids,new PowerUp(20f, 20f, 0f, false, 0f)));
 		ids++;
 		*/
+		/*
+		 * CREACION JUGADOR Y IA
+		 */
+		Sprite barquito = new Sprite(this.code.manager.get(this.code.tipoBarcoSeleccionado.barco,Texture.class),1024,1024);
+		barquito.setScale(0.20f/relation);
+		jugadorpos = new Vector2(0,0);
+		Body barcoj = crearCuerpo(jugadorpos,BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
+		jugador = new Barco(this.code.tipoBarcoSeleccionado,barcoj);
+		barcoj.setUserData(new UserData(barquito,ids,jugador));
+		ids++;
+		
+		for(int i = 0;i<3;i++) {
+			Body barcoia = crearCuerpo(new Vector2(10+10*i,0),BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
+			barcoia.setTransform(carriles.obtenerMedio(i+2), barcoia.getAngle());
+			TipoBarco iab = this.code.tipoBarcos.get((int) (this.code.tipoBarcos.size()*Math.random()));
+			Barco bia = new Barco(iab,barcoia,true);
+			IA ia = new IA(this.code.dificultad,iab);
+			barquito = new Sprite(this.code.manager.get(iab.barco,Texture.class),1024,1024);
+			barquito.setScale(0.20f/relation);
+			barcoia.setUserData(new UserData(barquito,ids,bia));
+			BarcosIA.add(bia);
+			IAs.add(ia);
+			ids++;
+		}
+		
+		/*
+		 * FIN CREACION JUGADOR Y IA
+		 */
 		barcoj.setTransform(carriles.obtenerMedio(1), barcoj.getAngle());
 	}
 

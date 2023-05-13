@@ -39,7 +39,7 @@ public class Colisiones implements ContactListener{
 				this.borrar.add(Cuerpo1);
 			}
 		}
-		if((Data1.tipo == 1 && Data2.tipo == 1) || (Data2.tipo ==1 && Data2.tipo == 1)) { //CHOQUE DE BARCOS
+		if((Data1.tipo == 1 && Data2.tipo == 1) || (Data2.tipo ==1 && Data1.tipo == 1)) { //CHOQUE DE BARCOS
 			boolean muerto = Data1.barco.recibirDanio(Colisiones.danioBaseBarcos*this.dificultad);
 			boolean muerto2 = Data2.barco.recibirDanio(Colisiones.danioBaseBarcos*this.dificultad);
 			if(muerto) {

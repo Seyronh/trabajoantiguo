@@ -87,7 +87,7 @@ public class PantallaPartida implements Screen {
 		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		Body powerup2 = crearCuerpo(new Vector2(20,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		boat = new Barco(new TipoBarco(20f,20f,"Neutro",10f,100f),barco);
-		Sprite barquito = new Sprite(this.code.manager.get("barquito.png",Texture.class),294,886);
+		Sprite barquito = new Sprite(this.code.manager.get("barcoNormal.png",Texture.class),294,886);
 		barquito.setScale(0.20f/relation);
 		barco.setUserData(new UserData(barquito,ids,boat));
 		ids++;
@@ -203,6 +203,9 @@ public class PantallaPartida implements Screen {
 			
 			//Aqui ya las cosas
 			
+			float anchoPantalla = Gdx.graphics.getWidth();
+			float altoPantalla = Gdx.graphics.getHeight();
+			
 			 if(Gdx.input.isKeyPressed(Keys.DOWN)) {
 		    		
 		    		commandnum++;
@@ -224,18 +227,10 @@ public class PantallaPartida implements Screen {
 		    		
 		    }
 			
-			Texture Fondo = new Texture("pausa.png");
 			
 
 			
-			code.batch.begin();
-
-
-		//	code.batch.draw(Fondo,0 , 0);
 			
-			
-			
-			code.batch.end();
 			
 			
 			switch (commandnum) {
@@ -263,7 +258,15 @@ public class PantallaPartida implements Screen {
 			}
 
 			
+			this.code.batch.begin();
+
+			this.code.batch.draw(new Texture("Menu2.png"), anchoPantalla*40/100,altoPantalla*50/100, anchoPantalla*21/100,altoPantalla*30/100  );
+		
 			
+			
+			
+			
+			this.code.batch.end();
 			
 			break;
 		

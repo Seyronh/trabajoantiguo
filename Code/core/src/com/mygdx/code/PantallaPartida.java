@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -40,8 +41,29 @@ public class PantallaPartida implements Screen {
 	Carriles carriles;
 	ArrayList<Body> borrar = new ArrayList<Body>();
 	Vector2 jugadorpos;
+	
+	
+	/////////
+	
+	
+	private int commandnum;
+	
+	public enum State{
+		
+		RUNNING,
+		PAUSE
+		
+	}
+	
+	private State state;
+	
+	
 	public PantallaPartida(Code code) {
 		this.code = code;
+		
+		/////
+		state = State.RUNNING;
+		commandnum = 0;
 	}
 
 	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Vector2 tamanio) {
@@ -78,7 +100,7 @@ public class PantallaPartida implements Screen {
 		/*
 		 * CREACION JUGADOR Y IA
 		 */
-		Sprite barquito = new Sprite(this.code.manager.get("barquito.png",Texture.class),294,886);
+		Sprite barquito = new Sprite(this.code.manager.get("barcoNormal.png",Texture.class),1024,1024);
 		barquito.setScale(0.20f/relation);
 		jugadorpos = new Vector2(0,0);
 		Body barcoj = crearCuerpo(jugadorpos,BodyType.DynamicBody,0.2f,1f,0.6f,false,new Vector2(25,85));
@@ -143,14 +165,21 @@ public class PantallaPartida implements Screen {
 
 	@Override
 	public void render(float delta) {
-		if(jugador.aplicado) {
-			jugador.tiempo += 100*delta;
-			if(jugador.tiempo > 1000) {
-				jugador.tiempo = 0;
-				jugador.aplicado = false;
-				jugador.resetStats();
+		
+		switch (state) {
+		case RUNNING:
+			
+
+			if(jugador.aplicado) {
+				jugador.tiempo += 100*delta;
+				if(jugador.tiempo > 1000) {
+					jugador.tiempo = 0;
+					jugador.aplicado = false;
+					jugador.resetStats();
+				}
 			}
-		}
+			
+		
 		ScreenUtils.clear(1, 1, 1, 1);
 		if(Gdx.input.isKeyPressed(code.moverIzquierda)) {
 			jugador.girarIzquierda();
@@ -233,130 +262,205 @@ public class PantallaPartida implements Screen {
 				jugador.poder = null;
 			}
 		}
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			code.setScreen(new MainMenuScreen(code));
-		}
-		
-		Vector2 pos2 = jugador.body.getPosition();
-		camara.position.set(new Vector3(camara.position.x,pos2.y,0));
-		camara.update();
-		BitmapFont fuente = new BitmapFont();
-		fuente.setColor(Color.GOLDENROD);
-		fuente.getData().setScale(5.0f/relation, 5.0f/relation);
-		Array<Body> lista = new Array<Body>();
-		fisicas.getBodies(lista);
-		Iterator<Body> iter = lista.iterator();
-	    Body body;
-	    Sprite sprite;
-	    background.animate(delta);
-	    carriles.update();
-	    this.code.batch.setProjectionMatrix(camara.combined);
-	    this.code.batch.begin();
-	    background.draw(this.code.batch);
-	    carriles.draw(this.code.batch);
-	    fuente.draw(this.code.batch,"Vida:"+jugador.vida,camara.position.x,camara.position.y);
-	    while (iter.hasNext()) {
-	        body = iter.next();
-	        UserData data = (UserData) body.getUserData();
-	        sprite = (Sprite) data.foto;
-	        Vector2 pos = body.getPosition();
-	        if(data.tipo == 1 && !data.barco.ia) {
-	        	jugadorpos = new Vector2(pos.x,pos.y);
-	        }
-	        if(data.tipo == 1 && data.barco.ia && pos.y>(camara.viewportHeight+jugadorpos.y)+camara.viewportHeight/2) {
-				Vector2 vel = body.getLinearVelocity();
-				Vector2 velco = new Vector2(vel.x,vel.y);
-				velco.rotateDeg(180);
-				velco.scl(0.8f);
-				body.applyForce(velco, pos,true);
-	        }
-	        if(data.tipo == 1 && (data.id == 0 || data.id == 1 || data.id == 2 || data.id == 3)) {
-        		Vector2 poscade = carriles.obtenerCarril(data.id+2);//CARRIL DERECHO
-        		Vector2 poscaiz = carriles.obtenerCarril(data.id+1);//CARRIL IZQUIERDO
-	        	if(pos.x>poscade.x||pos.x<poscaiz.x) {
+			if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+				
+				state = State.PAUSE;
+			}
+			
+			Vector2 pos2 = jugador.body.getPosition();
+			camara.position.set(new Vector3(camara.position.x,pos2.y,0));
+			camara.update();
+			BitmapFont fuente = new BitmapFont();
+			fuente.setColor(Color.GOLDENROD);
+			fuente.getData().setScale(5.0f/relation, 5.0f/relation);
+			Array<Body> lista = new Array<Body>();
+			fisicas.getBodies(lista);
+			Iterator<Body> iter = lista.iterator();
+		    Body body;
+		    Sprite sprite;
+		    background.animate(delta);
+		    carriles.update();
+		    this.code.batch.setProjectionMatrix(camara.combined);
+		    this.code.batch.begin();
+		    background.draw(this.code.batch);
+		    carriles.draw(this.code.batch);
+		    fuente.draw(this.code.batch,"Vida:"+jugador.vida,camara.position.x,camara.position.y);
+		    while (iter.hasNext()) {
+		        body = iter.next();
+		        UserData data = (UserData) body.getUserData();
+		        sprite = (Sprite) data.foto;
+		        Vector2 pos = body.getPosition();
+		        if(data.tipo == 1 && !data.barco.ia) {
+		        	jugadorpos = new Vector2(pos.x,pos.y);
+		        }
+		        if(data.tipo == 1 && data.barco.ia && pos.y>(camara.viewportHeight+jugadorpos.y)+camara.viewportHeight/2) {
 					Vector2 vel = body.getLinearVelocity();
 					Vector2 velco = new Vector2(vel.x,vel.y);
 					velco.rotateDeg(180);
 					velco.scl(0.8f);
 					body.applyForce(velco, pos,true);
-	        	}
-	        }
-	        if(body.getPosition().x<-camara.viewportWidth/2) {
-	        	body.setTransform(-camara.viewportWidth/2,pos.y,body.getAngle());
-	        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
-	        }
-	        if(body.getPosition().x>camara.viewportWidth/2) {
-	        	body.setTransform(camara.viewportWidth/2,pos.y,body.getAngle());
-	        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
-	        }
-	        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
-	        sprite.setCenter(pos.x, pos.y);
-	        sprite.draw(this.code.batch);
-	    }
-	    this.code.batch.end();
-	    accumulator += Math.min(delta, 0.25f);
+		        }
+		        if(data.tipo == 1 && (data.id == 0 || data.id == 1 || data.id == 2 || data.id == 3)) {
+	        		Vector2 poscade = carriles.obtenerCarril(data.id+2);//CARRIL DERECHO
+	        		Vector2 poscaiz = carriles.obtenerCarril(data.id+1);//CARRIL IZQUIERDO
+		        	if(pos.x>poscade.x||pos.x<poscaiz.x) {
+						Vector2 vel = body.getLinearVelocity();
+						Vector2 velco = new Vector2(vel.x,vel.y);
+						velco.rotateDeg(180);
+						velco.scl(0.8f);
+						body.applyForce(velco, pos,true);
+		        	}
+		        }
+		        if(body.getPosition().x<-camara.viewportWidth/2) {
+		        	body.setTransform(-camara.viewportWidth/2,pos.y,body.getAngle());
+		        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
+		        }
+		        if(body.getPosition().x>camara.viewportWidth/2) {
+		        	body.setTransform(camara.viewportWidth/2,pos.y,body.getAngle());
+		        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
+		        }
+		        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
+		        sprite.setCenter(pos.x, pos.y);
+		        sprite.draw(this.code.batch);
+		    }
+		    this.code.batch.end();
+		    accumulator += Math.min(delta, 0.25f);
 
-	    if (accumulator >= STEP_TIME) {
-	        accumulator -= STEP_TIME;
+		    if (accumulator >= STEP_TIME) {
+		        accumulator -= STEP_TIME;
 
-	        fisicas.step(STEP_TIME, 6, 2);
-	    }
-	    ArrayList<Body> aux = new ArrayList<Body>();
-	    for(int i = 0;i<obstaculos.size();i++) {
-	    	Body obs = obstaculos.get(i);
-	    	if(!this.borrar.contains(obs)) {
-	    	Vector2 pos = obs.getPosition();
-	    	if(pos.x<jugadorpos.x-camara.viewportWidth) {
-	    		if(!this.borrar.contains(obs)) {
-	    			this.borrar.add(obs);
-	    		}
-	    		if(!aux.contains(obs)) {
-	    			aux.add(obs);
-	    		}
-	    	} else
-	    	if(pos.x>jugadorpos.x+camara.viewportWidth) {
-	    		if(!this.borrar.contains(obs)) {
-	    			this.borrar.add(obs);
-	    		}
-	    		if(!aux.contains(obs)) {
-	    			aux.add(obs);
-	    		}
-	    	} else
-	    	if(pos.y<jugadorpos.y-camara.viewportHeight) {
-	    		if(!this.borrar.contains(obs)) {
-	    			this.borrar.add(obs);
-	    		}
-	    		if(!aux.contains(obs)) {
-	    			aux.add(obs);
-	    		}
-	    	}
-	    	} else {
-	    		aux.add(obs);
-	    	}
-	    }
-	    obstaculos.removeAll(aux);
-	    for(int i = 0;i<this.borrar.size();i++) {
-	    	fisicas.destroyBody(this.borrar.get(i));
-	    }
-	    this.borrar.clear();
-	    if(obstaculos.size()<PantallaPartida.numObstaculos) {
-			for(int i = 0;i<PantallaPartida.numObstaculos-obstaculos.size();i++) {
-				Vector3 posc = this.camara.position;
-				float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
-				float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
-				posy += Gdx.graphics.getHeight()/relation;
-				if(Math.random()<0.5f) {
-					posx = -posx;
+		        fisicas.step(STEP_TIME, 6, 2);
+		    }
+		    ArrayList<Body> aux = new ArrayList<Body>();
+		    for(int i = 0;i<obstaculos.size();i++) {
+		    	Body obs = obstaculos.get(i);
+		    	if(!this.borrar.contains(obs)) {
+		    	Vector2 pos = obs.getPosition();
+		    	if(pos.x<jugadorpos.x-camara.viewportWidth) {
+		    		if(!this.borrar.contains(obs)) {
+		    			this.borrar.add(obs);
+		    		}
+		    		if(!aux.contains(obs)) {
+		    			aux.add(obs);
+		    		}
+		    	} else
+		    	if(pos.x>jugadorpos.x+camara.viewportWidth) {
+		    		if(!this.borrar.contains(obs)) {
+		    			this.borrar.add(obs);
+		    		}
+		    		if(!aux.contains(obs)) {
+		    			aux.add(obs);
+		    		}
+		    	} else
+		    	if(pos.y<jugadorpos.y-camara.viewportHeight) {
+		    		if(!this.borrar.contains(obs)) {
+		    			this.borrar.add(obs);
+		    		}
+		    		if(!aux.contains(obs)) {
+		    			aux.add(obs);
+		    		}
+		    	}
+		    	} else {
+		    		aux.add(obs);
+		    	}
+		    }
+		    obstaculos.removeAll(aux);
+		    for(int i = 0;i<this.borrar.size();i++) {
+		    	fisicas.destroyBody(this.borrar.get(i));
+		    }
+		    this.borrar.clear();
+		    if(obstaculos.size()<PantallaPartida.numObstaculos) {
+				for(int i = 0;i<PantallaPartida.numObstaculos-obstaculos.size();i++) {
+					Vector3 posc = this.camara.position;
+					float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
+					float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
+					posy += Gdx.graphics.getHeight()/relation;
+					if(Math.random()<0.5f) {
+						posx = -posx;
+					}
+					Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
+					Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
+					obst.setScale(0.003f*obstaculo.tamanio/relation);
+					Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
+					obstaculob.setUserData(new UserData(obst,ids,obstaculo));
+					obstaculos.add(obstaculob);
+					ids++;
 				}
-				Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
-				Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
-				obst.setScale(0.003f*obstaculo.tamanio/relation);
-				Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
-				obstaculob.setUserData(new UserData(obst,ids,obstaculo));
-				obstaculos.add(obstaculob);
-				ids++;
+		    }
+			
+			
+			break;
+		case PAUSE:
+			
+			//Aqui ya las cosas
+			
+			 if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+		    		
+		    		commandnum++;
+		    		
+		    		if(commandnum > 2) {
+		    			
+		    			commandnum = 0;
+		    		}
+		    		
+		    	}
+			  if(Gdx.input.isKeyPressed(Keys.UP)) {
+		    		
+		    		commandnum--;
+		    		
+		    		if(commandnum < 0) {
+		    			
+		    			commandnum = 2;
+		    		}
+		    		
+		    }
+			
+			Texture Fondo = new Texture("pausa.png");
+			
+
+			
+			code.batch.begin();
+
+
+		//	code.batch.draw(Fondo,0 , 0);
+			
+			
+			
+			code.batch.end();
+			
+			
+			switch (commandnum) {
+			
+			case 0:
+				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+					
+					state = State.RUNNING;
+				}
+				break;
+			case 1:
+				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+					
+					code.setScreen(new MainMenuScreen(code));
+				}
+				break;
+			case 2:
+				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+					
+					System.exit(0);
+				}
+				break;
+			
+			
 			}
-	    }
+
+			
+			
+			
+			break;
+		
+		
+
+		}
 	  
 	}
 
@@ -369,6 +473,7 @@ public class PantallaPartida implements Screen {
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
+		
 		
 	}
 

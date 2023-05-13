@@ -317,7 +317,11 @@ public class OpcionesSonido implements Screen {
 				if (volumen > 1f) {
 					volumen = 1f;
 				}
-
+				float nvolumen = (float) Math.pow(volumen, 2);
+				if(silenciar) {
+					nvolumen = 0f;
+				}
+				code.music.setVolume(nvolumen);
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT) && !delay) {
 				delay = true;
@@ -325,10 +329,11 @@ public class OpcionesSonido implements Screen {
 				if (volumen < 0f) {
 					volumen = 0f;
 				}
-			}
-
-			if (!silenciar && code.music != null) {
-				code.music.setVolume((float) Math.pow(volumen, 2));
+				float nvolumen = (float) Math.pow(volumen, 2);
+				if(silenciar) {
+					nvolumen = 0f;
+				}
+				code.music.setVolume(nvolumen);
 			}
 			break;
 		case 1:

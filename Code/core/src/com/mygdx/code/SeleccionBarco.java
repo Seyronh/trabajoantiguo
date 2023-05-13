@@ -269,7 +269,7 @@ public class SeleccionBarco implements Screen {
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-
+			this.code.music.stop();
 			code.setScreen(new PantallaPartida(code));
 		}
 

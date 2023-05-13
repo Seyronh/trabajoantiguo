@@ -118,7 +118,6 @@ public class PantallaPartida implements Screen {
 	@Override
 	public void show() {
 		float vol = this.code.music.getVolume();
-		this.code.music.stop();
 		this.code.music = this.code.manager.get("enpartida.ogg");
 		this.code.music.setVolume(vol);
 		this.code.music.play();
@@ -492,7 +491,6 @@ public class PantallaPartida implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		this.code.music.dispose();
 	}
 }

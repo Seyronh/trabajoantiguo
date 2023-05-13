@@ -42,16 +42,16 @@ public class Code extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		/**
-		 * Quita el puntero del rat�n
+		 * Quita el puntero del ratï¿½n
 		 */
 //		Gdx.input.setCursorCatched(true);
 		/**
-		 * Quita la interacci�n con el rat�n
+		 * Quita la interacciï¿½n con el ratï¿½n
 		 */
 //		inputProcessor = new MyInputProcessor();
 //		Gdx.input.setInputProcessor(inputProcessor);
 		/**
-		 * Activar para escuchar m�sica, para probarlo hay que poner el nombre del
+		 * Activar para escuchar mï¿½sica, para probarlo hay que poner el nombre del
 		 * fichero .ogg en la carpeta sonidos dentro de assets
 		 */
 //		music = Gdx.audio.newMusic(Gdx.files.internal("sonidos/juego.ogg"));
@@ -61,14 +61,14 @@ public class Code extends Game {
 		manager = new AssetManager();
 		manager.load("Fondo_Inicio.jpg", Texture.class);
 		manager.finishLoading();
-		paisSeleccionado = new Pais("ES", "Espa�a", "espana.png");
+		paisSeleccionado = new Pais("ES", "España", "espana.png");
 		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f);
 		cargarPaises();
 		cargarTiposBarcos();
 		setScreen(new PantallaDeInicio(this));
 	}
 	
-	// M�todo que a�ade todos los tipos de barcos al array
+	// Método que añade todos los tipos de barcos al array
 	private void cargarTiposBarcos() {
 		tipoBarcos.add(new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f));
 		tipoBarcos.add(new TipoBarco(3f, 8f, "barcoMovilidad.png", 6f, 3f));
@@ -78,9 +78,9 @@ public class Code extends Game {
 		// TODO meter los barcos
 	}
 	
-	// M�todo que a�ade todos los pa�ses al array para mostrarlos
+	// Método que añade todos los países al array para mostrarlos
 		private void cargarPaises() {
-			paises.add(new Pais("ES", "Espa�a", "espana.png"));
+			paises.add(new Pais("ES", "España", "espana.png"));
 			paises.add(new Pais("CH", "China", "china.png"));
 			paises.add(new Pais("JP", "Japon", "japon.png"));
 			paises.add(new Pais("CS", "Corea del Sur", "coreaSur.png"));
@@ -90,20 +90,20 @@ public class Code extends Game {
 			paises.add(new Pais("AU", "Australia", "australia.png"));
 			paises.add(new Pais("EU", "Estados Unidos", "estadosUnidos.png"));
 			paises.add(new Pais("RU", "Rusia", "rusia.png"));
-			paises.add(new Pais("SD", "Sud�frica", "sudafrica.png"));
+			paises.add(new Pais("SD", "Sudáfrica", "sudafrica.png"));
 			paises.add(new Pais("BO", "Bolivia", "bolivia.png"));
 			paises.add(new Pais("AL", "Alemania", "alemania.png"));
 			paises.add(new Pais("FR", "Francia", "francia.png"));
 			paises.add(new Pais("CHAD", "Chad", "chad.png"));
 			paises.add(new Pais("NIG", "Nigeria", "nigeria.png"));
 			paises.add(new Pais("CM", "Costa de Marfil", "costaMarfil.png"));
-			paises.add(new Pais("CAM", "Camer�n", "camerun.png"));
+			paises.add(new Pais("CAM", "Camerún", "camerun.png"));
 			paises.add(new Pais("GR", "Grecia", "grecia.png"));
 			paises.add(new Pais("EG", "Egipto", "egipto.png"));
 			paises.add(new Pais("SU", "Suecia", "suecia.png"));
 			paises.add(new Pais("SUI", "Suiza", "suiza.png"));
 			paises.add(new Pais("CA", "Canada", "canada.png"));
-			paises.add(new Pais("MX", "M�xico", "mexico.png"));
+			paises.add(new Pais("MX", "México", "mexico.png"));
 			paises.add(new Pais("AR", "Argentina", "argentina.png"));
 			paises.add(new Pais("CU", "Cuba", "cuba.png"));
 			paises.add(new Pais("SL", "SriLanka", "sriLanka.png"));

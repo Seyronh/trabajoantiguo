@@ -66,7 +66,38 @@ public class PantallaPartida implements Screen {
 		state = State.RUNNING;
 		commandnum = 0;
 	}
-
+	private void generarObstaculo() {
+		Vector3 posc = this.camara.position;
+		float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
+		float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
+		posy += Gdx.graphics.getHeight()/relation;
+		if(Math.random()<0.5f) {
+			posx = -posx;
+		}
+		Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
+		Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
+		obst.setScale(0.003f*obstaculo.tamanio/relation);
+		Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
+		obstaculob.setUserData(new UserData(obst,ids,obstaculo));
+		obstaculos.add(obstaculob);
+		ids++;
+	}
+	private void generarPowerUp() {
+		Vector3 posc = this.camara.position;
+		float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
+		float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
+		posy += Gdx.graphics.getHeight()/relation;
+		if(Math.random()<0.5f) {
+			posx = -posx;
+		}
+		PowerUp powerup = PowerUp.predefinidos[(int)Math.random()*PowerUp.predefinidos.length];
+		Sprite power = new Sprite(this.code.manager.get("powerUp.png",Texture.class),1024,1024);
+		power.setScale(0.07f/relation);
+		Body powerbod = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(40,40));
+		powerbod.setUserData(new UserData(power,ids,powerup));
+		ids++;
+		powerupsa++;
+	}
 	private Body crearCuerpo(Vector2 posicion, BodyType tipo, float densidad, float friccion, float rebote, boolean sensor,Vector2 tamanio) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = tipo;
@@ -128,20 +159,7 @@ public class PantallaPartida implements Screen {
 		 * CREACION OBSTACULOS INICIALES
 		 */
 		for(int i = 0;i<PantallaPartida.numObstaculos;i++) {
-			Vector3 posc = this.camara.position;
-			float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
-			float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
-			posy += Gdx.graphics.getHeight()/relation;
-			if(Math.random()<0.5f) {
-				posx = -posx;
-			}
-			Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
-			Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
-			obst.setScale(0.003f*obstaculo.tamanio/relation);
-			Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
-			obstaculob.setUserData(new UserData(obst,ids,obstaculo));
-			obstaculos.add(obstaculob);
-			ids++;
+			this.generarObstaculo();
 		}
 		
 		/*
@@ -151,20 +169,7 @@ public class PantallaPartida implements Screen {
 		 * CREACION PowerUps
 		 */
 		for(int i = 0;i<PantallaPartida.numPowerUps;i++) {
-			Vector3 posc = this.camara.position;
-			float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
-			float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
-			posy += Gdx.graphics.getHeight()/relation;
-			if(Math.random()<0.5f) {
-				posx = -posx;
-			}
-			PowerUp powerup = PowerUp.predefinidos[(int) Math.floor(Math.random()*PowerUp.predefinidos.length)];
-			Sprite power = new Sprite(this.code.manager.get("powerUp.png",Texture.class),1024,1024);
-			power.setScale(0.07f/relation);
-			Body powerbod = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(40,40));
-			powerbod.setUserData(new UserData(power,ids,powerup));
-			ids++;
-			powerupsa++;
+			this.generarPowerUp();
 		}
 		
 		/*
@@ -275,8 +280,8 @@ public class PantallaPartida implements Screen {
 				jugador.elegido.aceleracion += poder.aceleracion;
 				jugador.elegido.movilidad += poder.movilidad;
 				jugador.vida += poder.curacion;
-				if(jugador.vida > jugador.elegido.vidamax) {
-					jugador.vida = jugador.elegido.vidamax;
+				if(jugador.vida > jugador.elegido.vidamax*Barco.basevidamax) {
+					jugador.vida = jugador.elegido.vidamax*Barco.basevidamax;
 				}
 				jugador.cansancio += poder.cansancio;
 				if(jugador.cansancio > 100) {
@@ -372,39 +377,11 @@ public class PantallaPartida implements Screen {
 		    }
 		    obstaculos.removeAll(auxo);
 		    this.borrar.clear();
-		    if(obstaculos.size()<PantallaPartida.numObstaculos) {
-				for(int i = 0;i<PantallaPartida.numObstaculos-obstaculos.size();i++) {
-					Vector3 posc = this.camara.position;
-					float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
-					float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
-					posy += Gdx.graphics.getHeight()/relation;
-					if(Math.random()<0.5f) {
-						posx = -posx;
-					}
-					Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
-					Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
-					obst.setScale(0.003f*obstaculo.tamanio/relation);
-					Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
-					obstaculob.setUserData(new UserData(obst,ids,obstaculo));
-					obstaculos.add(obstaculob);
-					ids++;
-				}
-		    }
+			for(int i = 0;i<PantallaPartida.numObstaculos-obstaculos.size();i++) {
+				generarObstaculo();
+			}
 			while(powerupsa<PantallaPartida.numPowerUps) {
-				Vector3 posc = this.camara.position;
-				float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
-				float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
-				posy += Gdx.graphics.getHeight()/relation;
-				if(Math.random()<0.5f) {
-					posx = -posx;
-				}
-				PowerUp powerup = PowerUp.predefinidos[(int) Math.floor(Math.random()*PowerUp.predefinidos.length)];
-				Sprite power = new Sprite(this.code.manager.get("powerUp.png",Texture.class),1024,1024);
-				power.setScale(0.07f/relation);
-				Body powerbod = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(40,40));
-				powerbod.setUserData(new UserData(power,ids,powerup));
-				ids++;
-				powerupsa++;
+				this.generarPowerUp();
 			}
 			
 			

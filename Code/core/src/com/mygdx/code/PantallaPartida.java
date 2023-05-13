@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -39,6 +40,10 @@ public class PantallaPartida implements Screen {
 	
 	
 	private int commandnum;
+
+	float anchoPantalla = Gdx.graphics.getWidth();
+	float altoPantalla = Gdx.graphics.getHeight();
+	Stage stage = new Stage();
 	
 	public enum State{
 		
@@ -87,7 +92,7 @@ public class PantallaPartida implements Screen {
 		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		Body powerup2 = crearCuerpo(new Vector2(20,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
 		boat = new Barco(new TipoBarco(20f,20f,"Neutro",10f,100f),barco);
-		Sprite barquito = new Sprite(this.code.manager.get("barcoNormal.png",Texture.class),294,886);
+		Sprite barquito = new Sprite(this.code.manager.get("barcoNormal.png",Texture.class),1024,1024);
 		barquito.setScale(0.20f/relation);
 		barco.setUserData(new UserData(barquito,ids,boat));
 		ids++;
@@ -203,8 +208,16 @@ public class PantallaPartida implements Screen {
 			
 			//Aqui ya las cosas
 			
-			float anchoPantalla = Gdx.graphics.getWidth();
-			float altoPantalla = Gdx.graphics.getHeight();
+			
+			stage.getBatch().begin();
+			
+			stage.getBatch().draw(code.manager.get("Menu2.png", Texture.class), anchoPantalla*36/100, altoPantalla*21/100, anchoPantalla*30/100, altoPantalla*60/100);
+			
+			stage.getBatch().draw(code.manager.get("Menus/Combo.png", Texture.class), anchoPantalla*40/100, altoPantalla*37/100, anchoPantalla*20/100, altoPantalla*30/100);
+			
+			stage.getBatch().end();
+			
+			
 			
 			 if(Gdx.input.isKeyPressed(Keys.DOWN)) {
 		    		
@@ -226,12 +239,6 @@ public class PantallaPartida implements Screen {
 		    		}
 		    		
 		    }
-			
-			
-
-			
-			
-			
 			
 			switch (commandnum) {
 			
@@ -257,16 +264,6 @@ public class PantallaPartida implements Screen {
 			
 			}
 
-			
-			this.code.batch.begin();
-
-			this.code.batch.draw(new Texture("Menu2.png"), anchoPantalla*40/100,altoPantalla*50/100, anchoPantalla*21/100,altoPantalla*30/100  );
-		
-			
-			
-			
-			
-			this.code.batch.end();
 			
 			break;
 		

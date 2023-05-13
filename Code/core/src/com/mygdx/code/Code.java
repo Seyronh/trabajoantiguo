@@ -19,6 +19,7 @@ public class Code extends Game {
 	AssetManager manager;
   	int dificultad;
 	Music music;
+	public float volumen;
 	private MyInputProcessor inputProcessor;
 	Pais paisSeleccionado;
 	TipoBarco tipoBarcoSeleccionado;

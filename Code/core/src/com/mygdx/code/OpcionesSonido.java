@@ -45,7 +45,6 @@ public class OpcionesSonido implements Screen {
 	float altoBoton;
 
 	boolean silenciar;
-	float volumen;
     private float delayi;
     private boolean delay;
 
@@ -57,8 +56,7 @@ public class OpcionesSonido implements Screen {
 		this.code = code;
 
 		if (code.music != null) {
-			silenciar = code.music.getVolume() == 0;
-			volumen = code.music.getVolume();
+			silenciar = this.code.volumen == 0;
 		}
 
 		anchoPantalla = Gdx.graphics.getWidth();
@@ -247,7 +245,7 @@ public class OpcionesSonido implements Screen {
 		    
 		
 		
-		stage.getBatch().draw(barra, anchoPantalla * 45 / 100, altoPantalla * 65 / 100, anchoPantalla*14/100 * volumen, altoBoton/4);
+		stage.getBatch().draw(barra, anchoPantalla * 45 / 100, altoPantalla * 65 / 100, anchoPantalla*14/100 * this.code.volumen, altoBoton/4);
 
 		stage.getBatch().draw(code.manager.get("Menus/Cuadro_sonido.png", Texture.class), anchoPantalla * 43 / 100, altoPantalla * 61 / 100, anchoPantalla*18/100, altoBoton);
 
@@ -312,12 +310,12 @@ public class OpcionesSonido implements Screen {
 
 			if (Gdx.input.isKeyPressed(Keys.RIGHT) && !delay) {
 				delay = true;
-				volumen += 0.05f;
+				this.code.volumen += 0.05f;
 
-				if (volumen > 1f) {
-					volumen = 1f;
+				if (this.code.volumen > 1f) {
+					this.code.volumen = 1f;
 				}
-				float nvolumen = (float) Math.pow(volumen, 2);
+				float nvolumen = (float) Math.pow(this.code.volumen, 2);
 				if(silenciar) {
 					nvolumen = 0f;
 				}
@@ -325,11 +323,11 @@ public class OpcionesSonido implements Screen {
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT) && !delay) {
 				delay = true;
-				volumen -= 0.05f;
-				if (volumen < 0f) {
-					volumen = 0f;
+				this.code.volumen -= 0.05f;
+				if (this.code.volumen < 0f) {
+					this.code.volumen = 0f;
 				}
-				float nvolumen = (float) Math.pow(volumen, 2);
+				float nvolumen = (float) Math.pow(this.code.volumen, 2);
 				if(silenciar) {
 					nvolumen = 0f;
 				}
@@ -344,7 +342,7 @@ public class OpcionesSonido implements Screen {
 				if(silenciar) {
 					code.music.setVolume(0f);
 				} else {
-					code.music.setVolume((float) Math.pow(volumen, 2));
+					code.music.setVolume((float) Math.pow(this.code.volumen, 2));
 				}
 			}
 			break;

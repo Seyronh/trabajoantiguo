@@ -17,6 +17,7 @@ import javax.sound.sampled.Mixer;
 public class Code extends Game {
 	SpriteBatch batch;
 	AssetManager manager;
+  	int dificultad;
 	Music music;
 	private MyInputProcessor inputProcessor;
 	Pais paisSeleccionado;
@@ -40,6 +41,7 @@ public class Code extends Game {
 
 	@Override
 	public void create() {
+		dificultad = 2;
 		batch = new SpriteBatch();
 		/**
 		 * Quita el puntero del ratï¿½n
@@ -69,6 +71,7 @@ public class Code extends Game {
 	}
 	
 	// Método que añade todos los tipos de barcos al array
+
 	private void cargarTiposBarcos() {
 		tipoBarcos.add(new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f));
 		tipoBarcos.add(new TipoBarco(3f, 8f, "barcoMovilidad.png", 6f, 3f));

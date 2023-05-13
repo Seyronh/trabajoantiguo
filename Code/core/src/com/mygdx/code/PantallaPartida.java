@@ -117,6 +117,11 @@ public class PantallaPartida implements Screen {
 	}
 	@Override
 	public void show() {
+		float vol = this.code.music.getVolume();
+		this.code.music.stop();
+		this.code.music = this.code.manager.get("enpartida.ogg");
+		this.code.music.setVolume(vol);
+		this.code.music.play();
 		/*
 		 * CREACION FISICAS
 		 */
@@ -412,8 +417,6 @@ public class PantallaPartida implements Screen {
 		    		}
 		    		
 		    }
-			
-			Texture Fondo = new Texture("pausa.png");
 			
 
 			

@@ -74,7 +74,7 @@ public class Colisiones implements ContactListener{
 				boolean muerto = Data2.barco.recibirDanio(Data1.obstaculo.danio*this.dificultad);
 				if(muerto) {
 					if(!Data2.barco.ia) {
-						this.code.setScreen(new MainMenuScreen(this.code));
+						this.code.setScreen(new minijuego(this.code));
 					}
 					this.borrar.add(Cuerpo2);
 				}

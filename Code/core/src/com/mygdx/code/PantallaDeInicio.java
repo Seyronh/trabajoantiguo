@@ -2,21 +2,16 @@ package com.mygdx.code;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.audio.Music;
 
 public class PantallaDeInicio implements Screen {
 
@@ -46,6 +41,15 @@ public class PantallaDeInicio implements Screen {
 	}
 
 	private void cargarImagenes() {
+		this.code.manager.load("pezVertical.png",Texture.class);
+		this.code.manager.load("pezHorizontal.png",Texture.class);
+		this.code.manager.load("island_pixel_art.png",Texture.class);
+		this.code.manager.load("pescador.png",Texture.class);
+		this.code.manager.load("canapescar.png",Texture.class);
+		this.code.manager.load("barraProgresoVertical.png",Texture.class);
+		this.code.manager.load("indicadorVertical.png",Texture.class);
+		this.code.manager.load("enpartida.ogg", Music.class);
+		this.code.manager.load("fuerapartida.ogg", Music.class);
 		this.code.manager.load("aguaMar.png", Texture.class);
 		this.code.manager.load("aguaRio.png", Texture.class);
 		this.code.manager.load("bronce.png", Texture.class);
@@ -163,6 +167,10 @@ public class PantallaDeInicio implements Screen {
 				elapsedTime = 0f;
 			}
 			if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+				this.code.music = this.code.manager.get("fuerapartida.ogg");
+				this.code.music.setLooping(true);
+				this.code.music.play();
+				this.code.music.setVolume(0.2f);
 				this.code.setScreen(new MainMenuScreen(this.code));
 			}
 		}

@@ -266,7 +266,7 @@ public class OpcionesSonido implements Screen {
 		stage.getBatch().draw(code.manager.get("Menus/Volver.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 		
-		if (silenciar) {
+		if (!silenciar) {
 
 			stage.getBatch().draw(code.manager.get("Menus/Hoyo.png", Texture.class), anchoPantalla * 50 / 100, altoPantalla * 53 / 100, anchoBoton , anchoBoton*0.33f );
 			//	game.music.setVolume(0f);
@@ -312,7 +312,7 @@ public class OpcionesSonido implements Screen {
 
 			if (Gdx.input.isKeyPressed(Keys.RIGHT) && !delay) {
 				delay = true;
-				volumen += 0.1f;
+				volumen += 0.05f;
 
 				if (volumen > 1f) {
 					volumen = 1f;
@@ -321,22 +321,26 @@ public class OpcionesSonido implements Screen {
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT) && !delay) {
 				delay = true;
-				volumen -= 0.1f;
+				volumen -= 0.05f;
 				if (volumen < 0f) {
 					volumen = 0f;
 				}
 			}
 
 			if (!silenciar && code.music != null) {
-				code.music.setVolume(volumen);
-      }
+				code.music.setVolume((float) Math.pow(volumen, 2));
+			}
 			break;
 		case 1:
 
 			if (Gdx.input.isKeyPressed(Keys.ENTER) && !delay) {
 				delay = true;
 				silenciar = !silenciar;
-
+				if(silenciar) {
+					code.music.setVolume(0f);
+				} else {
+					code.music.setVolume((float) Math.pow(volumen, 2));
+				}
 			}
 			break;
 		case 2:

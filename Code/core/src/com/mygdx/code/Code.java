@@ -52,13 +52,6 @@ public class Code extends Game {
 		 */
 //		inputProcessor = new MyInputProcessor();
 //		Gdx.input.setInputProcessor(inputProcessor);
-		/**
-		 * Activar para escuchar mï¿½sica, para probarlo hay que poner el nombre del
-		 * fichero .ogg en la carpeta sonidos dentro de assets
-		 */
-//		music = Gdx.audio.newMusic(Gdx.files.internal("sonidos/juego.ogg"));
-//		music.setLooping(true);
-//		music.play();
 
 		manager = new AssetManager();
 		manager.load("Fondo_Inicio.jpg", Texture.class);

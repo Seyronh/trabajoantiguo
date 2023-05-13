@@ -51,6 +51,7 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen(final Code code) {
 
 		this.code = code;
+		
 		anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
 		
@@ -197,6 +198,11 @@ public class MainMenuScreen implements Screen {
 			e.printStackTrace();
 		}
 		// TODO Auto-generated method stub
+		float vol = this.code.music.getVolume();
+		this.code.music.stop();
+		this.code.music = this.code.manager.get("fuerapartida.ogg");
+		this.code.music.setVolume(vol);
+		this.code.music.play();
 		cargarPantalla();
 	}
 

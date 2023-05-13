@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 
 public class minijuego implements Screen{
-    final Code game;
+    final Code code;
     //private Stage stage;º
 	private float anchoPantalla, altoPantalla, max, min;
 	private Texture fondo, pescador, canaPescar, barraVertical, indicador, pezV, pezH;
@@ -37,9 +37,10 @@ public class minijuego implements Screen{
     private ProgressBar barraProgreso;
     private Stage stage;
     private boolean estaBajando, hasGanado;
+    private float delay;
 
-    public minijuego(final Code game){
-        this.game = game;
+    public minijuego(final Code code){
+        this.code = code;
         anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
         
@@ -59,18 +60,18 @@ public class minijuego implements Screen{
         fuente = new BitmapFont();
         fuente.setColor(0, 0, 0, 1);
         fuente.getData().setScale(5, 5);
-        pezH = new Texture("pezHorizontal.png");
+        pezH = this.code.manager.get("pezHorizontal.png");
 
         //fondo
-        fondo = new Texture("island_pixel_art.png");
+        fondo = this.code.manager.get("island_pixel_art.png");
         //pescador
-        pescador = new Texture("pescador.png");
+        pescador = this.code.manager.get("pescador.png");
         //caña
-        canaPescar = new Texture("canapescar.png");
+        canaPescar = this.code.manager.get("canapescar.png");
         //barra pez
-        barraVertical = new Texture("barraProgresoVertical.png");
+        barraVertical = this.code.manager.get("barraProgresoVertical.png");
         //indicador
-        indicador = new Texture("indicadorVertical.png");
+        indicador = this.code.manager.get("indicadorVertical.png");
 
         //barraProgresp
         Pixmap pixmap = new Pixmap(25, 9000, Format.RGBA8888);
@@ -97,16 +98,17 @@ public class minijuego implements Screen{
         pixmap3.dispose();
         progressBarStyle.knobBefore = drawable3;
 
-        barraProgreso = new ProgressBar(0.0f, 1.0f, 0.02f, true, progressBarStyle);
+        barraProgreso = new ProgressBar(0.0f, 1.0f, 0.01f, true, progressBarStyle);
         barraProgreso.setValue(0.0f);
         barraProgreso.setAnimateDuration(0.1f);
         barraProgreso.setBounds(anchoPantalla/2 + 75 , altoPantalla/2 - 30, 30, 300);
+        barraProgreso.setProgrammaticChangeEvents(false);
         //barraProgreso.setPosition(anchoPantalla/2 + 75 , altoPantalla/2 - 30);
         
         stage.addActor(barraProgreso);      
 
         //pez
-        pezV = new Texture("pezVertical.png");
+        pezV = this.code.manager.get("pezVertical.png");
         Random rnd = new Random();
         max = (altoPantalla/2 + 211);
         min = (altoPantalla/2 - 22);
@@ -127,7 +129,7 @@ public class minijuego implements Screen{
         if (posY > minY && posY < maxY){
             //posY += -10 + rnd.nextFloat() * 20 ;
         	if (rnd.nextFloat()>0.5) {
-        		posY += -5;
+        		posY -= 5;
         	} else {
         		posY += 5;
         	}
@@ -150,7 +152,8 @@ public class minijuego implements Screen{
             }
             }
     	if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
-        	barraProgreso.setValue(barraProgreso.getValue() + 0.5f*Gdx.graphics.getDeltaTime());
+    		float newvalue = barraProgreso.getValue() + 0.01f;
+        	barraProgreso.setValue(newvalue);
             if(barraProgreso.getValue() >= 1f){
                 puntuacion++;
                 barraProgreso.setValue(0.0f);
@@ -199,9 +202,12 @@ public class minijuego implements Screen{
         fuente2.setColor(0, 0, 0, 1);
         fuente2.getData().setScale(10, 10);
         if(hasGanado) {
+        	delay += delta;
         	fuente2.draw(batch, "HAS GANADO!", 450, altoPantalla-700);
         }
-        
+        if(delay>2f) {
+        	this.code.setScreen(new PantallaPartida(this.code));
+        }
         /* 	MOSTRAR LIMITES COLISIONES
         BitmapFont fuente3 = new BitmapFont();
         fuente2.setColor(0, 0, 0, 1);
@@ -219,8 +225,8 @@ public class minijuego implements Screen{
         //ganar
         
         batch.end();
+        stage.act(delta);
         stage.draw();
-        stage.act();
                 
     }
 

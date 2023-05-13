@@ -161,7 +161,12 @@ public class PantallaPartida implements Screen {
 				}
 			}
 			if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-				
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				state = State.PAUSE;
 			}
 			
@@ -219,50 +224,22 @@ public class PantallaPartida implements Screen {
 			
 			
 			
-			 if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+			 if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 		    		
-		    		commandnum++;
-		    		
-		    		if(commandnum > 2) {
-		    			
-		    			commandnum = 0;
-		    		}
+		    	state = State.RUNNING;
 		    		
 		    	}
-			  if(Gdx.input.isKeyPressed(Keys.UP)) {
+			  if(Gdx.input.isKeyPressed(Keys.M)) {
+		    		stage.dispose();
+				  code.setScreen(new MainMenuScreen(code));
 		    		
-		    		commandnum--;
-		    		
-		    		if(commandnum < 0) {
-		    			
-		    			commandnum = 2;
-		    		}
-		    		
-		    }
-			
-			switch (commandnum) {
-			
-			case 0:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-					
-					state = State.RUNNING;
-				}
-				break;
-			case 1:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-					
-					code.setScreen(new MainMenuScreen(code));
-				}
-				break;
-			case 2:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+		     }
+			  if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 					
 					System.exit(0);
 				}
-				break;
 			
 			
-			}
 
 			
 			break;

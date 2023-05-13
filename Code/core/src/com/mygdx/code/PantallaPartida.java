@@ -25,6 +25,7 @@ public class PantallaPartida implements Screen {
 	static final float relation = (Gdx.graphics.getWidth()/Gdx.graphics.getHeight())+15;
 	static final float STEP_TIME = 1f/60f;
 	static int numObstaculos = 20;
+	static int numPowerUps = 4;
 	float accumulator = 0;
 	private int ids=0;
 	//private float tiempo = 0;
@@ -41,7 +42,7 @@ public class PantallaPartida implements Screen {
 	Carriles carriles;
 	ArrayList<Body> borrar = new ArrayList<Body>();
 	Vector2 jugadorpos;
-	
+	int powerupsa = 0;
 	
 	/////////
 	
@@ -146,7 +147,29 @@ public class PantallaPartida implements Screen {
 		/*
 		 * FINAL CREACION OBSTACULOS INICIALES
 		 */
+		/*
+		 * CREACION PowerUps
+		 */
+		for(int i = 0;i<PantallaPartida.numPowerUps;i++) {
+			Vector3 posc = this.camara.position;
+			float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
+			float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
+			posy += Gdx.graphics.getHeight()/relation;
+			if(Math.random()<0.5f) {
+				posx = -posx;
+			}
+			PowerUp powerup = PowerUp.predefinidos[(int) Math.floor(Math.random()*PowerUp.predefinidos.length)];
+			Sprite power = new Sprite(this.code.manager.get("powerUp.png",Texture.class),1024,1024);
+			power.setScale(0.07f/relation);
+			Body powerbod = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(40,40));
+			powerbod.setUserData(new UserData(power,ids,powerup));
+			ids++;
+			powerupsa++;
+		}
 		
+		/*
+		 * FINAL CREACION PowerUps
+		 */
 		
 		/*
 		Body powerup = crearCuerpo(new Vector2(0,20),BodyType.StaticBody,0.01f,0.01f,0.5f,true,new Vector2(20,20));
@@ -311,6 +334,11 @@ public class PantallaPartida implements Screen {
 						body.applyForce(velco, pos,true);
 		        	}
 		        }
+		        if((data.tipo == 3 || data.tipo == 2) && (pos.x<jugadorpos.x-camara.viewportWidth||pos.x>jugadorpos.x+camara.viewportWidth||pos.y<jugadorpos.y-camara.viewportHeight)) {
+		        	if(!this.borrar.contains(body)) {
+		        		this.borrar.add(body);
+		        	}
+		        }
 		        if(body.getPosition().x<-camara.viewportWidth/2) {
 		        	body.setTransform(-camara.viewportWidth/2,pos.y,body.getAngle());
 		        	body.setLinearVelocity(new Vector2(0,body.getLinearVelocity().y));
@@ -331,43 +359,18 @@ public class PantallaPartida implements Screen {
 
 		        fisicas.step(STEP_TIME, 6, 2);
 		    }
-		    ArrayList<Body> aux = new ArrayList<Body>();
-		    for(int i = 0;i<obstaculos.size();i++) {
-		    	Body obs = obstaculos.get(i);
-		    	if(!this.borrar.contains(obs)) {
-		    	Vector2 pos = obs.getPosition();
-		    	if(pos.x<jugadorpos.x-camara.viewportWidth) {
-		    		if(!this.borrar.contains(obs)) {
-		    			this.borrar.add(obs);
-		    		}
-		    		if(!aux.contains(obs)) {
-		    			aux.add(obs);
-		    		}
-		    	} else
-		    	if(pos.x>jugadorpos.x+camara.viewportWidth) {
-		    		if(!this.borrar.contains(obs)) {
-		    			this.borrar.add(obs);
-		    		}
-		    		if(!aux.contains(obs)) {
-		    			aux.add(obs);
-		    		}
-		    	} else
-		    	if(pos.y<jugadorpos.y-camara.viewportHeight) {
-		    		if(!this.borrar.contains(obs)) {
-		    			this.borrar.add(obs);
-		    		}
-		    		if(!aux.contains(obs)) {
-		    			aux.add(obs);
-		    		}
-		    	}
-		    	} else {
-		    		aux.add(obs);
-		    	}
-		    }
-		    obstaculos.removeAll(aux);
+		    ArrayList<Body> auxo = new ArrayList<>();
 		    for(int i = 0;i<this.borrar.size();i++) {
-		    	fisicas.destroyBody(this.borrar.get(i));
+		    	Body b = this.borrar.get(i);
+		    	UserData data = (UserData) b.getUserData();
+		    	if(data.tipo == 3) {
+		    		auxo.add(b);
+		    	} else if(data.tipo == 2) {
+		    		powerupsa--;
+		    	}
+		    	fisicas.destroyBody(b);
 		    }
+		    obstaculos.removeAll(auxo);
 		    this.borrar.clear();
 		    if(obstaculos.size()<PantallaPartida.numObstaculos) {
 				for(int i = 0;i<PantallaPartida.numObstaculos-obstaculos.size();i++) {
@@ -387,6 +390,22 @@ public class PantallaPartida implements Screen {
 					ids++;
 				}
 		    }
+			while(powerupsa<PantallaPartida.numPowerUps) {
+				Vector3 posc = this.camara.position;
+				float posx = (float) (Math.random()*camara.viewportWidth/2)-1;
+				float posy = camara.viewportHeight+(float)(Math.random()*camara.viewportHeight);
+				posy += Gdx.graphics.getHeight()/relation;
+				if(Math.random()<0.5f) {
+					posx = -posx;
+				}
+				PowerUp powerup = PowerUp.predefinidos[(int) Math.floor(Math.random()*PowerUp.predefinidos.length)];
+				Sprite power = new Sprite(this.code.manager.get("powerUp.png",Texture.class),1024,1024);
+				power.setScale(0.07f/relation);
+				Body powerbod = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(40,40));
+				powerbod.setUserData(new UserData(power,ids,powerup));
+				ids++;
+				powerupsa++;
+			}
 			
 			
 			break;

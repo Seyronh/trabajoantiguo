@@ -135,7 +135,7 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("carril.jpg", Texture.class);
 		this.code.manager.load("roca.png", Texture.class);
 		this.code.manager.load("fondo-mar.png", Texture.class);
-		this.code.manager.load("tibu2", Texture.class);
+		this.code.manager.load("tiburon.png", Texture.class);
 		//this.code.manager.load("meta", Texture.class);
 
 	}

@@ -237,7 +237,7 @@ public class PantallaPartida implements Screen {
 				//this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
 				//this.code.music.play();			
 				
-			  if(Math.random()<0.001f){
+			  if(Math.random()<0.5f){
 			  				this.code.music.stop();
 			 				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
 			 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));

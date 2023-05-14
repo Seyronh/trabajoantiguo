@@ -163,6 +163,7 @@ public class SeleccionBarco implements Screen {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+    		this.code.music.stop();
 			code.setScreen(new PantallaPartida(code));
 		}
 

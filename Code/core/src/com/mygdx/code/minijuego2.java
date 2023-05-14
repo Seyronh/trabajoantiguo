@@ -53,7 +53,7 @@ public class minijuego2 implements Screen{
         //fondo
         fondo = this.code.manager.get("fondo-mar.png");
         //tiburon
-        tiburon = this.code.manager.get("bolivia.png");
+        tiburon = this.code.manager.get("tibu2.png");
         //meta±a
         //meta = this.code.manager.get("meta.png");
         

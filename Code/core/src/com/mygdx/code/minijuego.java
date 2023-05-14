@@ -98,9 +98,9 @@ public class minijuego implements Screen{
         pixmap3.dispose();
         progressBarStyle.knobBefore = drawable3;
 
-        barraProgreso = new ProgressBar(0.0f, 1.0f, 0.01f, true, progressBarStyle);
+        barraProgreso = new ProgressBar(0.0f, 2.0f, 0.01f, true, progressBarStyle);
         barraProgreso.setValue(0.0f);
-        barraProgreso.setAnimateDuration(0.1f);
+        barraProgreso.setAnimateDuration(0.15f);
         barraProgreso.setBounds(anchoPantalla/2 + 75 , altoPantalla/2 - 30, 30, 300);
         barraProgreso.setProgrammaticChangeEvents(false);
         //barraProgreso.setPosition(anchoPantalla/2 + 75 , altoPantalla/2 - 30);
@@ -154,7 +154,7 @@ public class minijuego implements Screen{
     	if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
     		float newvalue = barraProgreso.getValue() + 0.01f;
         	barraProgreso.setValue(newvalue);
-            if(barraProgreso.getValue() >= 1f){
+            if(barraProgreso.getValue() >= 2f){
                 puntuacion++;
                 barraProgreso.setValue(0.0f);
 

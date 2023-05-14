@@ -3,7 +3,7 @@ package com.mygdx.code;
 public class PowerUp {
 	
 	
-	static PowerUp[] predefinidos = {new PowerUp(10,0,0,0),new PowerUp(0,10,0,0),new PowerUp(0,0,10,0),new PowerUp(0,0,0,10)};
+	static PowerUp[] predefinidos = {new PowerUp(2,0,0,0),new PowerUp(0,10,0,0),new PowerUp(0,0,2,0),new PowerUp(0,0,0,10)};
 	public float aceleracion = 0f;
 	public float curacion = 0f;
 	public float movilidad = 0f;

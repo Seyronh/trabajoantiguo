@@ -22,7 +22,7 @@ public class IA {
 		case 1:
 			accion = 1;
 			break;
-		case 2:
+		default:
 			if(Math.abs(velangular)>0) {
 				if(velangular>0) {
 					accion2 = 0;

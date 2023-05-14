@@ -213,6 +213,7 @@ public class PantallaPartida implements Screen {
 			if(this.code.ganadorj && this.code.ganadas == 4) {
 				this.code.terminados = 0;
 				this.code.ganadorj = false;
+				this.code.dificultad = 1;
 				this.code.music.stop();
 				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
@@ -220,6 +221,7 @@ public class PantallaPartida implements Screen {
 				this.code.setScreen(new MainMenuScreen(this.code));
 			} else
 			if(this.code.ganadorj) {
+				this.code.dificultad++;
 				this.code.terminados = 0;
 				this.code.ganadorj = false;
 				this.code.setScreen(new minijuego(this.code));
@@ -227,6 +229,7 @@ public class PantallaPartida implements Screen {
 			if(this.code.terminados == 3) {
 				this.code.terminados = 0;
 				this.code.ganadorj = false;
+				this.code.dificultad = 1;
 				this.code.music.stop();
 				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));

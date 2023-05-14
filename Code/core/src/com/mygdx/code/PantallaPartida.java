@@ -364,9 +364,6 @@ public class PantallaPartida implements Screen {
 			Vector2 pos2 = jugador.body.getPosition();
 			camara.position.set(new Vector3(camara.position.x,pos2.y+20,0));
 			camara.update();
-			BitmapFont fuente = new BitmapFont();
-			fuente.setColor(Color.GOLDENROD);
-			fuente.getData().setScale(5.0f/relation, 5.0f/relation);
 			Array<Body> lista = new Array<Body>();
 			fisicas.getBodies(lista);
 			Iterator<Body> iter = lista.iterator();
@@ -378,7 +375,6 @@ public class PantallaPartida implements Screen {
 		    this.code.batch.begin();
 		    background.draw(this.code.batch);
 		    carriles.draw(this.code.batch);
-		    fuente.draw(this.code.batch,"Vida:"+jugador.vida,camara.position.x,camara.position.y);
 		    while (iter.hasNext()) {
 		        body = iter.next();
 		        UserData data = (UserData) body.getUserData();

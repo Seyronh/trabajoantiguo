@@ -60,6 +60,8 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("musica/enpartida.ogg", Music.class);
 		this.code.manager.load("musica/fuerapartida.ogg", Music.class);
 		this.code.manager.load("musica/minijuego1.ogg", Music.class);
+		this.code.manager.load("musica/minijuego2.ogg", Music.class);
+
 		//FIN MUSICA
 		
 		//MEDALLAS

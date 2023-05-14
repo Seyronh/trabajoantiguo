@@ -148,6 +148,7 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("Menus/1.png", Texture.class);
 		this.code.manager.load("Menus/2.png", Texture.class);
 
+
 		this.code.manager.load("Menus/madera.png", Texture.class);
 		//FIN MENUS
 		

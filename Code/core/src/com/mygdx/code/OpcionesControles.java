@@ -318,11 +318,11 @@ public class OpcionesControles implements Screen {
 	 
 		    if(code.moverIzquierda == Keys.A) {
 		    	
-		    	stage.getBatch().draw(code.manager.get("Menus/circulo.png", Texture.class), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, anchoBoton/3, altoBoton);  // Modo ventana
+		    	stage.getBatch().draw(code.manager.get("Menus/circulo.png", Texture.class), anchoPantalla*507/1000, altoPantalla*407/1000, anchoBoton*30/100, altoBoton);  // Modo ventana
 		    	
 		    }else {
 		    	
-		    	stage.getBatch().draw(code.manager.get("Menus/circulo.png", Texture.class), anchoPantalla*40/100, altoPantalla*42/100 - (altoPantalla*7/100)*commandnum, anchoBoton/3, altoBoton);  // Modo ventana
+		    	stage.getBatch().draw(code.manager.get("Menus/circulo.png", Texture.class), anchoPantalla*547/1000, altoPantalla*407/1000, anchoBoton*30/100, altoBoton);  // Modo ventana
 		    	
 		    }
 		    
@@ -344,13 +344,11 @@ public class OpcionesControles implements Screen {
 		    	
 		    	
 		    	if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-		    		code.moverIzquierda = Keys.LEFT;
 		    		
 		    		
 		    		arrows = true;
 		    	}
 		    	if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-		    		code.moverIzquierda = Keys.A;
 		    		
 		    		arrows = false;
 		    	}

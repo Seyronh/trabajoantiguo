@@ -128,6 +128,8 @@ public class PantallaDeInicio implements Screen {
 		//FIN OPCIONES
 		
 		//MENUS
+		this.code.manager.load("Menus/Combo.png", Texture.class);
+		this.code.manager.load("Menus/Menu2.png", Texture.class);
 		this.code.manager.load("Menus/Cuadro_sonido.png", Texture.class);
 		this.code.manager.load("Menus/Volumen.png", Texture.class);
 		this.code.manager.load("Menus/Silenciar.png", Texture.class);

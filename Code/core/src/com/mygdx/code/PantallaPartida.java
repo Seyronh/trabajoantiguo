@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -48,7 +49,13 @@ public class PantallaPartida implements Screen {
 	/////////
 	
 	
-	private int commandnum;
+
+	float anchoPantalla = Gdx.graphics.getWidth();
+	float altoPantalla = Gdx.graphics.getHeight();
+	Stage stage = new Stage();
+	
+
+
 	
 	public enum State{
 		
@@ -65,7 +72,7 @@ public class PantallaPartida implements Screen {
 		
 		/////
 		state = State.RUNNING;
-		commandnum = 0;
+		
 	}
 	private void generarObstaculo() {
 		Vector3 posc = this.camara.position;
@@ -427,69 +434,41 @@ public class PantallaPartida implements Screen {
 			break;
 		case PAUSE:
 			
+			
+			
 			//Aqui ya las cosas
 			
-			 if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+			
+			stage.getBatch().begin();
+			
+			stage.getBatch().draw(code.manager.get("Menus/Menu2.png", Texture.class), anchoPantalla*36/100, altoPantalla*21/100, anchoPantalla*30/100, altoPantalla*60/100);
+			
+			stage.getBatch().draw(code.manager.get("Menus/Combo.png", Texture.class), anchoPantalla*40/100, altoPantalla*37/100, anchoPantalla*20/100, altoPantalla*30/100);
+			
+			stage.getBatch().end();
+			
+			
+			
+			 if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 		    		
-		    		commandnum++;
-		    		
-		    		if(commandnum > 2) {
-		    			
-		    			commandnum = 0;
-		    		}
+		    	state = State.RUNNING;
 		    		
 		    	}
-			  if(Gdx.input.isKeyPressed(Keys.UP)) {
+			  if(Gdx.input.isKeyPressed(Keys.M)) {
+		    		stage.dispose();
+				  code.setScreen(new MainMenuScreen(code));
 		    		
-		    		commandnum--;
-		    		
-		    		if(commandnum < 0) {
-		    			
-		    			commandnum = 2;
-		    		}
-		    		
-		    }
-			
-
-			
-			code.batch.begin();
-
-
-		//	code.batch.draw(Fondo,0 , 0);
-			
-			
-			
-			code.batch.end();
-			
-			
-			switch (commandnum) {
-			
-			case 0:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-					
-					state = State.RUNNING;
-				}
-				break;
-			case 1:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-					
-					code.setScreen(new MainMenuScreen(code));
-				}
-				break;
-			case 2:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+		     }
+			  if(Gdx.input.isKeyPressed(Keys.BACKSPACE)) {
 					
 					System.exit(0);
 				}
-				break;
 			
 			
-			}
 
 			
-			
-			
 			break;
+		
 		
 		
 

@@ -20,7 +20,7 @@ public class PantallaDeInicio implements Screen {
 	private Texture texture;
 	private BitmapFont font;
 	private float elapsedTime = 0.0f;
-	private boolean skipTime = true; //para no tener que pulsar espacio al iniciar
+	private boolean skipTime = false; //para no tener que pulsar espacio al iniciar
 
 	public PantallaDeInicio(Code code) {
 		this.code = code;

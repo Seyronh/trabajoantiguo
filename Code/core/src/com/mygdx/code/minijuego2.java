@@ -17,13 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 public class minijuego2 implements Screen{
     final Code code;
 	private float anchoPantalla, altoPantalla;
-	private Texture fondo, pez, tiburon, meta;
+	private Texture fondo, pez, tiburon;
     private SpriteBatch batch;
-    private int puntuacion;
-    private final int MAX_PUNTOS;
     private BitmapFont fuente;
-    private Random rnd;
-    private ProgressBar barraProgreso;
     private boolean hasGanado, hasPerdido;
     private float delay,  tiburonX, pezX, accel;
 	
@@ -31,9 +27,6 @@ public class minijuego2 implements Screen{
         this.code = code;
         anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();
-        
-        MAX_PUNTOS = 3;
-        rnd = new Random();
         hasGanado = false;
         hasPerdido = false;
         accel = 1;
@@ -45,7 +38,6 @@ public class minijuego2 implements Screen{
         //stage = new Stage();
         batch = new SpriteBatch();
         //puntuacion
-        puntuacion = 0;
         
         fuente = new BitmapFont();
         fuente.setColor(0, 0, 0, 1);
@@ -56,8 +48,7 @@ public class minijuego2 implements Screen{
         fondo = this.code.manager.get("fondo-mar.png");
         //tiburon
         tiburon = this.code.manager.get("tiburon.png");
-        //meta±a
-        //meta = this.code.manager.get("meta.png");
+
         tiburonX = anchoPantalla/30;
         pezX = anchoPantalla/3 - 100;
 	}
@@ -74,7 +65,6 @@ public class minijuego2 implements Screen{
         }
 
         batch.draw(tiburon,tiburonX, altoPantalla/5, 420, 300);
-        //batch.draw(meta, anchoPantalla/2 + 120, altoPantalla/2 - 30, 50, 300);
         
         if(!hasPerdido) {
 	        //Movimiento pez

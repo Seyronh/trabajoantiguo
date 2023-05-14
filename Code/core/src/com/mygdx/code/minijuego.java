@@ -129,24 +129,24 @@ public class minijuego implements Screen{
         if (posY > minY && posY < maxY){
             //posY += -10 + rnd.nextFloat() * 20 ;
         	if (rnd.nextFloat()>0.5) {
-        		posY -= 5;
+        		posY -= 2;
         	} else {
-        		posY += 5;
+        		posY += 2;
         	}
         } else if (posY <= minY){
-            posY += 5;
+            posY += 2;
         } else if (posY >= minY){
-            posY -= 5;
+            posY -= 2;
         }
         if(Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY < maxY){
             if((maxY - indicadorY) >= 8){
-                subir+=8;
+                subir+=4;
             } else {
                 subir += (maxY - indicadorY) + 3;
             }
         } else if (!Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY > minY){
             if((indicadorY - minY) >= 10){
-                subir-=10;
+                subir-=5;
             } else {
                 subir -= (indicadorY - minY) + 5;
             }

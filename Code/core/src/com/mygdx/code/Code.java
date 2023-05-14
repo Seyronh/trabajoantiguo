@@ -19,7 +19,10 @@ public class Code extends Game {
 	AssetManager manager;
   	int dificultad;
 	Music music;
-	public float volumen;
+	public float volumen = 0.5f;
+	public int terminados = 0;
+	public boolean ganadorj = false;
+	public int ganadas = 0;
 	private MyInputProcessor inputProcessor;
 	Pais paisSeleccionado;
 	TipoBarco tipoBarcoSeleccionado;
@@ -42,7 +45,7 @@ public class Code extends Game {
 
 	@Override
 	public void create() {
-		dificultad = 2;
+		dificultad = 1;
 		batch = new SpriteBatch();
 		/**
 		 * Quita el puntero del ratï¿½n
@@ -57,8 +60,8 @@ public class Code extends Game {
 		manager = new AssetManager();
 		manager.load("Fondo_Inicio.jpg", Texture.class);
 		manager.finishLoading();
-		paisSeleccionado = new Pais("ES", "España", "espana.png");
-		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f);
+		paisSeleccionado = new Pais("ES", "Espana", "banderas/espana.png");
+		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barcos/barcoNormal.png", 5f, 5f);
 		cargarPaises();
 		cargarTiposBarcos();
 		setScreen(new PantallaDeInicio(this));
@@ -67,48 +70,48 @@ public class Code extends Game {
 	// Método que añade todos los tipos de barcos al array
 
 	private void cargarTiposBarcos() {
-		tipoBarcos.add(new TipoBarco(5f, 5f, "barcoNormal.png", 5f, 5f));
-		tipoBarcos.add(new TipoBarco(3f, 8f, "barcoMovilidad.png", 6f, 3f));
-		tipoBarcos.add(new TipoBarco(2f, 5f, "barcoVida.png", 10f, 3f));
-		tipoBarcos.add(new TipoBarco(4f, 3f, "barcoSpeed.png", 5f, 8f));
-		tipoBarcos.add(new TipoBarco(8f, 6f, "barcoAceleracion.png", 3f, 3f));
+		tipoBarcos.add(new TipoBarco(5f, 5f, "barcos/barcoNormal.png", 5f, 5f));
+		tipoBarcos.add(new TipoBarco(3f, 8f, "barcos/barcoMovilidad.png", 6f, 3f));
+		tipoBarcos.add(new TipoBarco(2f, 5f, "barcos/barcoVida.png", 10f, 3f));
+		tipoBarcos.add(new TipoBarco(4f, 3f, "barcos/barcoSpeed.png", 5f, 8f));
+		tipoBarcos.add(new TipoBarco(8f, 6f, "barcos/barcoAceleracion.png", 3f, 3f));
 		// TODO meter los barcos
 	}
 	
 	// Método que añade todos los países al array para mostrarlos
 		private void cargarPaises() {
-			paises.add(new Pais("ES", "España", "espana.png"));
-			paises.add(new Pais("CH", "China", "china.png"));
-			paises.add(new Pais("JP", "Japon", "japon.png"));
-			paises.add(new Pais("CS", "Corea del Sur", "coreaSur.png"));
-			paises.add(new Pais("BR", "Brasil", "brasil.png"));
-			paises.add(new Pais("RU", "Reino Unido", "reinoUnido.png"));
-			paises.add(new Pais("ID", "Indonesia", "indonesia.png"));
-			paises.add(new Pais("AU", "Australia", "australia.png"));
-			paises.add(new Pais("EU", "Estados Unidos", "estadosUnidos.png"));
-			paises.add(new Pais("RU", "Rusia", "rusia.png"));
-			paises.add(new Pais("SD", "Sudáfrica", "sudafrica.png"));
-			paises.add(new Pais("BO", "Bolivia", "bolivia.png"));
-			paises.add(new Pais("AL", "Alemania", "alemania.png"));
-			paises.add(new Pais("FR", "Francia", "francia.png"));
-			paises.add(new Pais("CHAD", "Chad", "chad.png"));
-			paises.add(new Pais("NIG", "Nigeria", "nigeria.png"));
-			paises.add(new Pais("CM", "Costa de Marfil", "costaMarfil.png"));
-			paises.add(new Pais("CAM", "Camerún", "camerun.png"));
-			paises.add(new Pais("GR", "Grecia", "grecia.png"));
-			paises.add(new Pais("EG", "Egipto", "egipto.png"));
-			paises.add(new Pais("SU", "Suecia", "suecia.png"));
-			paises.add(new Pais("SUI", "Suiza", "suiza.png"));
-			paises.add(new Pais("CA", "Canada", "canada.png"));
-			paises.add(new Pais("MX", "México", "mexico.png"));
-			paises.add(new Pais("AR", "Argentina", "argentina.png"));
-			paises.add(new Pais("CU", "Cuba", "cuba.png"));
-			paises.add(new Pais("SL", "SriLanka", "sriLanka.png"));
-			paises.add(new Pais("MAU", "Islas Mauricio", "mauricio.png"));
-			paises.add(new Pais("MA", "Madagascar", "madagascar.png"));
-			paises.add(new Pais("VA", "Vaticano", "vaticano.png"));
-			paises.add(new Pais("IT", "Italia", "italia.png"));
-			paises.add(new Pais("IN", "India", "india.png"));
+			paises.add(new Pais("ES", "Espana", "banderas/espana.png"));
+			paises.add(new Pais("CH", "China", "banderas/china.png"));
+			paises.add(new Pais("JP", "Japon", "banderas/japon.png"));
+			paises.add(new Pais("CS", "Corea del Sur", "banderas/coreaSur.png"));
+			paises.add(new Pais("BR", "Brasil", "banderas/brasil.png"));
+			paises.add(new Pais("RU", "Reino Unido", "banderas/reinoUnido.png"));
+			paises.add(new Pais("ID", "Indonesia", "banderas/indonesia.png"));
+			paises.add(new Pais("AU", "Australia", "banderas/australia.png"));
+			paises.add(new Pais("EU", "Estados Unidos", "banderas/estadosUnidos.png"));
+			paises.add(new Pais("RU", "Rusia", "banderas/rusia.png"));
+			paises.add(new Pais("SD", "Sudafrica", "banderas/sudafrica.png"));
+			paises.add(new Pais("BO", "Bolivia", "banderas/bolivia.png"));
+			paises.add(new Pais("AL", "Alemania", "banderas/alemania.png"));
+			paises.add(new Pais("FR", "Francia", "banderas/francia.png"));
+			paises.add(new Pais("CHAD", "Chad", "banderas/chad.png"));
+			paises.add(new Pais("NIG", "Nigeria", "banderas/nigeria.png"));
+			paises.add(new Pais("CM", "Costa de Marfil", "banderas/costaMarfil.png"));
+			paises.add(new Pais("CAM", "Camerun", "banderas/camerun.png"));
+			paises.add(new Pais("GR", "Grecia", "banderas/grecia.png"));
+			paises.add(new Pais("EG", "Egipto", "banderas/egipto.png"));
+			paises.add(new Pais("SU", "Suecia", "banderas/suecia.png"));
+			paises.add(new Pais("SUI", "Suiza", "banderas/suiza.png"));
+			paises.add(new Pais("CA", "Canada", "banderas/canada.png"));
+			paises.add(new Pais("MX", "Mexico", "banderas/mexico.png"));
+			paises.add(new Pais("AR", "Argentina", "banderas/argentina.png"));
+			paises.add(new Pais("CU", "Cuba", "banderas/cuba.png"));
+			paises.add(new Pais("SL", "SriLanka", "banderas/sriLanka.png"));
+			paises.add(new Pais("MAU", "Islas Mauricio", "banderas/mauricio.png"));
+			paises.add(new Pais("MA", "Madagascar", "banderas/madagascar.png"));
+			paises.add(new Pais("VA", "Vaticano", "banderas/vaticano.png"));
+			paises.add(new Pais("IT", "Italia", "banderas/italia.png"));
+			paises.add(new Pais("IN", "India", "banderas/india.png"));
 		}
 
 	@Override

@@ -86,11 +86,11 @@ public class OpcionesSonido implements Screen {
 		stage = new Stage();
 		batch = new SpriteBatch();
 
-		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
-		tabla = code.manager.get("Menu.png", Texture.class);
+		fondo = code.manager.get("menuprincipal/fondoMenuPrincipal.png", Texture.class);
+		tabla = code.manager.get("opciones/Menu.png", Texture.class);
 
-		imagenVolumen = code.manager.get("Volumen.png", Texture.class);
-		barra = code.manager.get("Barra.png", Texture.class);
+		imagenVolumen = code.manager.get("opciones/Volumen.png", Texture.class);
+		barra = code.manager.get("opciones/Barra.png", Texture.class);
 
 //		Table table2 = new Table();
 //		table2.setPosition(0, 0);

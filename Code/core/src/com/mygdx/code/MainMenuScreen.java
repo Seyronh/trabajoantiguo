@@ -86,8 +86,8 @@ public class MainMenuScreen implements Screen {
 		batch = new SpriteBatch();
 		
 
-		fondo = this.code.manager.get("fondoMenuPrincipal.png",Texture.class);
-    titulo = this.code.manager.get("Titulo.png", Texture.class);
+		fondo = this.code.manager.get("menuprincipal/fondoMenuPrincipal.png",Texture.class);
+    titulo = this.code.manager.get("menuprincipal/Titulo.png", Texture.class);
 
 	//	Tabla = new Texture("opciones.png");
     	
@@ -106,8 +106,8 @@ public class MainMenuScreen implements Screen {
 	    
 	    	TextButtonStyle styleb = new TextButtonStyle();
 		
-	    	Texture buttondown = this.code.manager.get("botondownplchld.png",Texture.class);
-	    	Texture buttonup = this.code.manager.get("botonplchld.png",Texture.class);
+	    	Texture buttondown = this.code.manager.get("botones/botondownplchld.png",Texture.class);
+	    	Texture buttonup = this.code.manager.get("botones/botonplchld.png",Texture.class);
 		
 	    	styleb.down = new TextureRegionDrawable(new TextureRegion(buttondown));
 	    	styleb.up = new TextureRegionDrawable(new TextureRegion(buttonup));
@@ -222,22 +222,22 @@ public class MainMenuScreen implements Screen {
 		stage.getBatch().draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 		stage.getBatch().draw(titulo,anchoPantalla*5/100,altoPantalla*70/100,anchoPantalla*95/100/(16/9) , altoPantalla*18/100/(16/9));
 	 // batch.draw(Tabla, anchoPantalla*38/100, altoPantalla*3/10, anchoPantalla/4, altoPantalla*6/10); 
-		stage.getBatch().draw(new Texture("cuadro.png"), anchoPantalla*49/100 - (anchoBoton/2), altoPantalla*20/100, anchoPantalla*25/100, altoPantalla*40/100);
+		stage.getBatch().draw(new Texture("menuprincipal/cuadro.png"), anchoPantalla*49/100 - (anchoBoton/2), altoPantalla*20/100, anchoPantalla*25/100, altoPantalla*40/100);
 	    
 	    float medidax = anchoPantalla*45/100;
 	    float mediday =  altoPantalla*495/1000;
 	    
-	    stage.getBatch().draw(code.manager.get("Jugar.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("menuprincipal/Jugar.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    mediday = mediday - altoPantalla*9/100;
 	    
-	    stage.getBatch().draw(code.manager.get("Controles.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("menuprincipal/Controles.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    mediday = mediday - altoPantalla*9/100;
-	    stage.getBatch().draw(code.manager.get("Sonido.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("menuprincipal/Sonido.png", Texture.class), medidax, mediday, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    mediday = mediday - altoPantalla*9/100;
-	    stage.getBatch().draw(code.manager.get("Salir.png", Texture.class), medidax, mediday+4, anchoPantalla*10/100, altoPantalla*6/100);
+	    stage.getBatch().draw(code.manager.get("menuprincipal/Salir.png", Texture.class), medidax, mediday+4, anchoPantalla*10/100, altoPantalla*6/100);
 	    
 	    
 	  //medio pantalla  

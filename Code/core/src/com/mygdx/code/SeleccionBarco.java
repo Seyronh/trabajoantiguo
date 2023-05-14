@@ -70,19 +70,19 @@ public class SeleccionBarco implements Screen {
 		anchoBoton = anchoPantalla * 25 / 100;
 		altoBoton = altoPantalla * 10 / 100;
 
-		seleccionarIzquierda = code.manager.get("flechaSeleccionIzquierda.png", Texture.class);
-		seleccionarDerecha = code.manager.get("flechaSeleccionDerecha.png", Texture.class);
-		textoSeleccion = code.manager.get("textoSeleccionBarcoPais.png",Texture.class);
+		seleccionarIzquierda = code.manager.get("seleccionbarco/flechaSeleccionIzquierda.png", Texture.class);
+		seleccionarDerecha = code.manager.get("seleccionbarco/flechaSeleccionDerecha.png", Texture.class);
+		textoSeleccion = code.manager.get("seleccionbarco/textoSeleccionBarcoPais.png",Texture.class);
 		
-		vida = code.manager.get("Volumen.png", Texture.class);
-		velocidad = code.manager.get("Volumen.png", Texture.class);
-		movilidad = code.manager.get("Volumen.png", Texture.class);
-		aceleracion = code.manager.get("Volumen.png", Texture.class);
+		vida = code.manager.get("opciones/Volumen.png", Texture.class);
+		velocidad = code.manager.get("opciones/Volumen.png", Texture.class);
+		movilidad = code.manager.get("opciones/Volumen.png", Texture.class);
+		aceleracion = code.manager.get("opciones/Volumen.png", Texture.class);
 		
-		barraVida = code.manager.get("Barra.png", Texture.class);
-		barraAceleracion = code.manager.get("Barra.png", Texture.class);
-		barraMovilidad = code.manager.get("Barra.png", Texture.class);
-		barraVelocidad= code.manager.get("Barra.png", Texture.class);
+		barraVida = code.manager.get("opciones/Barra.png", Texture.class);
+		barraAceleracion = code.manager.get("opciones/Barra.png", Texture.class);
+		barraMovilidad = code.manager.get("opciones/Barra.png", Texture.class);
+		barraVelocidad= code.manager.get("opciones/Barra.png", Texture.class);
 		
 //		if (game.paisSeleccionado != null) {
 //			boolean encontrado = false;
@@ -115,7 +115,7 @@ public class SeleccionBarco implements Screen {
 		batch = new SpriteBatch();
 
 		
-		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
+		fondo = code.manager.get("menuprincipal/fondoMenuPrincipal.png", Texture.class);
 		imagenPais = code.manager.get(code.paisSeleccionado.getBandera(), Texture.class);
 		imagenBarco = code.manager.get(code.tipoBarcoSeleccionado.barco, Texture.class);
 		
@@ -212,7 +212,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				code.paisSeleccionado = code.paises.get(posPais);
-				imagenPais = new Texture(code.paisSeleccionado.getBandera());
+				imagenPais = this.code.manager.get(code.paisSeleccionado.getBandera(),Texture.class);
 				
 			} else {
 				posTipoBarco++;
@@ -221,7 +221,7 @@ public class SeleccionBarco implements Screen {
 					posTipoBarco = 0;
 				}
 				code.tipoBarcoSeleccionado = code.tipoBarcos.get(posTipoBarco);
-				imagenBarco = new Texture(code.tipoBarcoSeleccionado.barco);
+				imagenBarco = this.code.manager.get(code.tipoBarcoSeleccionado.barco,Texture.class);
 				setearVistaValoresBarco();
 			}
 		}
@@ -236,7 +236,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				code.paisSeleccionado = code.paises.get(posPais);
-				imagenPais = new Texture(code.paisSeleccionado.getBandera());
+				imagenPais = this.code.manager.get(code.paisSeleccionado.getBandera(),Texture.class);
 			} else {
 				posTipoBarco--;
 
@@ -245,7 +245,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				code.tipoBarcoSeleccionado = code.tipoBarcos.get(posTipoBarco);
-				imagenBarco = new Texture(code.tipoBarcoSeleccionado.barco);
+				imagenBarco = this.code.manager.get(code.tipoBarcoSeleccionado.barco,Texture.class);
 				setearVistaValoresBarco();
 			}
 		}
@@ -281,16 +281,16 @@ public class SeleccionBarco implements Screen {
 	}
 	
 	private void setearVistaValoresBarco() {
-		batch.draw(code.manager.get("vida.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 38 / 100, anchoBoton / 4, altoBoton / 2);
+		batch.draw(code.manager.get("seleccionbarco/vida.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 38 / 100, anchoBoton / 4, altoBoton / 2);
 		batch.draw(vida, anchoPantalla * 72 / 100, altoPantalla * 36 / 100, anchoBoton, altoBoton / 4);
 		batch.draw(barraVida, anchoPantalla * 72 / 100, altoPantalla * 36 / 100, anchoBoton *(code.tipoBarcoSeleccionado.vidamax / 10), altoBoton / 4);
-		batch.draw(code.manager.get("velocidad.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 31 / 100, anchoBoton / 3, altoBoton / 2);
+		batch.draw(code.manager.get("seleccionbarco/velocidad.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 31 / 100, anchoBoton / 3, altoBoton / 2);
 		batch.draw(velocidad, anchoPantalla * 72 / 100, altoPantalla * 29 / 100, anchoBoton, altoBoton / 4);
 		batch.draw(barraVelocidad, anchoPantalla * 72 / 100, altoPantalla * 29 / 100, anchoBoton *(code.tipoBarcoSeleccionado.velocidadmax / 10), altoBoton / 4);
-		batch.draw(code.manager.get("aceleracion.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 24 / 100, anchoBoton / 3, altoBoton / 2);
+		batch.draw(code.manager.get("seleccionbarco/aceleracion.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 24 / 100, anchoBoton / 3, altoBoton / 2);
 		batch.draw(aceleracion, anchoPantalla * 72 / 100, altoPantalla * 22 / 100, anchoBoton, altoBoton / 4);
 		batch.draw(barraAceleracion, anchoPantalla * 72 / 100, altoPantalla * 22 / 100, anchoBoton *(code.tipoBarcoSeleccionado.aceleracion / 10), altoBoton / 4);
-		batch.draw(code.manager.get("movilidad.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 17 / 100, anchoBoton / 3, altoBoton / 2);
+		batch.draw(code.manager.get("seleccionbarco/movilidad.png", Texture.class), anchoPantalla * 72 / 100, altoPantalla * 17 / 100, anchoBoton / 3, altoBoton / 2);
 		batch.draw(movilidad, anchoPantalla * 72 / 100, altoPantalla * 15 / 100, anchoBoton, altoBoton / 4);
 		batch.draw(barraMovilidad, anchoPantalla * 72 / 100, altoPantalla * 15 / 100, anchoBoton *(code.tipoBarcoSeleccionado.movilidad / 10), altoBoton / 4);
 	}

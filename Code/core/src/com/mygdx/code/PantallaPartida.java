@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -41,13 +42,20 @@ public class PantallaPartida implements Screen {
 	BackgroundPartida background;
 	Carriles carriles;
 	ArrayList<Body> borrar = new ArrayList<Body>();
+	Body meta;
 	Vector2 jugadorpos;
 	int powerupsa = 0;
 	
 	/////////
 	
 	
-	private int commandnum;
+
+	float anchoPantalla = Gdx.graphics.getWidth();
+	float altoPantalla = Gdx.graphics.getHeight();
+	Stage stage = new Stage();
+	
+
+
 	
 	public enum State{
 		
@@ -64,7 +72,7 @@ public class PantallaPartida implements Screen {
 		
 		/////
 		state = State.RUNNING;
-		commandnum = 0;
+		
 	}
 	private void generarObstaculo() {
 		Vector3 posc = this.camara.position;
@@ -75,7 +83,7 @@ public class PantallaPartida implements Screen {
 			posx = -posx;
 		}
 		Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
-		Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
+		Sprite obst = new Sprite(this.code.manager.get("pantallapartida/roca.png",Texture.class),4000,4000);
 		obst.setScale(0.003f*obstaculo.tamanio/relation);
 		Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
 		obstaculob.setUserData(new UserData(obst,ids,obstaculo));
@@ -91,7 +99,7 @@ public class PantallaPartida implements Screen {
 			posx = -posx;
 		}
 		PowerUp powerup = PowerUp.predefinidos[(int)Math.random()*PowerUp.predefinidos.length];
-		Sprite power = new Sprite(this.code.manager.get("powerUp.png",Texture.class),1024,1024);
+		Sprite power = new Sprite(this.code.manager.get("pantallapartida/powerUp.png",Texture.class),1024,1024);
 		power.setScale(0.07f/relation);
 		Body powerbod = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(40,40));
 		powerbod.setUserData(new UserData(power,ids,powerup));
@@ -117,9 +125,9 @@ public class PantallaPartida implements Screen {
 	}
 	@Override
 	public void show() {
-		float vol = this.code.music.getVolume();
-		this.code.music = this.code.manager.get("enpartida.ogg");
-		this.code.music.setVolume(vol);
+		this.code.music.stop();
+		this.code.music = this.code.manager.get("musica/enpartida.ogg");
+		this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
 		this.code.music.play();
 		/*
 		 * CREACION FISICAS
@@ -133,6 +141,14 @@ public class PantallaPartida implements Screen {
 		/*
 		 * FIN CREACION FISICAS
 		 */
+		/*
+		 * CREAMOS LA META
+		 */
+		meta = crearCuerpo(new Vector2(0,1200),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(Gdx.graphics.getWidth(),100));
+		Sprite metas = new Sprite(this.code.manager.get("pantallapartida/Meta.jpg",Texture.class),745,114);
+		metas.setScale(3f/relation);
+		meta.setUserData(new UserData(metas,ids));
+		ids++;
 		/*
 		 * CREACION OBSTACULOS INICIALES
 		 */
@@ -202,7 +218,51 @@ public class PantallaPartida implements Screen {
 		
 		switch (state) {
 		case RUNNING:
-			
+			if(this.code.ganadorj && this.code.ganadas == 4) {
+				this.code.terminados = 0;
+				this.code.ganadorj = false;
+				this.code.dificultad = 1;
+				this.code.music.stop();
+				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
+				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+				this.code.music.play();
+				this.code.setScreen(new MainMenuScreen(this.code));
+			} else
+			if(this.code.ganadorj) {
+				this.code.dificultad++;
+				this.code.terminados = 0;
+				this.code.ganadorj = false;
+				this.code.music.stop();
+				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
+				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+				this.code.music.play();
+				this.code.setScreen(new Minijuego(this.code));
+				/*
+				 * if(Math.random()<0.5f){
+				 * 				this.code.music.stop();
+				 *				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
+				 *				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+				 *				this.code.music.play();
+				 * 		this.code.setScreen(new Minijuego(this.code));
+				 * } else {
+				 * 				this.code.music.stop();
+				 *				this.code.music = this.code.manager.get("musica/minijuego2.ogg");
+				 *				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+				 *				this.code.music.play();
+				 * 		this.code.setScreen(new Minijuego2(this.code));
+				 * }
+				 */
+			}
+			if(this.code.terminados == 3) {
+				this.code.terminados = 0;
+				this.code.ganadorj = false;
+				this.code.dificultad = 1;
+				this.code.music.stop();
+				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
+				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+				this.code.music.play();
+				this.code.setScreen(new MainMenuScreen(this.code));
+			}
 
 			if(jugador.aplicado) {
 				jugador.tiempo += 100*delta;
@@ -279,7 +339,7 @@ public class PantallaPartida implements Screen {
 				bia.frenar();
 			}
 		}
-		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+		if(Gdx.input.isKeyPressed(Keys.SPACE) && !jugador.aplicado) {
 			PowerUp poder = jugador.usarPowerUp();
 			if(poder != null) {
 				jugador.aplicado = true;
@@ -302,11 +362,8 @@ public class PantallaPartida implements Screen {
 			}
 			
 			Vector2 pos2 = jugador.body.getPosition();
-			camara.position.set(new Vector3(camara.position.x,pos2.y,0));
+			camara.position.set(new Vector3(camara.position.x,pos2.y+20,0));
 			camara.update();
-			BitmapFont fuente = new BitmapFont();
-			fuente.setColor(Color.GOLDENROD);
-			fuente.getData().setScale(5.0f/relation, 5.0f/relation);
 			Array<Body> lista = new Array<Body>();
 			fisicas.getBodies(lista);
 			Iterator<Body> iter = lista.iterator();
@@ -318,7 +375,6 @@ public class PantallaPartida implements Screen {
 		    this.code.batch.begin();
 		    background.draw(this.code.batch);
 		    carriles.draw(this.code.batch);
-		    fuente.draw(this.code.batch,"Vida:"+jugador.vida,camara.position.x,camara.position.y);
 		    while (iter.hasNext()) {
 		        body = iter.next();
 		        UserData data = (UserData) body.getUserData();
@@ -394,69 +450,41 @@ public class PantallaPartida implements Screen {
 			break;
 		case PAUSE:
 			
+			
+			
 			//Aqui ya las cosas
 			
-			 if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+			
+			stage.getBatch().begin();
+			
+			stage.getBatch().draw(code.manager.get("Menus/Menu2.png", Texture.class), anchoPantalla*36/100, altoPantalla*21/100, anchoPantalla*30/100, altoPantalla*60/100);
+			
+			stage.getBatch().draw(code.manager.get("Menus/Combo.png", Texture.class), anchoPantalla*40/100, altoPantalla*37/100, anchoPantalla*20/100, altoPantalla*30/100);
+			
+			stage.getBatch().end();
+			
+			
+			
+			 if(Gdx.input.isKeyPressed(Keys.ENTER)) {
 		    		
-		    		commandnum++;
-		    		
-		    		if(commandnum > 2) {
-		    			
-		    			commandnum = 0;
-		    		}
+		    	state = State.RUNNING;
 		    		
 		    	}
-			  if(Gdx.input.isKeyPressed(Keys.UP)) {
+			  if(Gdx.input.isKeyPressed(Keys.M)) {
+		    		stage.dispose();
+				  code.setScreen(new MainMenuScreen(code));
 		    		
-		    		commandnum--;
-		    		
-		    		if(commandnum < 0) {
-		    			
-		    			commandnum = 2;
-		    		}
-		    		
-		    }
-			
-
-			
-			code.batch.begin();
-
-
-		//	code.batch.draw(Fondo,0 , 0);
-			
-			
-			
-			code.batch.end();
-			
-			
-			switch (commandnum) {
-			
-			case 0:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-					
-					state = State.RUNNING;
-				}
-				break;
-			case 1:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
-					
-					code.setScreen(new MainMenuScreen(code));
-				}
-				break;
-			case 2:
-				if(Gdx.input.isKeyPressed(Keys.ENTER)) {
+		     }
+			  if(Gdx.input.isKeyPressed(Keys.BACKSPACE)) {
 					
 					System.exit(0);
 				}
-				break;
 			
 			
-			}
 
 			
-			
-			
 			break;
+		
 		
 		
 

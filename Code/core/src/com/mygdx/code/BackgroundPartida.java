@@ -31,7 +31,7 @@ public class BackgroundPartida {
 			}
 		}
 		for(int i = 0;i<9;i++) { //Creamos los 9 fondos y les ponemos el tamaño de la camara y la posicion
-			Sprite fondo = new Sprite(this.code.manager.get("aguaRio.png",Texture.class),1024,1024);
+			Sprite fondo = new Sprite(this.code.manager.get("pantallapartida/aguaRio.png",Texture.class),1024,1024);
 			fondo.setSize(w, h);
 			Vector2 pos = posiciones.get(i);
 			fondo.setCenter(pos.x, pos.y);

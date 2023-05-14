@@ -60,6 +60,10 @@ public class Colisiones implements ContactListener{
 				boolean muerto = Data1.barco.recibirDanio(Data2.obstaculo.danio*this.dificultad);
 				if(muerto) {
 					if(!Data1.barco.ia) {
+						this.code.music.stop();
+						this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
+						this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+						this.code.music.play();
 						this.code.setScreen(new MainMenuScreen(this.code));
 					}
 					this.borrar.add(Cuerpo1);
@@ -74,9 +78,30 @@ public class Colisiones implements ContactListener{
 				boolean muerto = Data2.barco.recibirDanio(Data1.obstaculo.danio*this.dificultad);
 				if(muerto) {
 					if(!Data2.barco.ia) {
-						this.code.setScreen(new minijuego(this.code));
+						this.code.music.stop();
+						this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
+						this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+						this.code.music.play();
+						this.code.setScreen(new MainMenuScreen(this.code));
 					}
 					this.borrar.add(Cuerpo2);
+				}
+			}
+		}
+		if((Data1.tipo == 4 && Data2.tipo == 1) || (Data1.tipo == 1 && Data2.tipo==4)) {
+			if(Data1.tipo == 4) {
+				if(Data2.barco.ia) {
+					this.code.terminados++;
+				} else {
+					this.code.ganadorj = true;
+					this.code.ganadas++;
+				}
+			} else {
+				if(Data1.barco.ia) {
+					this.code.terminados++;
+				} else {
+					this.code.ganadorj = true;
+					this.code.ganadas++;
 				}
 			}
 		}

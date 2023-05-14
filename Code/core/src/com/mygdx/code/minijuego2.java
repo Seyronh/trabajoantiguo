@@ -21,7 +21,7 @@ public class minijuego2 implements Screen{
     private SpriteBatch batch;
     private BitmapFont fuente;
     private boolean hasGanado, hasPerdido;
-    private float delay,  tiburonX, pezX, accel;
+    private float delay,  tiburonX, pezX, accel, delay2;
 	
     public minijuego2(final Code code){
         this.code = code;
@@ -91,6 +91,14 @@ public class minijuego2 implements Screen{
         if(pezX >= anchoPantalla) {
             fuente.draw(batch, "HAS GANADO", 100, altoPantalla-70);
             hasGanado=true;
+        }
+        
+        if(hasGanado) {
+        	delay2++;
+        }
+       
+        if(delay2>3f) {
+        	this.code.setScreen(new PantallaPartida(this.code));
         }
         	
         batch.end();

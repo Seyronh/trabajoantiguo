@@ -43,7 +43,7 @@ public class minijuego2 implements Screen{
         fuente.setColor(0, 0, 0, 1);
         fuente.getData().setScale(5, 5);     
         
-        pez = this.code.manager.get("pezHorizontal.png");
+        pez = this.code.manager.get("minijuego1/pezHorizontal.png");
         //fondo
         fondo = this.code.manager.get("fondo-mar.png");
         //tiburon

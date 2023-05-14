@@ -41,6 +41,7 @@ public class PantallaPartida implements Screen {
 	BackgroundPartida background;
 	Carriles carriles;
 	ArrayList<Body> borrar = new ArrayList<Body>();
+	Body meta;
 	Vector2 jugadorpos;
 	int powerupsa = 0;
 	
@@ -75,7 +76,7 @@ public class PantallaPartida implements Screen {
 			posx = -posx;
 		}
 		Obstaculo obstaculo = new Obstaculo((int)Math.floor(Math.random()*10f));
-		Sprite obst = new Sprite(this.code.manager.get("roca.png",Texture.class),4000,4000);
+		Sprite obst = new Sprite(this.code.manager.get("pantallapartida/roca.png",Texture.class),4000,4000);
 		obst.setScale(0.003f*obstaculo.tamanio/relation);
 		Body obstaculob = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(obstaculo.tamanio*3,obstaculo.tamanio*3));
 		obstaculob.setUserData(new UserData(obst,ids,obstaculo));
@@ -91,7 +92,7 @@ public class PantallaPartida implements Screen {
 			posx = -posx;
 		}
 		PowerUp powerup = PowerUp.predefinidos[(int)Math.random()*PowerUp.predefinidos.length];
-		Sprite power = new Sprite(this.code.manager.get("powerUp.png",Texture.class),1024,1024);
+		Sprite power = new Sprite(this.code.manager.get("pantallapartida/powerUp.png",Texture.class),1024,1024);
 		power.setScale(0.07f/relation);
 		Body powerbod = crearCuerpo(new Vector2(posc.x+posx,posc.y+posy),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(40,40));
 		powerbod.setUserData(new UserData(power,ids,powerup));
@@ -117,9 +118,8 @@ public class PantallaPartida implements Screen {
 	}
 	@Override
 	public void show() {
-		float vol = this.code.music.getVolume();
-		this.code.music = this.code.manager.get("enpartida.ogg");
-		this.code.music.setVolume(vol);
+		this.code.music = this.code.manager.get("musica/enpartida.ogg");
+		this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
 		this.code.music.play();
 		/*
 		 * CREACION FISICAS
@@ -133,6 +133,14 @@ public class PantallaPartida implements Screen {
 		/*
 		 * FIN CREACION FISICAS
 		 */
+		/*
+		 * CREAMOS LA META
+		 */
+		meta = crearCuerpo(new Vector2(0,1200),BodyType.StaticBody,0.2f,1f,0.6f,true,new Vector2(Gdx.graphics.getWidth(),100));
+		Sprite metas = new Sprite(this.code.manager.get("pantallapartida/Meta.jpg",Texture.class),745,114);
+		metas.setScale(3f/relation);
+		meta.setUserData(new UserData(metas,ids));
+		ids++;
 		/*
 		 * CREACION OBSTACULOS INICIALES
 		 */
@@ -202,7 +210,29 @@ public class PantallaPartida implements Screen {
 		
 		switch (state) {
 		case RUNNING:
-			
+			if(this.code.ganadorj && this.code.ganadas == 4) {
+				this.code.terminados = 0;
+				this.code.ganadorj = false;
+				this.code.music.stop();
+				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
+				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+				this.code.music.play();
+				this.code.setScreen(new MainMenuScreen(this.code));
+			} else
+			if(this.code.ganadorj) {
+				this.code.terminados = 0;
+				this.code.ganadorj = false;
+				this.code.setScreen(new minijuego(this.code));
+			}
+			if(this.code.terminados == 3) {
+				this.code.terminados = 0;
+				this.code.ganadorj = false;
+				this.code.music.stop();
+				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
+				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+				this.code.music.play();
+				this.code.setScreen(new MainMenuScreen(this.code));
+			}
 
 			if(jugador.aplicado) {
 				jugador.tiempo += 100*delta;
@@ -279,7 +309,7 @@ public class PantallaPartida implements Screen {
 				bia.frenar();
 			}
 		}
-		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+		if(Gdx.input.isKeyPressed(Keys.SPACE) && !jugador.aplicado) {
 			PowerUp poder = jugador.usarPowerUp();
 			if(poder != null) {
 				jugador.aplicado = true;
@@ -302,7 +332,7 @@ public class PantallaPartida implements Screen {
 			}
 			
 			Vector2 pos2 = jugador.body.getPosition();
-			camara.position.set(new Vector3(camara.position.x,pos2.y,0));
+			camara.position.set(new Vector3(camara.position.x,pos2.y+20,0));
 			camara.update();
 			BitmapFont fuente = new BitmapFont();
 			fuente.setColor(Color.GOLDENROD);

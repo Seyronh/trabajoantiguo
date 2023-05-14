@@ -60,18 +60,18 @@ public class minijuego implements Screen{
         fuente = new BitmapFont();
         fuente.setColor(0, 0, 0, 1);
         fuente.getData().setScale(5, 5);
-        pezH = this.code.manager.get("pezHorizontal.png");
+        pezH = this.code.manager.get("minijuego1/pezHorizontal.png");
 
         //fondo
-        fondo = this.code.manager.get("island_pixel_art.png");
+        fondo = this.code.manager.get("minijuego1/island_pixel_art.png");
         //pescador
-        pescador = this.code.manager.get("pescador.png");
+        pescador = this.code.manager.get("minijuego1/pescador.png");
         //caña
-        canaPescar = this.code.manager.get("canapescar.png");
+        canaPescar = this.code.manager.get("minijuego1/canapescar.png");
         //barra pez
-        barraVertical = this.code.manager.get("barraProgresoVertical.png");
+        barraVertical = this.code.manager.get("minijuego1/barraProgresoVertical.png");
         //indicador
-        indicador = this.code.manager.get("indicadorVertical.png");
+        indicador = this.code.manager.get("minijuego1/indicadorVertical.png");
 
         //barraProgresp
         Pixmap pixmap = new Pixmap(25, 9000, Format.RGBA8888);
@@ -108,7 +108,7 @@ public class minijuego implements Screen{
         stage.addActor(barraProgreso);      
 
         //pez
-        pezV = this.code.manager.get("pezVertical.png");
+        pezV = this.code.manager.get("minijuego1/pezVertical.png");
         Random rnd = new Random();
         max = (altoPantalla/2 + 211);
         min = (altoPantalla/2 - 22);

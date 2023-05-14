@@ -86,8 +86,8 @@ public class OpcionesControles implements Screen {
 	    stage = new Stage();
    		batch = new SpriteBatch();
 		
-		fondo = code.manager.get("fondoMenuPrincipal.png", Texture.class);
-		tabla = code.manager.get("Menu.png", Texture.class);
+		fondo = code.manager.get("menuprincipal/fondoMenuPrincipal.png", Texture.class);
+		tabla = code.manager.get("opciones/Menu.png", Texture.class);
 		
 		
 //    	

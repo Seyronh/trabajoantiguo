@@ -42,75 +42,92 @@ public class PantallaDeInicio implements Screen {
 	}
 
 	private void cargarImagenes() {
-		this.code.manager.load("pezVertical.png",Texture.class);
-		this.code.manager.load("pezHorizontal.png",Texture.class);
-		this.code.manager.load("island_pixel_art.png",Texture.class);
-		this.code.manager.load("pescador.png",Texture.class);
-		this.code.manager.load("canapescar.png",Texture.class);
-		this.code.manager.load("barraProgresoVertical.png",Texture.class);
-		this.code.manager.load("indicadorVertical.png",Texture.class);
-		this.code.manager.load("enpartida.ogg", Music.class);
-		this.code.manager.load("fuerapartida.ogg", Music.class);
-		this.code.manager.load("aguaMar.png", Texture.class);
-		this.code.manager.load("aguaRio.png", Texture.class);
-		this.code.manager.load("bronce.png", Texture.class);
-		this.code.manager.load("oro.png", Texture.class);
-		this.code.manager.load("plata.png", Texture.class);
-		this.code.manager.load("powerUp.png", Texture.class);
-		this.code.manager.load("vida.png", Texture.class);
-		this.code.manager.load("velocidad.png", Texture.class);
-		this.code.manager.load("movilidad.png", Texture.class);
-		this.code.manager.load("aceleracion.png", Texture.class);
-		this.code.manager.load("fondoMenuPrincipal.png", Texture.class);
-		this.code.manager.load("opciones.png", Texture.class);
-		this.code.manager.load("espana.png", Texture.class);
-		this.code.manager.load("china.png", Texture.class);
-		this.code.manager.load("japon.png", Texture.class);
-		this.code.manager.load("coreaSur.png", Texture.class);
-		this.code.manager.load("brasil.png", Texture.class);
-		this.code.manager.load("reinoUnido.png", Texture.class);
-		this.code.manager.load("indonesia.png", Texture.class);
-		this.code.manager.load("australia.png", Texture.class);
-		this.code.manager.load("estadosUnidos.png", Texture.class);
-		this.code.manager.load("rusia.png", Texture.class);
-		this.code.manager.load("sudafrica.png", Texture.class);
-		this.code.manager.load("bolivia.png", Texture.class);
-		this.code.manager.load("alemania.png", Texture.class);
-		this.code.manager.load("francia.png", Texture.class);
-		this.code.manager.load("chad.png", Texture.class);
-		this.code.manager.load("nigeria.png", Texture.class);
-		this.code.manager.load("costaMarfil.png", Texture.class);
-		this.code.manager.load("camerun.png", Texture.class);
-		this.code.manager.load("grecia.png", Texture.class);
-		this.code.manager.load("egipto.png", Texture.class);
-		this.code.manager.load("suecia.png", Texture.class);
-		this.code.manager.load("suiza.png", Texture.class);
-		this.code.manager.load("canada.png", Texture.class);
-		this.code.manager.load("mexico.png", Texture.class);
-		this.code.manager.load("argentina.png", Texture.class);
-		this.code.manager.load("cuba.png", Texture.class);
-		this.code.manager.load("sriLanka.png", Texture.class);
-		this.code.manager.load("mauricio.png", Texture.class);
-		this.code.manager.load("madagascar.png", Texture.class);
-		this.code.manager.load("vaticano.png", Texture.class);
-		this.code.manager.load("italia.png", Texture.class);
-		this.code.manager.load("india.png", Texture.class);
-		this.code.manager.load("Barra.png", Texture.class);
-		this.code.manager.load("Volumen.png", Texture.class);
-		this.code.manager.load("textoSeleccionBarcoPais.png", Texture.class);
-		this.code.manager.load("flechaSeleccionDerecha.png", Texture.class);
-		this.code.manager.load("flechaSeleccionIzquierda.png", Texture.class);
-		this.code.manager.load("seleccionar.png", Texture.class);
-		this.code.manager.load("botoncheckedplchld.png", Texture.class);
-		this.code.manager.load("botonuncheckedplchld.png", Texture.class);
-		this.code.manager.load("botondownplchld.png", Texture.class);
-		this.code.manager.load("botonplchld.png", Texture.class);
-		this.code.manager.load("Titulo.png", Texture.class);
-		this.code.manager.load("Menus/madera.png", Texture.class);
-		this.code.manager.load("PowerUp.png", Texture.class);
-		this.code.manager.load("sliderbg.png", Texture.class);
-		this.code.manager.load("sliderknob.png", Texture.class);
-		this.code.manager.load("Menu.png", Texture.class);
+		//MINIJUEGO1
+		this.code.manager.load("minijuego1/pezVertical.png",Texture.class);
+		this.code.manager.load("minijuego1/pezHorizontal.png",Texture.class);
+		this.code.manager.load("minijuego1/island_pixel_art.png",Texture.class);
+		this.code.manager.load("minijuego1/pescador.png",Texture.class);
+		this.code.manager.load("minijuego1/canapescar.png",Texture.class);
+		this.code.manager.load("minijuego1/barraProgresoVertical.png",Texture.class);
+		this.code.manager.load("minijuego1/indicadorVertical.png",Texture.class);
+		//FIN MINIJUEGO1
+		
+		//MUSICA
+		this.code.manager.load("musica/enpartida.ogg", Music.class);
+		this.code.manager.load("musica/fuerapartida.ogg", Music.class);
+		//FIN MUSICA
+		
+		//MEDALLAS
+		//this.code.manager.load("medallas/bronce.png", Texture.class);
+		//this.code.manager.load("medallas/oro.png", Texture.class);
+		//this.code.manager.load("medallas/plata.png", Texture.class);
+		//FIN MEDALLAS
+		
+		//PANTALLAPARTIDA
+		this.code.manager.load("pantallapartida/powerUp.png", Texture.class);
+		this.code.manager.load("pantallapartida/carril.jpg", Texture.class);
+		this.code.manager.load("pantallapartida/roca.png", Texture.class);
+		this.code.manager.load("pantallapartida/Meta.jpg", Texture.class);
+		this.code.manager.load("pantallapartida/aguaRio.png", Texture.class);
+		//FIN PANTALLAPARTIDA
+		
+		//BANDERAS
+		this.code.manager.load("banderas/espana.png", Texture.class);
+		this.code.manager.load("banderas/china.png", Texture.class);
+		this.code.manager.load("banderas/japon.png", Texture.class);
+		this.code.manager.load("banderas/coreaSur.png", Texture.class);
+		this.code.manager.load("banderas/brasil.png", Texture.class);
+		this.code.manager.load("banderas/reinoUnido.png", Texture.class);
+		this.code.manager.load("banderas/indonesia.png", Texture.class);
+		this.code.manager.load("banderas/australia.png", Texture.class);
+		this.code.manager.load("banderas/estadosUnidos.png", Texture.class);
+		this.code.manager.load("banderas/rusia.png", Texture.class);
+		this.code.manager.load("banderas/sudafrica.png", Texture.class);
+		this.code.manager.load("banderas/bolivia.png", Texture.class);
+		this.code.manager.load("banderas/alemania.png", Texture.class);
+		this.code.manager.load("banderas/francia.png", Texture.class);
+		this.code.manager.load("banderas/chad.png", Texture.class);
+		this.code.manager.load("banderas/nigeria.png", Texture.class);
+		this.code.manager.load("banderas/costaMarfil.png", Texture.class);
+		this.code.manager.load("banderas/camerun.png", Texture.class);
+		this.code.manager.load("banderas/grecia.png", Texture.class);
+		this.code.manager.load("banderas/egipto.png", Texture.class);
+		this.code.manager.load("banderas/suecia.png", Texture.class);
+		this.code.manager.load("banderas/suiza.png", Texture.class);
+		this.code.manager.load("banderas/canada.png", Texture.class);
+		this.code.manager.load("banderas/mexico.png", Texture.class);
+		this.code.manager.load("banderas/argentina.png", Texture.class);
+		this.code.manager.load("banderas/cuba.png", Texture.class);
+		this.code.manager.load("banderas/sriLanka.png", Texture.class);
+		this.code.manager.load("banderas/mauricio.png", Texture.class);
+		this.code.manager.load("banderas/madagascar.png", Texture.class);
+		this.code.manager.load("banderas/vaticano.png", Texture.class);
+		this.code.manager.load("banderas/italia.png", Texture.class);
+		this.code.manager.load("banderas/india.png", Texture.class);
+		//FIN BANDERAS
+		
+		//SELECCIONBARCO
+		this.code.manager.load("seleccionbarco/textoSeleccionBarcoPais.png", Texture.class);
+		this.code.manager.load("seleccionbarco/flechaSeleccionDerecha.png", Texture.class);
+		this.code.manager.load("seleccionbarco/flechaSeleccionIzquierda.png", Texture.class);
+		this.code.manager.load("seleccionbarco/vida.png", Texture.class);
+		this.code.manager.load("seleccionbarco/velocidad.png", Texture.class);
+		this.code.manager.load("seleccionbarco/movilidad.png", Texture.class);
+		this.code.manager.load("seleccionbarco/aceleracion.png", Texture.class);
+		//FIN SELECCIONBARCO
+		
+		//BOTONES
+		this.code.manager.load("botones/botondownplchld.png", Texture.class);
+		this.code.manager.load("botones/botonplchld.png", Texture.class);
+		//FIN BOTONES
+		
+		//OPCIONES
+		this.code.manager.load("opciones/Menu.png", Texture.class);
+		this.code.manager.load("opciones/Barra.png", Texture.class);
+		this.code.manager.load("opciones/Volumen.png", Texture.class);
+		//FIN OPCIONES
+		
+		//MENUS
 		this.code.manager.load("Menus/Cuadro_sonido.png", Texture.class);
 		this.code.manager.load("Menus/Volumen.png", Texture.class);
 		this.code.manager.load("Menus/Silenciar.png", Texture.class);
@@ -123,17 +140,25 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("Menus/opcion2.png", Texture.class);
 		this.code.manager.load("Menus/1.png", Texture.class);
 		this.code.manager.load("Menus/2.png", Texture.class);
-		this.code.manager.load("Jugar.png", Texture.class);
-		this.code.manager.load("Controles.png", Texture.class);
-		this.code.manager.load("Sonido.png", Texture.class);
-		this.code.manager.load("Salir.png", Texture.class);
-		this.code.manager.load("barcoAceleracion.png", Texture.class);
-		this.code.manager.load("barcoMovilidad.png", Texture.class);
-		this.code.manager.load("barcoNormal.png", Texture.class);
-		this.code.manager.load("barcoSpeed.png", Texture.class);
-		this.code.manager.load("barcoVida.png", Texture.class);
-		this.code.manager.load("carril.jpg", Texture.class);
-		this.code.manager.load("roca.png", Texture.class);
+		this.code.manager.load("Menus/madera.png", Texture.class);
+		//FIN MENUS
+		
+		//MENU PRINCIPAL
+		this.code.manager.load("menuprincipal/Jugar.png", Texture.class);
+		this.code.manager.load("menuprincipal/Controles.png", Texture.class);
+		this.code.manager.load("menuprincipal/Sonido.png", Texture.class);
+		this.code.manager.load("menuprincipal/Salir.png", Texture.class);
+		this.code.manager.load("menuprincipal/Titulo.png", Texture.class);
+		this.code.manager.load("menuprincipal/fondoMenuPrincipal.png", Texture.class);
+		//FIN MENU PRINCIPAL
+		
+		//BARCOS
+		this.code.manager.load("barcos/barcoAceleracion.png", Texture.class);
+		this.code.manager.load("barcos/barcoMovilidad.png", Texture.class);
+		this.code.manager.load("barcos/barcoNormal.png", Texture.class);
+		this.code.manager.load("barcos/barcoSpeed.png", Texture.class);
+		this.code.manager.load("barcos/barcoVida.png", Texture.class);
+		//FIN BARCOS
 	}
 
 	@Override
@@ -168,10 +193,10 @@ public class PantallaDeInicio implements Screen {
 				elapsedTime = 0f;
 			}
 			if (Gdx.input.isKeyPressed(Keys.SPACE) || skipTime) {
-				this.code.music = this.code.manager.get("fuerapartida.ogg");
+				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
 				this.code.music.setLooping(true);
 				this.code.music.play();
-				this.code.music.setVolume(0.2f);
+				this.code.music.setVolume((float)Math.pow(this.code.volumen,2));
 				this.code.setScreen(new MainMenuScreen(this.code));
 			}
 		}

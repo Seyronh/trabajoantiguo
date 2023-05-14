@@ -72,7 +72,7 @@ public class Carriles {
 		return pos;
 	}
 	public void draw(SpriteBatch batch) {
-		Texture text = this.code.manager.get("carril.jpg",Texture.class);
+		Texture text = this.code.manager.get("pantallapartida/carril.jpg",Texture.class);
 		Sprite barrera1 = new Sprite(text,29,1079);
 		Sprite barrera2 = new Sprite(text,29,1079);
 		Sprite barrera3 = new Sprite(text,29,1079);

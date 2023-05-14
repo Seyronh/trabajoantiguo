@@ -20,7 +20,7 @@ public class PantallaDeInicio implements Screen {
 	private Texture texture;
 	private BitmapFont font;
 	private float elapsedTime = 0.0f;
-	private boolean skipTime = false; //para no tener que pulsar espacio al iniciar
+	private boolean skipTime = true; //para no tener que pulsar espacio al iniciar
 
 	public PantallaDeInicio(Code code) {
 		this.code = code;
@@ -51,6 +51,10 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("minijuego1/barraProgresoVertical.png",Texture.class);
 		this.code.manager.load("minijuego1/indicadorVertical.png",Texture.class);
 		//FIN MINIJUEGO1
+    
+    //MINIJUEGO2
+    this.code.manager.load("fondo-mar.png", Texture.class);
+		this.code.manager.load("tiburon.png", Texture.class);
 		
 		//MUSICA
 		this.code.manager.load("musica/enpartida.ogg", Music.class);
@@ -143,6 +147,7 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("Menus/opcion2.png", Texture.class);
 		this.code.manager.load("Menus/1.png", Texture.class);
 		this.code.manager.load("Menus/2.png", Texture.class);
+
 		this.code.manager.load("Menus/madera.png", Texture.class);
 		//FIN MENUS
 		
@@ -199,8 +204,10 @@ public class PantallaDeInicio implements Screen {
 				this.code.music = this.code.manager.get("musica/fuerapartida.ogg");
 				this.code.music.setLooping(true);
 				this.code.music.play();
+
 				this.code.music.setVolume((float)Math.pow(this.code.volumen,2));
 				this.code.setScreen(new MainMenuScreen(this.code));
+
 			}
 		}
 		this.code.batch.end();

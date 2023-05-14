@@ -212,7 +212,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				code.paisSeleccionado = code.paises.get(posPais);
-				imagenPais = new Texture(code.paisSeleccionado.getBandera());
+				imagenPais = this.code.manager.get(code.paisSeleccionado.getBandera(),Texture.class);
 				
 			} else {
 				posTipoBarco++;
@@ -221,7 +221,7 @@ public class SeleccionBarco implements Screen {
 					posTipoBarco = 0;
 				}
 				code.tipoBarcoSeleccionado = code.tipoBarcos.get(posTipoBarco);
-				imagenBarco = new Texture(code.tipoBarcoSeleccionado.barco);
+				imagenBarco = this.code.manager.get(code.tipoBarcoSeleccionado.barco,Texture.class);
 				setearVistaValoresBarco();
 			}
 		}
@@ -236,7 +236,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				code.paisSeleccionado = code.paises.get(posPais);
-				imagenPais = new Texture(code.paisSeleccionado.getBandera());
+				imagenPais = this.code.manager.get(code.paisSeleccionado.getBandera(),Texture.class);
 			} else {
 				posTipoBarco--;
 
@@ -245,7 +245,7 @@ public class SeleccionBarco implements Screen {
 				}
 
 				code.tipoBarcoSeleccionado = code.tipoBarcos.get(posTipoBarco);
-				imagenBarco = new Texture(code.tipoBarcoSeleccionado.barco);
+				imagenBarco = this.code.manager.get(code.tipoBarcoSeleccionado.barco,Texture.class);
 				setearVistaValoresBarco();
 			}
 		}

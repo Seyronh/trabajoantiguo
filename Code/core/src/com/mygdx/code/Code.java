@@ -60,7 +60,7 @@ public class Code extends Game {
 		manager = new AssetManager();
 		manager.load("Fondo_Inicio.jpg", Texture.class);
 		manager.finishLoading();
-		paisSeleccionado = new Pais("ES", "España", "banderas/espana.png");
+		paisSeleccionado = new Pais("ES", "Espana", "banderas/espana.png");
 		tipoBarcoSeleccionado = new TipoBarco(5f, 5f, "barcos/barcoNormal.png", 5f, 5f);
 		cargarPaises();
 		cargarTiposBarcos();
@@ -80,7 +80,7 @@ public class Code extends Game {
 	
 	// Método que añade todos los países al array para mostrarlos
 		private void cargarPaises() {
-			paises.add(new Pais("ES", "España", "banderas/espana.png"));
+			paises.add(new Pais("ES", "Espana", "banderas/espana.png"));
 			paises.add(new Pais("CH", "China", "banderas/china.png"));
 			paises.add(new Pais("JP", "Japon", "banderas/japon.png"));
 			paises.add(new Pais("CS", "Corea del Sur", "banderas/coreaSur.png"));
@@ -90,20 +90,20 @@ public class Code extends Game {
 			paises.add(new Pais("AU", "Australia", "banderas/australia.png"));
 			paises.add(new Pais("EU", "Estados Unidos", "banderas/estadosUnidos.png"));
 			paises.add(new Pais("RU", "Rusia", "banderas/rusia.png"));
-			paises.add(new Pais("SD", "Sudáfrica", "banderas/sudafrica.png"));
+			paises.add(new Pais("SD", "Sudafrica", "banderas/sudafrica.png"));
 			paises.add(new Pais("BO", "Bolivia", "banderas/bolivia.png"));
 			paises.add(new Pais("AL", "Alemania", "banderas/alemania.png"));
 			paises.add(new Pais("FR", "Francia", "banderas/francia.png"));
 			paises.add(new Pais("CHAD", "Chad", "banderas/chad.png"));
 			paises.add(new Pais("NIG", "Nigeria", "banderas/nigeria.png"));
 			paises.add(new Pais("CM", "Costa de Marfil", "banderas/costaMarfil.png"));
-			paises.add(new Pais("CAM", "Camerún", "banderas/camerun.png"));
+			paises.add(new Pais("CAM", "Camerun", "banderas/camerun.png"));
 			paises.add(new Pais("GR", "Grecia", "banderas/grecia.png"));
 			paises.add(new Pais("EG", "Egipto", "banderas/egipto.png"));
 			paises.add(new Pais("SU", "Suecia", "banderas/suecia.png"));
 			paises.add(new Pais("SUI", "Suiza", "banderas/suiza.png"));
 			paises.add(new Pais("CA", "Canada", "banderas/canada.png"));
-			paises.add(new Pais("MX", "México", "banderas/mexico.png"));
+			paises.add(new Pais("MX", "Mexico", "banderas/mexico.png"));
 			paises.add(new Pais("AR", "Argentina", "banderas/argentina.png"));
 			paises.add(new Pais("CU", "Cuba", "banderas/cuba.png"));
 			paises.add(new Pais("SL", "SriLanka", "banderas/sriLanka.png"));

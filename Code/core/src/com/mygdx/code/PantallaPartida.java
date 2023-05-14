@@ -236,22 +236,22 @@ public class PantallaPartida implements Screen {
 				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
 				this.code.music.play();
-				this.code.setScreen(new Minijuego(this.code));
-				/*
-				 * if(Math.random()<0.5f){
-				 * 				this.code.music.stop();
-				 *				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
-				 *				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
-				 *				this.code.music.play();
-				 * 		this.code.setScreen(new Minijuego(this.code));
-				 * } else {
-				 * 				this.code.music.stop();
-				 *				this.code.music = this.code.manager.get("musica/minijuego2.ogg");
-				 *				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
-				 *				this.code.music.play();
-				 * 		this.code.setScreen(new Minijuego2(this.code));
-				 * }
-				 */
+				//this.code.setScreen(new Minijuego(this.code));
+			
+			  if(Math.random()<0.5f){
+			  				this.code.music.stop();
+			 				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
+			 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+			 				this.code.music.play();
+			  		this.code.setScreen(new Minijuego(this.code));
+			  } else {
+			  				this.code.music.stop();
+			 				this.code.music = this.code.manager.get("musica/minijuego2.ogg");
+			 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+			 				this.code.music.play();
+			  		this.code.setScreen(new minijuego2(this.code));
+			  }
+			 
 			}
 			if(this.code.terminados == 3) {
 				this.code.terminados = 0;

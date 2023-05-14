@@ -231,7 +231,7 @@ public class PantallaPartida implements Screen {
 				this.code.dificultad++;
 				this.code.terminados = 0;
 				this.code.ganadorj = false;
-				this.code.setScreen(new minijuego(this.code));
+				this.code.setScreen(new Minijuego(this.code));
 			}
 			if(this.code.terminados == 3) {
 				this.code.terminados = 0;

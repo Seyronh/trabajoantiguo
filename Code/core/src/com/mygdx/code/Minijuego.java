@@ -21,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 
-public class minijuego implements Screen{
+public class Minijuego implements Screen{
     final Code code;
     //private Stage stage;º
 	private float anchoPantalla, altoPantalla, max, min;
@@ -39,7 +39,7 @@ public class minijuego implements Screen{
     private boolean estaBajando, hasGanado;
     private float delay;
 
-    public minijuego(final Code code){
+    public Minijuego(final Code code){
         this.code = code;
         anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();

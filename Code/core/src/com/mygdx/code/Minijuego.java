@@ -112,7 +112,9 @@ public class Minijuego implements Screen{
         Random rnd = new Random();
         max = (altoPantalla/2 + 211);
         min = (altoPantalla/2 - 22);
-        posY = min + rnd.nextFloat() * (max - min);
+        if(!hasGanado) {
+        	posY = min + rnd.nextFloat() * (max - min);
+        }
     }
 /*
     private boolean pescado(){
@@ -138,7 +140,7 @@ public class Minijuego implements Screen{
         } else if (posY >= minY){
             posY -= 2;
         }
-        if(Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY < maxY){
+        if(Gdx.input.isKeyPressed(Keys.SPACE) && indicadorY < maxY && !hasGanado){
             if((maxY - indicadorY) >= 8){
                 subir+=4;
             } else {

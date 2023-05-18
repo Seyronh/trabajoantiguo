@@ -93,8 +93,8 @@ public class minijuego2 implements Screen{
             hasGanado=true;
         }
         
-        if(hasGanado) {
-        	delay2++;
+        if(hasGanado || hasPerdido) {
+        	delay2 += delta;
         }
        
         if(delay2>3f) {

@@ -209,7 +209,7 @@ public class PantallaDeInicio implements Screen {
 				this.code.music.play();
 
 				this.code.music.setVolume((float)Math.pow(this.code.volumen,2));
-				this.code.setScreen(new MainMenuScreen(this.code));
+				this.code.setScreen(new Minijuego3(code));
 
 			}
 		}

@@ -52,9 +52,19 @@ public class PantallaDeInicio implements Screen {
 		this.code.manager.load("minijuego1/indicadorVertical.png",Texture.class);
 		//FIN MINIJUEGO1
     
-    //MINIJUEGO2
-    this.code.manager.load("fondo-mar.png", Texture.class);
+	    //MINIJUEGO2
+	    this.code.manager.load("fondo-mar.png", Texture.class);
 		this.code.manager.load("tiburon.png", Texture.class);
+		
+		//MINIJUEGO3
+		this.code.manager.load("minijuego3/barra.png",Texture.class);
+		this.code.manager.load("minijuego3/dragon.png",Texture.class);
+		this.code.manager.load("minijuego3/fondo_playa.png",Texture.class);
+		this.code.manager.load("minijuego3/fuego.png",Texture.class);
+		this.code.manager.load("minijuego3/pez_cocinado.png",Texture.class);
+		this.code.manager.load("minijuego3/barraGrande.png",Texture.class);
+		this.code.manager.load("minijuego3/pezMedioCocinado2.png",Texture.class);
+		this.code.manager.load("minijuego3/pezMedioCocinado.png",Texture.class);
 		
 		//MUSICA
 		this.code.manager.load("musica/enpartida.ogg", Music.class);
@@ -209,7 +219,7 @@ public class PantallaDeInicio implements Screen {
 				this.code.music.play();
 
 				this.code.music.setVolume((float)Math.pow(this.code.volumen,2));
-				this.code.setScreen(new Minijuego3(code));
+				this.code.setScreen(new MainMenuScreen(this.code));
 
 			}
 		}

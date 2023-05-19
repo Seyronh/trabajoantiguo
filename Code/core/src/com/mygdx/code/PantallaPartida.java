@@ -236,19 +236,26 @@ public class PantallaPartida implements Screen {
 				//this.code.music = this.code.manager.get("musica/minijuego1.ogg");
 				//this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
 				//this.code.music.play();			
-				
-			  if(Math.random()<0.5f){
-			  				this.code.music.stop();
-			 				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
-			 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
-			 				this.code.music.play();
+			  double rnd = Math.random();
+			  if(rnd<1 && rnd>=0.66){
+	  				this.code.music.stop();
+	 				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
+	 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+	 				this.code.music.play();
 			  		this.code.setScreen(new Minijuego(this.code));
-			  } else {
-			  				this.code.music.stop();
-			 				this.code.music = this.code.manager.get("musica/minijuego2.ogg");
-			 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
-			 				this.code.music.play();
-			  		this.code.setScreen(new minijuego2(this.code));
+			  } else if (rnd<0.66f && rnd>=0.33){
+	  				this.code.music.stop();
+	 				this.code.music = this.code.manager.get("musica/minijuego2.ogg");
+	 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+	 				this.code.music.play();
+			  		this.code.setScreen(new Minijuego2(this.code));
+			  } else if (rnd<0.33f){{
+					this.code.music.stop();
+	 				this.code.music = this.code.manager.get("musica/minijuego1.ogg");
+	 				this.code.music.setVolume((float)Math.pow(this.code.volumen, 2));
+	 				this.code.music.play();
+	 				this.code.setScreen(new Minijuego3(this.code));
+			  }
 			  }
 			  
 			 

@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 
-public class minijuego2 implements Screen{
+public class Minijuego2 implements Screen{
     final Code code;
 	private float anchoPantalla, altoPantalla;
 	private Texture fondo, pez, tiburon;
@@ -23,7 +23,7 @@ public class minijuego2 implements Screen{
     private boolean hasGanado, hasPerdido;
     private float delay,  tiburonX, pezX, accel, delay2;
 	
-    public minijuego2(final Code code){
+    public Minijuego2(final Code code){
         this.code = code;
         anchoPantalla = Gdx.graphics.getWidth();
 		altoPantalla = Gdx.graphics.getHeight();

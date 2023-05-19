@@ -154,7 +154,7 @@ public class Minijuego implements Screen{
             }
             }
     	if((posY >= indicadorY && posY + 50 < indicadorY +100) || (posY <= indicadorY && posY - 50 > indicadorY)){
-    		float newvalue = barraProgreso.getValue() + 0.01f;
+    		float newvalue = barraProgreso.getValue() + 0.03f;
         	barraProgreso.setValue(newvalue);
             if(barraProgreso.getValue() >= 2f){
                 puntuacion++;
@@ -207,7 +207,7 @@ public class Minijuego implements Screen{
         	delay += delta;
         	fuente2.draw(batch, "HAS GANADO!", 450, altoPantalla-700);
         }
-        if(delay>2f) {
+        if(delay>3f) {
         	this.code.setScreen(new PantallaPartida(this.code));
         }
         /* 	MOSTRAR LIMITES COLISIONES
